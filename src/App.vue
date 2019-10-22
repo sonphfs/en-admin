@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <MainLayout/>
+    <component :is="layout"></component>
   </div>
 </template>
 
 <script>
 import MainLayout from './components/MainLayout.vue'
+import BlankLayout from './components/BlankLayout.vue'
 
 import '@/assets/vendors/bootstrap/dist/css/bootstrap.min.css'
 import '@/assets/vendors/font-awesome/css/font-awesome.min.css'
@@ -20,6 +21,11 @@ export default {
   name: 'app',
   components: {
     MainLayout
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout == 'BlankLayout' ? BlankLayout : MainLayout 
+    }
   }
 }
 </script>
