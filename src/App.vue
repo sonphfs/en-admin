@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MainLayout/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainLayout from './components/MainLayout.vue'
+
+import '@/assets/vendors/bootstrap/dist/css/bootstrap.min.css'
+import '@/assets/vendors/font-awesome/css/font-awesome.min.css'
+import '@/assets/vendors/nprogress/nprogress.css'
+import '@/assets/vendors/iCheck/skins/flat/green.css'
+import '@/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'
+import '@/assets/vendors/jqvmap/dist/jqvmap.min.css'
+import '@/assets/vendors/bootstrap-daterangepicker/daterangepicker.css'
+import '@/assets/build/css/custom.min.css'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    MainLayout
   }
 }
 </script>
@@ -21,8 +29,5 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
