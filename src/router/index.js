@@ -11,6 +11,10 @@ const routes = [
         }
     },
     {
+        path: '/',
+        component: () => import("@/components/pages/Dashboard"),
+    },
+    {
         path: '/page-403',
         component: () => import("@/components/error_pages/Page403"),
         meta: {
