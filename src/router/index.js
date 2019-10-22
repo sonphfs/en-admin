@@ -34,6 +34,30 @@ const routes = [
         meta: {
             layout: 'BlankLayout'
         }
+    },
+    {
+        path: '/table',
+        component: () => import("@/components/pages/Table"),
+    },
+    {
+        path: '/management/users/list',
+        component: () => import("@/components/users/Index"),
+    },
+    {
+        path: '/management/lessons/list',
+        component: () => import("@/components/lessons/Index"),
+    },
+    {
+        path: '/management/questions/list',
+        component: () => import("@/components/questions/Index"),
+    },
+    {
+        path: '/management/examinations/list',
+        component: () => import("@/components/examinations/Index"),
+    },
+    {
+        path: '/management/learning_words/list',
+        component: () => import("@/components/learning_words/Index"),
     }
 ]
 
