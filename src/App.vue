@@ -5,34 +5,36 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
-import BlankLayout from './components/BlankLayout.vue'
+import MainLayout from "./components/MainLayout.vue";
+import BlankLayout from "./components/BlankLayout.vue";
 
-import '@/assets/vendors/bootstrap/dist/css/bootstrap.min.css'
-import '@/assets/vendors/font-awesome/css/font-awesome.min.css'
-import '@/assets/vendors/nprogress/nprogress.css'
-import '@/assets/vendors/iCheck/skins/flat/green.css'
-import '@/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'
-import '@/assets/vendors/jqvmap/dist/jqvmap.min.css'
-import '@/assets/vendors/bootstrap-daterangepicker/daterangepicker.css'
-import '@/assets/build/css/custom.min.css'
+import "@/assets/vendors/bootstrap/dist/css/bootstrap.min.css";
+import "@/assets/vendors/font-awesome/css/font-awesome.min.css";
+import "@/assets/vendors/nprogress/nprogress.css";
+import "@/assets/vendors/iCheck/skins/flat/green.css";
+import "@/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css";
+import "@/assets/vendors/jqvmap/dist/jqvmap.min.css";
+import "@/assets/vendors/bootstrap-daterangepicker/daterangepicker.css";
+import "@/assets/build/css/custom.min.css";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     MainLayout
   },
   computed: {
     layout() {
-      return this.$route.meta.layout == 'BlankLayout' ? BlankLayout : MainLayout 
+      return this.$route.meta.layout == "BlankLayout"
+        ? BlankLayout
+        : MainLayout;
     }
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

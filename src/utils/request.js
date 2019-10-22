@@ -10,7 +10,7 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(
-    service.defaults.headers.common['Authorization'] = 'Bearer '+ getToken()
+    service.defaults.headers.common['Authorization'] = 'Bearer ' + getToken()
 )
 
 export default service
