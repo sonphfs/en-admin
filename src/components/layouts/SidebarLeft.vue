@@ -80,7 +80,10 @@
                   <a href="/management/learning_words/create">Create new words</a>
                 </li>
                 <li>
-                  <a href="typography.html">Typography</a>
+                  <a href="/management/learning_words/subjects/list">List Subject</a>
+                </li>
+                <li>
+                  <a href="/management/learning_words/subjects/create">Create Subject</a>
                 </li>
               </ul>
             </li>

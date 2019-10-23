@@ -64,6 +64,18 @@ const routes = [
         component: () => import("@/components/learning_words/Create"),
     },
     {
+        path: '/management/learning_words/subjects/list',
+        component: () => import("@/components/subjects/List.vue"),
+    },
+    {
+        path: '/management/learning_words/subjects/create',
+        component: () => import("@/components/subjects/Create"),
+    },
+    {
+        path: '/management/learning_words/subjects/edit',
+        component: () => import("@/components/subjects/Edit"),
+    },
+    {
         path: '/my-profile',
         component: () => import("@/components/pages/Profile"),
     }
