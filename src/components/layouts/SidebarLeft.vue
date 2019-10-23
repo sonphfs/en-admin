@@ -77,7 +77,7 @@
                   <a href="/management/learning_words/list">List Learning Words</a>
                 </li>
                 <li>
-                  <a href="media_gallery.html">Media Gallery</a>
+                  <a href="/management/learning_words/create">Create new words</a>
                 </li>
                 <li>
                   <a href="typography.html">Typography</a>

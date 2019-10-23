@@ -60,6 +60,10 @@ const routes = [
         component: () => import("@/components/learning_words/Index"),
     },
     {
+        path: '/management/learning_words/create',
+        component: () => import("@/components/learning_words/Create"),
+    },
+    {
         path: '/my-profile',
         component: () => import("@/components/pages/Profile"),
     }
