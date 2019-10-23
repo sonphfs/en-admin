@@ -58,6 +58,10 @@ const routes = [
     {
         path: '/management/learning_words/list',
         component: () => import("@/components/learning_words/Index"),
+    },
+    {
+        path: '/my-profile',
+        component: () => import("@/components/pages/Profile"),
     }
 ]
 

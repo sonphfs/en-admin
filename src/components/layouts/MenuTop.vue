@@ -16,13 +16,14 @@
               class="user-profile dropdown-toggle"
               data-toggle="dropdown"
               aria-expanded="false"
+              @click="drawer=!drawer"
             >
               <img src="images/img.jpg" alt />Son PH
               <span class="fa fa-angle-down"></span>
             </a>
-            <ul class="dropdown-menu dropdown-usermenu pull-right">
+            <ul class="dropdown-menu dropdown-usermenu pull-right show" v-if="drawer">
               <li>
-                <a href="javascript:;">Profile</a>
+                <a href="/my-profile">Profile</a>
               </li>
               <li>
                 <a href="javascript:;">
@@ -127,6 +128,11 @@
 
 <script>
 export default {
-  name: "MenuTop"
+  name: "MenuTop",
+  data() {
+    return {
+      drawer: false
+    }
+  }
 };
 </script>
