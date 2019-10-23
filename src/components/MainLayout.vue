@@ -15,7 +15,7 @@ import Sidebar from "@/components/layouts/SidebarLeft";
 import Main from "@/components/layouts/Main";
 import Footer from "@/components/layouts/Footer";
 export default {
-  name: "HelloWorld",
+  name: "MainLayout",
   components: {
     MenuTop,
     Sidebar,

@@ -30,14 +30,14 @@
         <div class="menu_section">
           <h3>General</h3>
           <ul class="nav side-menu">
-            <li class="active">
+            <li class @click="userMenu = userMenu" v-bind:class="{ active : userMenu}">
               <a>
                 <i class="fa fa-home"></i> Users Management
                 <span class="fa fa-chevron-down"></span>
               </a>
-              <ul class="nav child_menu" style="display: block">
+              <ul class="nav child_menu user_menu" style="display: block" v-show="userMenu">
                 <li>
-                  <a href="index.html">Dashboard</a>
+                  <a href="/management/users/list">List Users</a>
                 </li>
                 <li>
                   <a href="index2.html">Dashboard2</a>
@@ -47,14 +47,14 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <li @click="examMenu = examMenu" v-bind:class="{ active : examMenu}">
               <a>
-                <i class="fa fa-edit"></i> Examination Management
+                <i class="fa fa-edit"></i> Exam Management
                 <span class="fa fa-chevron-down"></span>
               </a>
-              <ul class="nav child_menu" style="display: block">
-                <li>
-                  <a href="form.html">General Form</a>
+              <ul class="nav child_menu" style="display: block" v-show="examMenu">
+                <li >
+                  <a href="/management/examinations/list">List Examinations</a>
                 </li>
                 <li>
                   <a href="form_advanced.html">Advanced Components</a>
@@ -67,14 +67,14 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <li @click="wordMenu = wordMenu" v-bind:class="{ active : wordMenu}">
               <a>
                 <i class="fa fa-desktop"></i> Learning Words
                 <span class="fa fa-chevron-down"></span>
               </a>
-              <ul class="nav child_menu" style="display: block">
+              <ul class="nav child_menu" style="display: block" v-show="wordMenu">
                 <li>
-                  <a href="general_elements.html">General Elements</a>
+                  <a href="/management/learning_words/list">List Learning Words</a>
                 </li>
                 <li>
                   <a href="media_gallery.html">Media Gallery</a>
@@ -84,28 +84,28 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <li @click="lessonMenu = lessonMenu" v-bind:class="{ active : lessonMenu}">
               <a>
                 <i class="fa fa-table"></i> Lessons Management
                 <span class="fa fa-chevron-down"></span>
               </a>
-              <ul class="nav child_menu" style="display: block">
+              <ul class="nav child_menu" style="display: block" v-show="lessonMenu">
                 <li>
-                  <a href="tables.html">Tables</a>
+                  <a href="/management/lessons/list">List Lessons</a>
                 </li>
                 <li>
                   <a href="tables_dynamic.html">Table Dynamic</a>
                 </li>
               </ul>
             </li>
-            <li>
+            <li @click="questionMenu = questionMenu" v-bind:class="{ active : questionMenu}">
               <a>
                 <i class="fa fa-bar-chart-o"></i> Questions Management
                 <span class="fa fa-chevron-down"></span>
               </a>
-              <ul class="nav child_menu" style="display: block">
+              <ul class="nav child_menu" style="display: block" v-show="questionMenu">
                 <li>
-                  <a href="chartjs.html">Chart JS</a>
+                  <a href="/management/questions/list">List Questions</a>
                 </li>
                 <li>
                   <a href="chartjs2.html">Chart JS2</a>
@@ -139,6 +139,26 @@
 
 <script>
 export default {
-  name: "Sidebar"
+  name: "Sidebar",
+  data() {
+    return {
+      userMenu: true,
+      examMenu: true,
+      lessonMenu: true,
+      wordMenu: true,
+      questionMenu: true
+    };
+  },
+  methods: {},
+  watch: {
+    userMenu() {
+      
+    }
+  }
 };
 </script>
+<style scoped>
+.display_block {
+  display: block;
+}
+</style>

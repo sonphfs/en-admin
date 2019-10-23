@@ -11,7 +11,7 @@ const routes = [
         }
     },
     {
-        path: '/',
+        path: '/Dashboard',
         component: () => import("@/components/pages/Dashboard"),
     },
     {

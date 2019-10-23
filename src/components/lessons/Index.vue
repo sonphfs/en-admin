@@ -3,8 +3,8 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Button Example
-          <small>Users</small>
+          List
+          <small>Lessons</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
@@ -302,3 +302,26 @@
     </div>
   </div>
 </template>
+<script>
+import request from "@/utils/request";
+export default {
+  name: "ListLessons",
+  data() {
+    return {
+      lessons: []
+    };
+  },
+  created() {
+    request({
+      url: "/backend/lessons/list",
+      method: "get"
+    })
+      .then(res => {
+        this.lessons = res.data.result_data;
+      })
+      .catch(err => {
+        console.log(err.res);
+      });
+  }
+};
+</script>

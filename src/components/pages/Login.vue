@@ -9,13 +9,25 @@
           <form>
             <h1>Login Form</h1>
             <div>
-              <input type="text" class="form-control" placeholder="Username" required />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                required
+                v-model="email"
+              />
             </div>
             <div>
-              <input type="password" class="form-control" placeholder="Password" required />
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                required
+                v-model="password"
+              />
             </div>
             <div>
-              <a class="btn btn-default submit" href="index.html">Log in</a>
+              <a class="btn btn-default submit" @click="login">Log in</a>
               <a class="reset_pass" href="#">Lost your password?</a>
             </div>
 
@@ -40,51 +52,44 @@
           </form>
         </section>
       </div>
-
-      <div id="register" class="animate form registration_form">
-        <section class="login_content">
-          <form>
-            <h1>Create Account</h1>
-            <div>
-              <input type="text" class="form-control" placeholder="Username" required />
-            </div>
-            <div>
-              <input type="email" class="form-control" placeholder="Email" required />
-            </div>
-            <div>
-              <input type="password" class="form-control" placeholder="Password" required />
-            </div>
-            <div>
-              <a class="btn btn-default submit" href="index.html">Submit</a>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="separator">
-              <p class="change_link">
-                Already a member ?
-                <a href="#signin" class="to_register">Log in</a>
-              </p>
-
-              <div class="clearfix"></div>
-              <br />
-
-              <div>
-                <h1>
-                  <i class="fa fa-paw"></i> Gentelella Alela!
-                </h1>
-                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-              </div>
-            </div>
-          </form>
-        </section>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
+import request from "@/utils/request";
+import { setToken, getToken } from "@/utils/auth";
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      email: "sonph@gmail.com",
+      password: "admin123",
+      token: ""
+    };
+  },
+  methods: {
+    login() {
+      let data = {
+        email: this.email,
+        password: this.password,
+        site: "backend"
+      };
+      request({
+        url: "/login",
+        method: "post",
+        data
+      })
+        .then(res => {
+          this.token = res.data.result_data.token;
+          setToken(this.token)
+          request.defaults.headers.common['Authorization'] = 'Bearer '+ getToken()
+          this.$router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    }
+  }
 };
 </script>

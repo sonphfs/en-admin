@@ -3,8 +3,8 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Button Example
-          <small>Users</small>
+          List
+          <small>Questions</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
@@ -302,3 +302,26 @@
     </div>
   </div>
 </template>
+<script>
+import request from "@/utils/request";
+export default {
+  name: "ListQuestions",
+  data() {
+    return {
+      questions: []
+    };
+  },
+  created() {
+    request({
+      url: "/backend/questions/list",
+      method: "get"
+    })
+      .then(res => {
+        this.questions = res.data.result_data;
+      })
+      .catch(err => {
+        console.log(err.res);
+      });
+  }
+};
+</script>
