@@ -3,7 +3,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Create new words
+          Create new Lesson
           <small></small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
@@ -43,7 +43,7 @@
         <br />
         <form class="form-horizontal form-label-left">
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
               <select class="select2_group form-control">
                 <option value="A">Contract</option>
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Word</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
               <input type="text" class="form-control" placeholder="attract" />
             </div>
@@ -65,50 +65,17 @@
               <input type="text" class="form-control" placeholder />
             </div>
           </div>
-
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder="v, n, adj, adv" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Meaning</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder="thu hút" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Pronunciation</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Audio</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Example</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder />
-            </div>
-          </div>
-          <div class="ln_solid"></div>
-          <div class="form-group">
-            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-              <button type="submit" class="btn btn-success">Create</button>
-            </div>
+          <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+            <button type="submit" class="btn btn-success">Create</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
-  name: "CreateWord"
+  name: "CreateLesson"
 };
 </script>

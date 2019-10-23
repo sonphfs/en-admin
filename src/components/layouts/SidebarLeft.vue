@@ -97,7 +97,13 @@
                   <a href="/management/lessons/list">List Lessons</a>
                 </li>
                 <li>
-                  <a href="tables_dynamic.html">Table Dynamic</a>
+                  <a href="/management/lessons/create">Create Lessons</a>
+                </li>
+                <li>
+                  <a href="/management/units/list">Units</a>
+                </li>
+                <li>
+                  <a href="/management/units/create">Create Units</a>
                 </li>
               </ul>
             </li>
@@ -131,7 +137,7 @@
         <a data-toggle="tooltip" data-placement="top" title="Lock">
           <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
         </a>
-        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+        <a data-toggle="tooltip" data-placement="top" title="Logout" href="/login">
           <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
         </a>
       </div>

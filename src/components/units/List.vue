@@ -4,7 +4,7 @@
       <div class="x_title">
         <h2>
           List
-          <small>Learning Words</small>
+          <small>Unit</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
@@ -45,17 +45,15 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Subject</th>
-              <th>Image</th>
+              <th>Name</th>
               <th>Created_at</th>
               <th>#Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr >
               <td>1</td>
               <td>Contract</td>
-              <td>Image link</td>
               <td>2019/10/23 20:56</td>
               <td>
                 <a href="#" class="btn btn-primary btn-xs">

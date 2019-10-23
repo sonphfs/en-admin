@@ -48,6 +48,26 @@ const routes = [
         component: () => import("@/components/lessons/Index"),
     },
     {
+        path: '/management/lessons/create',
+        component: () => import("@/components/lessons/Create"),
+    },
+    {
+        path: '/management/lessons/edit',
+        component: () => import("@/components/lessons/Edit"),
+    },
+    {
+        path: '/management/units/create',
+        component: () => import("@/components/units/Create"),
+    },
+    {
+        path: '/management/units/edit',
+        component: () => import("@/components/units/Edit"),
+    },
+    {
+        path: '/management/units/list',
+        component: () => import("@/components/units/List"),
+    },
+    {
         path: '/management/questions/list',
         component: () => import("@/components/questions/Index"),
     },
