@@ -52,7 +52,7 @@ const routes = [
         component: () => import("@/components/lessons/Create"),
     },
     {
-        path: '/management/lessons/edit',
+        path: '/management/lessons/edit/:id',
         component: () => import("@/components/lessons/Edit"),
     },
     {

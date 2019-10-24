@@ -61,10 +61,10 @@
               <td>{{lesson.id}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
-                <a href="#" class="btn btn-primary btn-xs">
+                <a :href="'/management/lessons/show/'+ lesson.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="#" class="btn btn-info btn-xs">
+                <a :href="'/management/lessons/edit/'+ lesson.id" class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">

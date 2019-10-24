@@ -75,7 +75,23 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
-  name: "EditLesson"
+  name: "EditLesson",
+  data() {
+    return {
+      lesson: []
+    };
+  },
+  created() {
+    request({
+      url: "/backend/units/show/" + this.$route.params.id,
+      method: "get"
+    })
+      .then(res => {
+        this.lesson = res.data.result_data;
+      })
+      .catch();
+  }
 };
 </script>

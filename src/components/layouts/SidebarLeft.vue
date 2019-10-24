@@ -153,7 +153,7 @@ export default {
     return {
       userMenu: !true,
       examMenu: !true,
-      lessonMenu: !true,
+      lessonMenu: true,
       wordMenu: !true,
       questionMenu: !true
     };
