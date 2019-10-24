@@ -41,23 +41,24 @@
       </div>
       <div class="x_content">
         <br />
-        <form class="form-horizontal form-label-left">
+        <form class="form-horizontal form-label-left" @submit.prevent="create">
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent unit</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <select class="select2_group form-control">
-                <option value="">Select parent unit</option>
-                <option value="A">Contract</option>
-                <option value="B">Marketing</option>
-                <option value="C">Warranties</option>
-                <option value="D">Business planning</option>
+              <select class="select2_group form-control" :value="unit.parent_id">
+                <option value>Select parent unit</option>
+                <option
+                  :value="pUnit.id"
+                  v-for="pUnit in listUnits"
+                  v-if="pUnit.parent_id == 0"
+                >{{pUnit.name}}</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder="attract" />
+              <input type="text" class="form-control" placeholder="attract" v-model="unit.name" />
             </div>
           </div>
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
@@ -70,7 +71,43 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
-  name: "CreateUnit"
+  name: "CreateUnit",
+  data() {
+    return {
+      unit: {
+        parent_id: null,
+        name: ""
+      },
+      listUnits: []
+    };
+  },
+  methods: {
+    create() {
+      let data = this.unit;
+      request({
+        url: "/backend/units/create",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch();
+    }
+  },
+  created() {
+    // get list unit
+    request({
+      url: "/backend/units/list",
+      method: "get"
+    })
+      .then(res => {
+        console.log(res);
+        this.listUnits = res.data.result_data;
+      })
+      .catch();
+  }
 };
 </script>

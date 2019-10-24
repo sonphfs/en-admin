@@ -60,7 +60,7 @@ const routes = [
         component: () => import("@/components/units/Create"),
     },
     {
-        path: '/management/units/edit',
+        path: '/management/units/edit/:id',
         component: () => import("@/components/units/Edit"),
     },
     {

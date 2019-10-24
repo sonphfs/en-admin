@@ -41,28 +41,31 @@
       </div>
       <div class="x_content">
         <br />
-        <form class="form-horizontal form-label-left">
+        <form class="form-horizontal form-label-left" @submit.prevent="create()">
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Unit</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <select class="select2_group form-control">
-                <option value="A">Contract</option>
-                <option value="B">Marketing</option>
-                <option value="C">Warranties</option>
-                <option value="D">Business planning</option>
+              <select class="select2_group form-control" v-model="lesson.unit_id">
+                <option v-for="unit in units" :value="unit.id">{{ unit.name }}</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder="attract" />
+              <input type="text" class="form-control" v-model="lesson.title" />
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Image</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input type="text" class="form-control" placeholder />
+              <input
+                type="file"
+                class="form-control"
+                id="file"
+                ref="file"
+                @change="onChangeFileUpload()"
+              />
             </div>
           </div>
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
@@ -75,7 +78,51 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 export default {
-  name: "CreateLesson"
+  name: "CreateLesson",
+  data() {
+    return {
+      units: [],
+      lesson: {
+        unit_id: null,
+        title: "",
+        image: ""
+      }
+    };
+  },
+  created() {
+    request({
+      url: "/backend/units/list",
+      method: "get"
+    })
+      .then(res => {
+        this.units = res.data.result_data;
+      })
+      .catch();
+  },
+  methods: {
+    create() {
+      let data = this.lesson;
+      let formData = new FormData();
+      formData.append("file", this.lesson.file);
+      formData.append("unit_id", this.lesson.unit_id);
+      formData.append("title", this.lesson.title);
+      formData.append("image", this.lesson.image);
+      request
+        .post("/backend/lessons/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch();
+    },
+    onChangeFileUpload() {
+      this.lesson.image = this.$refs.file.files[0];
+    }
+  }
 };
 </script>

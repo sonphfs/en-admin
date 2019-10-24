@@ -30,7 +30,7 @@
         <div class="menu_section">
           <h3>General</h3>
           <ul class="nav side-menu">
-            <li class @click="userMenu = userMenu" v-bind:class="{ active : userMenu}">
+            <li class @click="userMenu = !userMenu" v-bind:class="{ active : userMenu}">
               <a>
                 <i class="fa fa-home"></i> Users Management
                 <span class="fa fa-chevron-down"></span>
@@ -47,7 +47,7 @@
                 </li>
               </ul>
             </li>
-            <li @click="examMenu = examMenu" v-bind:class="{ active : examMenu}">
+            <li @click="examMenu = !examMenu" v-bind:class="{ active : examMenu}">
               <a>
                 <i class="fa fa-edit"></i> Exam Management
                 <span class="fa fa-chevron-down"></span>
@@ -67,7 +67,7 @@
                 </li>
               </ul>
             </li>
-            <li @click="wordMenu = wordMenu" v-bind:class="{ active : wordMenu}">
+            <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
               <a>
                 <i class="fa fa-desktop"></i> Learning Words
                 <span class="fa fa-chevron-down"></span>
@@ -87,7 +87,7 @@
                 </li>
               </ul>
             </li>
-            <li @click="lessonMenu = lessonMenu" v-bind:class="{ active : lessonMenu}">
+            <li @click="lessonMenu = !lessonMenu" v-bind:class="{ active : lessonMenu}">
               <a>
                 <i class="fa fa-table"></i> Lessons Management
                 <span class="fa fa-chevron-down"></span>
@@ -107,7 +107,7 @@
                 </li>
               </ul>
             </li>
-            <li @click="questionMenu = questionMenu" v-bind:class="{ active : questionMenu}">
+            <li @click="questionMenu = !questionMenu" v-bind:class="{ active : questionMenu}">
               <a>
                 <i class="fa fa-bar-chart-o"></i> Questions Management
                 <span class="fa fa-chevron-down"></span>
@@ -151,11 +151,11 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      userMenu: true,
-      examMenu: true,
-      lessonMenu: true,
-      wordMenu: true,
-      questionMenu: true
+      userMenu: !true,
+      examMenu: !true,
+      lessonMenu: !true,
+      wordMenu: !true,
+      questionMenu: !true
     };
   },
   methods: {},

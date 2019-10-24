@@ -51,18 +51,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr >
-              <td>1</td>
-              <td>Contract</td>
-              <td>2019/10/23 20:56</td>
+            <tr v-for="(unit, index) in units">
+              <td>{{index + 1}}</td>
+              <td>{{unit.name}}</td>
+              <td>{{unit.created_at}}</td>
               <td>
-                <a href="#" class="btn btn-primary btn-xs">
+                <a :href="'/management/units/show/'+ unit.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="/management/learning_words/subjects/edit" class="btn btn-info btn-xs">
+                <a :href="'/management/units/edit/'+ unit.id" class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a @click="deleteUnit(unit.id)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -73,3 +73,38 @@
     </div>
   </div>
 </template>
+
+<script>
+import request from "@/utils/request";
+export default {
+  name: "ListUnit",
+  data() {
+    return {
+      units: []
+    };
+  },
+  created() {
+    request({
+      url: "/backend/units/list",
+      method: "get"
+    })
+      .then(res => {
+        this.units = res.data.result_data;
+      })
+      .catch();
+  },
+  methods: {
+    deleteUnit(id) {
+      let isDelete = confirm("Delete Unit  ???");
+      if (isDelete) {
+        request({
+          url: "/backend/units/delete/" + id,
+          method: "get"
+        })
+          .then()
+          .catch();
+      }
+    }
+  }
+};
+</script>
