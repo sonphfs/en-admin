@@ -39,12 +39,6 @@
                 <li>
                   <a href="/management/users/list">List Users</a>
                 </li>
-                <li>
-                  <a href="index2.html">Dashboard2</a>
-                </li>
-                <li>
-                  <a href="index3.html">Dashboard3</a>
-                </li>
               </ul>
             </li>
             <li @click="examMenu = !examMenu" v-bind:class="{ active : examMenu}">
@@ -55,15 +49,6 @@
               <ul class="nav child_menu" style="display: block" v-show="examMenu">
                 <li >
                   <a href="/management/examinations/list">List Examinations</a>
-                </li>
-                <li>
-                  <a href="form_advanced.html">Advanced Components</a>
-                </li>
-                <li>
-                  <a href="form_validation.html">Form Validation</a>
-                </li>
-                <li>
-                  <a href="form_wizards.html">Form Wizard</a>
                 </li>
               </ul>
             </li>
@@ -115,9 +100,6 @@
               <ul class="nav child_menu" style="display: block" v-show="questionMenu">
                 <li>
                   <a href="/management/questions/list">List Questions</a>
-                </li>
-                <li>
-                  <a href="chartjs2.html">Chart JS2</a>
                 </li>
               </ul>
             </li>
