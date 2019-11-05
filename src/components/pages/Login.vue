@@ -84,7 +84,7 @@ export default {
           this.token = res.data.result_data.token;
           setToken(this.token)
           request.defaults.headers.common['Authorization'] = 'Bearer '+ getToken()
-          this.$router.push('/')
+          this.$router.push('/dashboard')
         })
         .catch(err => {
           console.log(err)

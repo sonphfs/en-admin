@@ -11,6 +11,10 @@ const routes = [
         }
     },
     {
+        path: '/',
+        redirect: '/dashboard'
+    },
+    {
         path: '/Dashboard',
         component: () => import("@/components/pages/Dashboard"),
     },
@@ -35,6 +39,7 @@ const routes = [
             layout: 'BlankLayout'
         }
     },
+    { path: '*', redirect: '/page-404' },  
     {
         path: '/table',
         component: () => import("@/components/pages/Table"),
