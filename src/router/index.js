@@ -39,10 +39,24 @@ const routes = [
         path: '/table',
         component: () => import("@/components/pages/Table"),
     },
+    //user
     {
         path: '/management/users/list',
         component: () => import("@/components/users/Index"),
     },
+    {
+        path: '/management/users/create',
+        component: () => import("@/components/users/Create"),
+    },
+    {
+        path: '/management/users/view',
+        component: () => import("@/components/users/Show"),
+    },
+    {
+        path: '/my-profile',
+        component: () => import("@/components/pages/Profile"),
+    },
+    //lesson
     {
         path: '/management/lessons/list',
         component: () => import("@/components/lessons/Index"),
@@ -55,6 +69,7 @@ const routes = [
         path: '/management/lessons/edit/:id',
         component: () => import("@/components/lessons/Edit"),
     },
+    //units
     {
         path: '/management/units/create',
         component: () => import("@/components/units/Create"),
@@ -67,14 +82,17 @@ const routes = [
         path: '/management/units/list',
         component: () => import("@/components/units/List"),
     },
+    //questions
     {
         path: '/management/questions/list',
         component: () => import("@/components/questions/Index"),
     },
+    //examinations
     {
         path: '/management/examinations/list',
         component: () => import("@/components/examinations/Index"),
     },
+    //learning_words
     {
         path: '/management/learning_words/list',
         component: () => import("@/components/learning_words/Index"),
@@ -94,10 +112,6 @@ const routes = [
     {
         path: '/management/learning_words/subjects/edit',
         component: () => import("@/components/subjects/Edit"),
-    },
-    {
-        path: '/my-profile',
-        component: () => import("@/components/pages/Profile"),
     }
 ]
 
