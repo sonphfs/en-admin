@@ -53,21 +53,10 @@
                 />
               </div>
             </div>
-            <h3></h3>
-            <a class="btn btn-success">
-              <i class="fa fa-upload"></i>&nbsp;&nbsp; Upload avatar
-            </a>
-            <br />
-
           </div>
           <div class="col-md-9 col-sm-9 col-xs-12">
             <br />
-            <form
-              id="demo-form2"
-              data-parsley-validate
-              class="form-horizontal form-label-left"
-              @submit.prevent="updateProfile"
-            >
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">
                   Username
@@ -79,7 +68,6 @@
                     id="username"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
-                    v-model="userInfos.username"
                   />
                 </div>
               </div>
@@ -95,7 +83,6 @@
                     name="email"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
-                    v-model="userInfos.email"
                   />
                 </div>
               </div>
@@ -111,7 +98,6 @@
                     name="phone"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
-                    v-model="userInfos.phone"
                   />
                 </div>
               </div>
@@ -127,29 +113,22 @@
                     name="address"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
-                    v-model="userInfos.address"
                   />
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gender">
+                  Gender
+                  <span class="required">*</span>
+                </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div id="gender" class="btn-group" data-toggle="buttons">
-                    <label
-                      class="btn btn-default"
-                      data-toggle-class="btn-primary"
-                      data-toggle-passive-class="btn-default"
-                    >
-                      <input type="radio" name="gender" value="male" /> &nbsp; Male &nbsp;
-                    </label>
-                    <label
-                      class="btn btn-primary"
-                      data-toggle-class="btn-primary"
-                      data-toggle-passive-class="btn-default"
-                    >
-                      <input type="radio" name="gender" value="female" /> Female
-                    </label>
-                  </div>
+                  <input
+                    type="text"
+                    id="gender"
+                    name="gender"
+                    required="gender"
+                    class="form-control col-md-7 col-xs-12"
+                  />
                 </div>
               </div>
               <div class="form-group">
@@ -167,12 +146,6 @@
                   />
                 </div>
               </div>
-              <div class="ln_solid"></div>
-              <div class="form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                  <button type="submit" class="btn btn-success">Update</button>
-                </div>
-              </div>
             </form>
           </div>
         </div>
@@ -180,48 +153,3 @@
     </div>
   </div>
 </template>
-<script>
-import request from "@/utils/request";
-export default {
-  name: "profile",
-  data() {
-    return {
-      userInfos: {
-        email: "",
-        username: "",
-        phone: "",
-        address: ""
-      }
-    };
-  },
-  methods: {
-    updateProfile() {
-      let data = this.userInfos;
-      request({
-        url: "/user/update-profile",
-        method: "post",
-        data
-      })
-        .then(res => {
-          if (res.data.result_data == true) {
-            alert("Lưu thành công!");
-          }
-        })
-        .catch(err => {
-          // eslint-disable-next-line
-          console.log(err.res);
-        });
-    }
-  },
-  created() {
-    request({
-      url: "/user/infos",
-      method: "get"
-    })
-      .then(res => {
-        this.userInfos = res.data.result_data;
-      })
-      .catch({});
-  }
-};
-</script>
