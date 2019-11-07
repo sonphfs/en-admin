@@ -1,5 +1,6 @@
 <template>
   <div class="col-md-6 col-xs-12">
+    <Breadcrumb></Breadcrumb>
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -108,7 +109,11 @@
   </div>
 </template>
 <script>
+import request from "@/utils/request";
+import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
-  name: "CreateWord"
+  components: {
+    Breadcrumb
+  }
 };
 </script>

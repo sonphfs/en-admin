@@ -1,5 +1,6 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
+    <Breadcrumb></Breadcrumb>
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -76,8 +77,12 @@
 
 <script>
 import request from "@/utils/request";
+import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
   name: "ListUnit",
+  components: {
+    Breadcrumb
+  },
   data() {
     return {
       units: []

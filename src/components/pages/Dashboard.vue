@@ -1,5 +1,6 @@
 <template>
   <div class>
+    <Breadcrumb></Breadcrumb>
     <div class="page-title">
       <div class="title_left">
         <h3>Welcome to Your Website!</h3>
@@ -64,7 +65,11 @@
   </div>
 </template>
 <script>
+import request from "@/utils/request";
+import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
-  name: "DashBoard"
+  components: {
+    Breadcrumb
+  }
 };
 </script>
