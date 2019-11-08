@@ -134,8 +134,8 @@ export default {
   data() {
     return {
       userMenu: !true,
-      examMenu: !true,
-      lessonMenu: true,
+      examMenu: true,
+      lessonMenu: !true,
       wordMenu: !true,
       questionMenu: !true
     };

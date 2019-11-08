@@ -97,6 +97,18 @@ const routes = [
         path: '/management/examinations/list',
         component: () => import("@/components/examinations/Index"),
     },
+    {
+        path: '/management/examinations/show',
+        component: () => import("@/components/examinations/Show"),
+    },
+    {
+        path: '/management/examinations/create',
+        component: () => import("@/components/examinations/Create"),
+    },
+    {
+        path: '/management/examinations/edit',
+        component: () => import("@/components/examinations/Edit"),
+    },
     //learning_words
     {
         path: '/management/learning_words/list',

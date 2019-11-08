@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <Breadcrumb></Breadcrumb>
+    <Breadcrumb :breads="breads"></Breadcrumb>
     <div class="page-title">
       <div class="title_left">
         <h3>Welcome to Your Website!</h3>
@@ -82,7 +82,21 @@ export default {
   },
   data() {
     return {
-      users: []
+      users: [],
+      breads: [
+        {
+          title: "Dashboard",
+          link: "/dashboard"
+        },
+        {
+          title: "Users management",
+          link: "/"
+        },
+        {
+          title: "List users",
+          link: "/"
+        }
+      ]
     };
   },
   created() {
