@@ -57,7 +57,7 @@
               <td>{{unit.name}}</td>
               <td>{{unit.created_at}}</td>
               <td>
-                <a :href="'/management/units/show/'+ unit.id" class="btn btn-primary btn-xs">
+                <a :href="'/management/units/detail/'+ unit.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a :href="'/management/units/edit/'+ unit.id" class="btn btn-info btn-xs">

@@ -59,7 +59,7 @@
               <td>image link</td>
               <td>2019/10/23 20:56</td>
               <td>
-                <a href="#" class="btn btn-primary btn-xs">
+                <a href="/management/learning_words/subjects/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a href="/management/learning_words/subjects/edit" class="btn btn-info btn-xs">

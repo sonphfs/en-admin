@@ -57,7 +57,7 @@
               <td>{{examination.audio}}</td>
               <td>{{examination.created_at}}</td>
               <td>
-                <a href="/management/examinations/show" class="btn btn-primary btn-xs">
+                <a href="/management/examinations/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a href="/management/examinations/edit" class="btn btn-info btn-xs">

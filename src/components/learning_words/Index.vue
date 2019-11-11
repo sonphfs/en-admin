@@ -67,10 +67,10 @@
               <td>{{word.example}}</td>
               <td>{{word.created_at}}</td>
               <td>
-                <a href="#" class="btn btn-primary btn-xs">
+                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="#" class="btn btn-info btn-xs">
+                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">

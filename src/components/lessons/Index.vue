@@ -58,11 +58,13 @@
             <tr v-for="(lesson, index) in lessons">
               <td>{{index}}</td>
               <td>{{lesson.title}}</td>
-              <td><img :src="'http://127.0.0.1:8001/'+ lesson.image"></td>
+              <td>
+                <img :src="'http://127.0.0.1:8001/'+ lesson.image" style="width: 300px;" />
+              </td>
               <td>{{lesson.id}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
-                <a :href="'/management/lessons/show/'+ lesson.id" class="btn btn-primary btn-xs">
+                <a :href="'/management/lessons/detail/'+ lesson.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a :href="'/management/lessons/edit/'+ lesson.id" class="btn btn-info btn-xs">

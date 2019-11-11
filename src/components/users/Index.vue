@@ -57,7 +57,7 @@
               <td>{{ user.created_at }}</td>
               <td>{{user.updated_at }}</td>
               <td>
-                <a href="/management/users/view" class="btn btn-primary btn-xs">
+                <a href="/management/users/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">

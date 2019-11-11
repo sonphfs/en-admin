@@ -54,7 +54,7 @@ const routes = [
         component: () => import("@/components/users/Create"),
     },
     {
-        path: '/management/users/view',
+        path: '/management/users/detail',
         component: () => import("@/components/users/Show"),
     },
     {
@@ -74,6 +74,10 @@ const routes = [
         path: '/management/lessons/edit/:id',
         component: () => import("@/components/lessons/Edit"),
     },
+    {
+        path: '/management/lessons/detail/:id',
+        component: () => import("@/components/lessons/Show"),
+    },
     //units
     {
         path: '/management/units/create',
@@ -82,6 +86,10 @@ const routes = [
     {
         path: '/management/units/edit/:id',
         component: () => import("@/components/units/Edit"),
+    },
+    {
+        path: '/management/units/detail/:id',
+        component: () => import("@/components/units/Show"),
     },
     {
         path: '/management/units/list',
@@ -98,7 +106,7 @@ const routes = [
         component: () => import("@/components/examinations/Index"),
     },
     {
-        path: '/management/examinations/show',
+        path: '/management/examinations/detail',
         component: () => import("@/components/examinations/Show"),
     },
     {
@@ -119,6 +127,14 @@ const routes = [
         component: () => import("@/components/learning_words/Create"),
     },
     {
+        path: '/management/learning_words/detail',
+        component: () => import("@/components/learning_words/Show"),
+    },
+    {
+        path: '/management/learning_words/edit',
+        component: () => import("@/components/learning_words/Edit"),
+    },
+    {
         path: '/management/learning_words/subjects/list',
         component: () => import("@/components/subjects/List.vue"),
     },
@@ -128,6 +144,10 @@ const routes = [
     },
     {
         path: '/management/learning_words/subjects/edit',
+        component: () => import("@/components/subjects/Edit"),
+    },
+    {
+        path: '/management/learning_words/subjects/detail',
         component: () => import("@/components/subjects/Edit"),
     }
 ]
