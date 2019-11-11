@@ -57,15 +57,16 @@
               placeholder
               required="required"
               type="text"
+              v-model="examination.title"
             />
           </div>
         </div>
         <div class="item form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control">
-              <option>FULL TEST</option>
-              <option>SHORT TEST</option>
+            <select class="form-control" v-model="examination.type">
+              <option value="FULL_TEST">FULL TEST</option>
+              <option value="SHORT_TEST">SHORT TEST</option>
             </select>
           </div>
         </div>
@@ -82,19 +83,26 @@
               data-validate-linked="email"
               required="required"
               class="form-control col-md-7 col-xs-12"
+              v-model="examination.description"
             />
           </div>
         </div>
         <div class="item form-group">
           <label for="file-audio" class="control-label col-md-3">Audio</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
+            <button type="button" class="btn btn-default" @click="chooseFile()">Upload Audio</button>
+            <span v-if="examination.audio">{{ examination.audio.name}}</span>
             <input
               id="file-audio"
               type="file"
-              name="file"
+              name="audio"
               data-validate-length="6,8"
               class="form-control col-md-7 col-xs-12"
               required="required"
+              ref="examinationAudio"
+              style="display: none"
+              accept="audio/*"
+              @change="changeFile()"
             />
           </div>
         </div>
@@ -102,10 +110,52 @@
         <div class="form-group">
           <div class="col-md-6 col-md-offset-3">
             <button type="button" class="btn btn-primary">Cancel</button>
-            <button id="send" type="button" class="btn btn-success">Submit</button>
+            <button id="send" type="button" class="btn btn-success" @click="createExamination()">Create</button>
           </div>
         </div>
       </form>
     </div>
   </div>
 </template>
+
+<script>
+import request from '@/utils/request'
+export default {
+  name: "CreateExamination",
+  data() {
+    return {
+      examination: {
+        title: null,
+        audio: null,
+        type: null,
+        description: null
+      }
+    };
+  },
+  methods: {
+    chooseFile() {
+      this.$refs.examinationAudio.click();
+    },
+    changeFile() {
+      this.examination.audio = this.$refs.examinationAudio.files[0];
+    },
+    createExamination() {
+      let data = this.examination;
+      let formData = new FormData();
+      formData.append("title", this.examination.title);
+      formData.append("audio", this.examination.audio);
+      formData.append("type", this.examination.type);
+      formData.append("description", this.examination.description);
+      request
+        .post("/backend/examinations/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          console.log(res.data.result_data)
+        })
+    }
+  }
+};
+</script>
