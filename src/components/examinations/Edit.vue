@@ -1,202 +1,227 @@
 <template>
-  <div class>
-    <Breadcrumb :breads="breads"></Breadcrumb>
-    <div class="col-md-9" style="display-inline">
-      <h3>Examinations</h3>
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>
+        Update
+        <small>sub title</small>
+      </h2>
+      <ul class="nav navbar-right panel_toolbox">
+        <li>
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a
+            href="#"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-expanded="false"
+          >
+            <i class="fa fa-wrench"></i>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="#">Settings 1</a>
+            </li>
+            <li>
+              <a href="#">Settings 2</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="close-link">
+            <i class="fa fa-close"></i>
+          </a>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-    <div class="row">
-      <div class="col-md-9 col-sm-9 col-xs-9">
-        <div class="x_panel">
-          <div class="card part-1" v-show="step == 1">
-            <div class="card-body" style="padding-left: 80px;">
-              <h2 style="font-size: 30px">Listening Test</h2>
-              <p>In the Listening test, you will be asked to demonstrate how well you understand spoken English. The entire Listening test will last approximately 45 minutes. There are four parts, and directions are given for each part. You must mark your answers on the separate answer sheet. Do not write your answers in your test book.</p>
-              <h3>Part 1</h3>
-              <p>
-                <strong>Directions:</strong> For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time. Look at the example item below.
-              </p>
-              <p>
-                <strong>Example:</strong>
-              </p>
-              <p>
-                <img
-                  src="https://enza.com.vn/toeic/image/sample/c-they-re-standing-near-the-table.jpg"
-                  alt="Image File"
-                  title="ENZA.VN"
-                />
-              </p>
-              <p>Statement (C), "They're standing near the table," is the best description of the picture, so you should select answer (C) and mark it on your answer sheet.</p>
-              <hr />
-              <hr />
-            </div>
-          </div>
-          <div class="card part-2" v-show="step == 2">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 2</h3>
-              <p>
-                <strong>Directions:</strong> You will hear a question or statement and three responses spoken in English. They will be spoken only one time and will not be printed in your test book. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.
-              </p>
-              <p>
-                <strong>Example</strong>
-              </p>
-              <p>
-                You will hear:
-                <strong>What are you doing?</strong>
-              </p>
-              <p>You will also hear:</p>
-              <ul>
-                <li>(A) I am doing fine.</li>
-                <li>(B) I am looking for something.</li>
-                <li>(C) I can't do it.</li>
-              </ul>
-              <p>The best response to the question "What are you doing?" is choice (B), "I am looking for something," so (B) is the correct answer. You should mark answer (B) on you answer sheet.</p>
-              <hr />
-              <p></p>
-              <hr />
-            </div>
-          </div>
-          <div class="card part-3" v-show="step == 3">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 3</h3>
-              <p>
-                <strong>Directions:</strong> You will hear some conversations between two people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question. The conversations will be spoken only one time.
-              </p>
-              <hr />
-              <p></p>
-              <hr />
-            </div>
-          </div>
-          <div class="card part-4" v-show="step == 4">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 4</h3>
-              <p>
-                <strong>Directions:</strong> You will hear some short talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each short talk. Select the best response to each question. The talks will be spoken only one time.
-              </p>
-              <hr />
-              <p></p>
-              <hr />
-            </div>
-          </div>
-          <div class="card part-5" v-show="step == 5">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 5</h3>
-              <p>
-                <strong>Directions:</strong> A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence.
-              </p>
-              <hr />
-              <p></p>
-              <hr />
-            </div>
-          </div>
-          <div class="card part-6" v-show="step == 6">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 6</h3>
-              <p>
-                <strong>Directions:</strong> A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
-              </p>
-              <hr />
-              <hr />
-            </div>
-          </div>
-          <div class="card part-7" v-show="step == 7">
-            <div class="card-body" style="padding-left: 80px;">
-              <h3>Part 7</h3>
-              <p>
-                <strong>Directions:</strong> In this part, you will read a selection of texts, such as magazine and newspaper articles, letters, and advertisements. Each text is followed by several questions. Select the best answer for each question.
-              </p>
-              <hr />
-            </div>
-          </div>
-          <div class="card button-publish" v-show="step == 7">
-            <div class="card-body" style="padding-left: 80px;">
-              <button class="btn btn-success">Publish</button>
-            </div>
+    <div class="x_content">
+      <form class="form-horizontal form-label-left" novalidate>
+        <span class="section">Update examination</span>
+
+        <div class="item form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+            Title
+            <span class="required">*</span>
+          </label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input
+              id="name"
+              class="form-control col-md-7 col-xs-12"
+              data-validate-length-range="6"
+              data-validate-words="2"
+              name="name"
+              placeholder
+              required="required"
+              type="text"
+              v-model="examination.title"
+            />
           </div>
         </div>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-3 grid-margin part-navigation">
+        <div class="item form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" v-model="examination.type">
+              <option value="FULL_TEST">FULL TEST</option>
+              <option value="SHORT_TEST">SHORT TEST</option>
+            </select>
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+            Description
+            <span class="required">*</span>
+          </label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <input
+              type="email"
+              id="email2"
+              name="confirm_email"
+              data-validate-linked="email"
+              required="required"
+              class="form-control col-md-7 col-xs-12"
+              v-model="examination.description"
+            />
+          </div>
+        </div>
+        <div class="item form-group">
+          <label for="file-audio" class="control-label col-md-3">Audio</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <button type="button" class="btn btn-default" @click="chooseFile()">Upload Audio</button>
+            <span v-if="examination.audio">{{ examination.audio.name}}</span>
+            <input
+              id="file-audio"
+              type="file"
+              name="audio"
+              data-validate-length="6,8"
+              class="form-control col-md-7 col-xs-12"
+              required="required"
+              ref="examinationAudio"
+              style="display: none"
+              accept="audio/*"
+              @change="changeFile()"
+            />
+          </div>
+        </div>
+        <div class="item form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <select class="form-control" v-model="examination.type">
+              <option value="0">SPENDING</option>
+              <option value="1">ACTIVE</option>
+            </select>
+          </div>
+        </div>
+        <div class="ln_solid"></div>
+        <div class="form-group">
+          <div class="col-md-6 col-md-offset-3">
+            <button
+              id="send"
+              type="button"
+              class="btn btn-success"
+              @click="createExamination()"
+            >Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="card">
-            <div class="card-body d-flex flex-column">
-              <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div></div>
-                </div>
-              </div>
-              <div class="wrapper">
-                <h4 class="card-title mb-0">PART</h4>
-                <p></p>
-                <nav aria-label="...">
-                  <ul class="pagination pagination-lg">
-                    <li class="page-item">
-                      <a @click="changeStep(1)" tabindex="-1" class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a @click="changeStep(2)" tabindex="-1" class="page-link">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a @click="changeStep(3)" tabindex="-1" class="page-link">3</a>
-                    </li>
-                    <li class="page-item">
-                      <a @click="changeStep(4)" tabindex="-1" class="page-link">4</a>
-                    </li>
-                  </ul>
-                </nav>
-                <nav aria-label="...">
-                  <ul class="pagination pagination-lg">
-                    <li class="page-item">
-                      <a @click="changeStep(5)" tabindex="-1" class="page-link">5</a>
-                    </li>
-                    <li class="page-item">
-                      <a @click="changeStep(6)" tabindex="-1" class="page-link">6</a>
-                    </li>
-                    <li class="page-item">
-                      <a @click="changeStep(7)" tabindex="-1" class="page-link">7</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
+          <div class="x_content">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <th>Part 1</th>
+                  <td>
+                    <a href="/management/examinations/edit/part" class="btn btn-primary">Edit</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 2</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 3</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 4</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 5</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 6</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Part 7</th>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import request from "@/utils/request";
-import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
-  name: "ExaminationShow",
+  name: "CreateExamination",
   data() {
     return {
-      step: 1,
-      breads: [
-        {
-          title: "Dashboard",
-          link: "/dashboard"
-        },
-        {
-          title: "Examinations management",
-          link: "/"
-        },
-        {
-          title: "Show",
-          link: "/"
-        }
-      ]
+      examination: {
+        title: null,
+        audio: null,
+        type: null,
+        description: null
+      }
     };
   },
-  components: {
-    Breadcrumb
-  },
   methods: {
-    changeStep(step) {
-      this.step = step;
+    chooseFile() {
+      this.$refs.examinationAudio.click();
+    },
+    changeFile() {
+      this.examination.audio = this.$refs.examinationAudio.files[0];
+    },
+    createExamination() {
+      let data = this.examination;
+      let formData = new FormData();
+      formData.append("title", this.examination.title);
+      formData.append("audio", this.examination.audio);
+      formData.append("type", this.examination.type);
+      formData.append("description", this.examination.description);
+      request
+        .post("/backend/examinations/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          console.log(res.data.result_data);
+        });
     }
   }
 };

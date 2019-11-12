@@ -24,3 +24,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+  div.main_container {
+    padding-bottom: 48px;
+    position: relative;
+  }
+</style>

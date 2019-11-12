@@ -117,6 +117,10 @@ const routes = [
         path: '/management/examinations/edit',
         component: () => import("@/components/examinations/Edit"),
     },
+    {
+        path: '/management/examinations/edit/part',
+        component: () => import("@/components/examinations/PartEdit"),
+    },
     //learning_words
     {
         path: '/management/learning_words/list',

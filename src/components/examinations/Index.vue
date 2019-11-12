@@ -41,7 +41,7 @@
               <th>Title</th>
               <th>Type</th>
               <th>Description</th>
-              <th>Audio</th>
+              <th>Status</th>
               <th>Created at</th>
               <th>#Action</th>
             </tr>
@@ -54,7 +54,7 @@
               <td>{{examination.title}}</td>
               <td>{{examination.type}}</td>
               <td>{{examination.description}}</td>
-              <td>{{examination.audio}}</td>
+              <td>spending</td>
               <td>{{examination.created_at}}</td>
               <td>
                 <a href="/management/examinations/detail" class="btn btn-primary btn-xs">
