@@ -106,7 +106,7 @@ const routes = [
         component: () => import("@/components/examinations/Index"),
     },
     {
-        path: '/management/examinations/detail',
+        path: '/management/examinations/detail/:code',
         component: () => import("@/components/examinations/Show"),
     },
     {

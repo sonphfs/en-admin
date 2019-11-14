@@ -154,6 +154,7 @@ export default {
         })
         .then(res => {
           console.log(res.data.result_data)
+          this.$router.push('/management/examinations/list')
         })
     }
   }

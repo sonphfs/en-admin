@@ -52,12 +52,12 @@
               <td>{{index}}</td>
               <td>{{ examination.code }}</td>
               <td>{{examination.title}}</td>
-              <td>{{examination.type}}</td>
+              <td>{{examination.examination_type.name}}</td>
               <td>{{examination.description}}</td>
-              <td>spending</td>
+              <td>{{ getStatus(examination.status) }}</td>
               <td>{{examination.created_at}}</td>
               <td>
-                <a href="/management/examinations/detail" class="btn btn-primary btn-xs">
+                <a :href="'/management/examinations/detail/' + examination.code" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a href="/management/examinations/edit" class="btn btn-info btn-xs">
@@ -102,7 +102,11 @@ export default {
           title: "List users",
           link: "/"
         }
-      ]
+      ],
+      status: {
+        0: "SPENDING",
+        1: "ACTIVE"
+      }
     };
   },
   created() {
@@ -116,6 +120,11 @@ export default {
       .catch(err => {
         console.log(err.res);
       });
+  },
+  methods: {
+    getStatus(status) {
+      return status == 1 ? "ACTIVE": "SPENDING"
+    }
   }
 };
 </script>

@@ -28,6 +28,31 @@
               </p>
               <p>Statement (C), "They're standing near the table," is the best description of the picture, so you should select answer (C) and mark it on your answer sheet.</p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 1">
+                <h5>{{question.no}}. {{ question.content }}</h5>
+                <p v-if="question.image">
+                  <img v-bind:src="question.image" alt="img01" title="ENZA.VN" />
+                </p>
+                <div class="answer">
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'A'">(A)</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'B'">(B)</label>
+                  </div>
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'C'">(C)</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'D'">(D)</label>
+                  </div>
+                </div>
+                <br />
+              </div>
               <hr />
             </div>
           </div>
@@ -54,6 +79,24 @@
               <hr />
               <p></p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 2">
+                <h5>{{question.no}}. {{ question.content }}</h5>
+                <div class="answer">
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'A'">(A)</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'B'">(B)</label>
+                  </div>
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'C'">(C)</label>
+                  </div>
+                </div>
+                <p></p>
+              </div>
             </div>
           </div>
           <div class="card part-3" v-show="step == 3">
@@ -64,6 +107,28 @@
               </p>
               <hr />
               <p></p>
+              <div v-for="question in examination.questions" v-if="question.part == 3">
+                <h5>{{question.no}}. {{question.content}}</h5>
+                <div class="answer">
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
+                  </div>
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
+                  </div>
+                </div>
+                <p></p>
+              </div>
               <hr />
             </div>
           </div>
@@ -76,6 +141,28 @@
               <hr />
               <p></p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 4">
+                <h5>{{question.no}}. {{question.content}}</h5>
+                <div class="answer">
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
+                  </div>
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
+                  </div>
+                </div>
+                <p></p>
+              </div>
             </div>
           </div>
           <div class="card part-5" v-show="step == 5">
@@ -87,6 +174,28 @@
               <hr />
               <p></p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 5">
+                <h5>{{question.no}}. {{question.content}}</h5>
+                <div class="answer">
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
+                  </div>
+                  <div class="r0">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
+                  </div>
+                  <div class="r1">
+                    <input type="radio" v-bind:name="question.id" />
+                    <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
+                  </div>
+                </div>
+                <p></p>
+              </div>
             </div>
           </div>
           <div class="card part-6" v-show="step == 6">
@@ -96,6 +205,35 @@
                 <strong>Directions:</strong> A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
               </p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 6">
+                <div class="paragraph" v-if="question.paragraph">
+                  <pre><strong>{{question.content}}</strong></pre>
+                  <p v-html="question.paragraph"></p>
+                </div>
+                <div class="content" v-if="!question.paragraph">
+                  <h5>{{question.no}}. {{question.content}}</h5>
+                  <div class="answer">
+                    <div class="r0">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
+                    </div>
+                    <div class="r1">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'B'">{{question.answer_A}}</label>
+                    </div>
+                    <div class="r0">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'C'">{{question.answer_A}}</label>
+                    </div>
+                    <div class="r1">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'D'">{{question.answer_A}}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <p></p>
+              </div>
               <hr />
             </div>
           </div>
@@ -106,6 +244,43 @@
                 <strong>Directions:</strong> In this part, you will read a selection of texts, such as magazine and newspaper articles, letters, and advertisements. Each text is followed by several questions. Select the best answer for each question.
               </p>
               <hr />
+              <div v-for="question in examination.questions" v-if="question.part == 7">
+                <div class="paragraph" v-if="question.paragraph">
+                  <pre><strong>Questions 153-154 refer to the following e-mail.</strong></pre>
+                  <p>
+                    To: All families in our community
+                    <br />From: The San Jose Museum of Art
+                  </p>
+                  <p>It's my pleasure to notify you that we are having our December Kids Art Sunday on December 11, 2007. With the objective of making the artwork on view accessible to young audiences, the Museum's Education Department will present a stimulating range of hands-on art workshops. A speech by the curator Benito Juarez, gallery tours and other activities related to the current exhibitions will be also available to the visitors. There is no admission charge, and no reservations are required. However, you need to be at the Museum no later than 3 P.M. if you do not want to miss a single event.</p>
+                  <p>If you are interested in a setting with more one-on-one attention, join us for the members only portion of Kids Art Sunday, Side by Side. It takes place in the SJ annex and includes a gallery discussion and structured hands-on art activities. Pre-registration is required for Side by Side and only one child is allowed per adult. To register or become a member, please call (408) 555-6867.</p>
+                  <hr />
+                  <p></p>
+                </div>
+
+                <div class="content" v-if="!question.paragraph">
+                  <h5>{{question.no}}. {{question.content}}</h5>
+
+                  <div class="answer">
+                    <div class="r0">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'A'">{{ question.answer_A}}</label>
+                    </div>
+                    <div class="r1">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'B'">{{ question.answer_A}}</label>
+                    </div>
+                    <div class="r0">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'C'">{{ question.answer_A}}</label>
+                    </div>
+                    <div class="r1">
+                      <input type="radio" v-bind:name="question.id" />
+                      <label v-bind:for="question.id+'D'">{{ question.answer_A}}</label>
+                    </div>
+                  </div>
+                  <p></p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card button-publish" v-show="step == 7">
@@ -188,7 +363,8 @@ export default {
           title: "Show",
           link: "/"
         }
-      ]
+      ],
+      examination: {}
     };
   },
   components: {
@@ -198,6 +374,14 @@ export default {
     changeStep(step) {
       this.step = step;
     }
+  },
+  created() {
+    request({
+      url: "backend/examinations/show/" + this.$route.params.code,
+      method: "get"
+    }).then(res => {
+      this.examination = res.data.result_data;
+    });
   }
 };
 </script>
