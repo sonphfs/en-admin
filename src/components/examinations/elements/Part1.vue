@@ -38,14 +38,18 @@
       </div>
       <div class="x_content">
         <br />
+        <Question v-for="item in questions" :item="item"></Question>
         <Question v-for="i in questionCount"></Question>
-        <!-- <VueEditor v-model="paragraph"></VueEditor> -->
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <button class="btn btn-primary">Add Example</button>
-            <button class="btn btn-primary" :disabled="questionCount == maxQuestionCount" @click="addQuestion()">Add Question</button>
-            <button class="btn btn-success">Add Paragraph</button>
+            <button class="btn btn-success" :disabled="hasExample">Add Example</button>
+            <button
+              class="btn btn-success"
+              :disabled="questionCount == maxQuestionCount"
+              @click="addQuestion()"
+            >Add Question</button>
+            <button class="btn btn-primary">Update</button>
           </div>
         </div>
       </div>
@@ -54,20 +58,20 @@
 </template>
 
 <script>
+import request from "@/utils/request";
 import Question from "@/components/elements/CreateQuestion.vue";
-import { VueEditor } from "vue2-editor";
 export default {
   name: "Part1",
   components: {
-    Question,
-    VueEditor
+    Question
   },
   data() {
     return {
       paragraph: "",
       questionCount: 0,
       maxQuestionCount: 10,
-      hasExample: false
+      hasExample: false,
+      questions: []
     };
   },
   methods: {
@@ -80,14 +84,34 @@ export default {
     },
     changeAudio() {},
     addQuestion() {
-      if(this.questionCount < this.maxQuestionCount) {
-        this.questionCount++
+      if (this.questionCount < this.maxQuestionCount) {
+        this.questionCount++;
       }
+    },
+    getPart1() {
+      request({
+        url:
+          "/backend/examinations/questions/" +
+          this.$route.params.code +
+          "/" +
+          this.$route.params.part,
+        method: "get"
+      })
+        .then(res => {
+          console.log(res);
+          this.questions = res.data.result_data;
+          this.maxQuestionCount -= this.questions.length
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
+  created() {
+    this.getPart1();
+  }
 };
 </script>
 
 <style scoped>
-
 </style>

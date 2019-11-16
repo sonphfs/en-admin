@@ -65,8 +65,11 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" v-model="examination.type">
-              <option value="FULL_TEST">FULL TEST</option>
-              <option value="SHORT_TEST">SHORT TEST</option>
+              <option
+                v-for="item in examinationTypes"
+                :value="item.id"
+                :selected="{ 'selected' : item.id == examination.type }"
+              >{{ item.name }}</option>
             </select>
           </div>
         </div>
@@ -109,7 +112,11 @@
         <div class="item form-group">
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <select class="form-control" v-model="examination.type">
+            <select
+              class="form-control"
+              v-model="examination.status"
+              :selected="examination.status"
+            >
               <option value="0">SPENDING</option>
               <option value="1">ACTIVE</option>
             </select>
@@ -137,13 +144,15 @@
                 <tr>
                   <th>Part 1</th>
                   <td>
-                    <a href="/management/examinations/edit/part" class="btn btn-primary">Edit</a>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/1'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 2</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a href>
+                      <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
                   </td>
                 </tr>
                 <tr>
@@ -196,7 +205,8 @@ export default {
         audio: null,
         type: null,
         description: null
-      }
+      },
+      examinationTypes: []
     };
   },
   methods: {
@@ -222,7 +232,35 @@ export default {
         .then(res => {
           console.log(res.data.result_data);
         });
+    },
+    getExaminationTypes() {
+      request({
+        url: "/backend/examinations/examination-types",
+        method: "get"
+      })
+        .then(res => {
+          this.examinationTypes = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    },
+    getExamination() {
+      request({
+        url: "/backend/examinations/show/" + this.$route.params.code,
+        method: "get"
+      })
+        .then(res => {
+          this.examination = res.data.result_data;
+        })
+        .catch(err => {
+          return this.$router.push("/page-404");
+        });
     }
+  },
+  created() {
+    this.getExaminationTypes();
+    this.getExamination();
   }
 };
 </script>

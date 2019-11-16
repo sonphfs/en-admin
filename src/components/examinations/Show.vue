@@ -35,20 +35,35 @@
                 </p>
                 <div class="answer">
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'A'">(A)</label>
-                  </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'B'">(B)</label>
+                    <div class="icheckbox_flat-green checked">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'C'">(C)</label>
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'D'">(D)</label>
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
+                  </div>
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                   </div>
                 </div>
                 <br />
@@ -78,21 +93,29 @@
               <p>The best response to the question "What are you doing?" is choice (B), "I am looking for something," so (B) is the correct answer. You should mark answer (B) on you answer sheet.</p>
               <hr />
               <p></p>
-              <hr />
               <div v-for="question in examination.questions" v-if="question.part == 2">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'A'">(A)</label>
-                  </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'B'">(B)</label>
+                    <div class="icheckbox_flat-green checked">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'A'">{{  question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
-                    <label v-bind:for="question.id+'C'">(C)</label>
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
+                  </div>
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
+                    <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
                 </div>
                 <p></p>
@@ -111,19 +134,34 @@
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green checked">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                   </div>
                 </div>
@@ -140,24 +178,38 @@
               </p>
               <hr />
               <p></p>
-              <hr />
               <div v-for="question in examination.questions" v-if="question.part == 4">
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green checked">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                   </div>
                 </div>
@@ -173,24 +225,38 @@
               </p>
               <hr />
               <p></p>
-              <hr />
               <div v-for="question in examination.questions" v-if="question.part == 5">
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green checked">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <input type="radio" v-bind:name="question.id" />
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
-                  <div class="r1">
-                    <input type="radio" v-bind:name="question.id" />
+                  <div class="r0">
+                    <div class="icheckbox_flat-green">
+                      <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                      <ins class="iCheck-helper"></ins>
+                    </div>
                     <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                   </div>
                 </div>
@@ -214,20 +280,35 @@
                   <h5>{{question.no}}. {{question.content}}</h5>
                   <div class="answer">
                     <div class="r0">
-                      <input type="radio" v-bind:name="question.id" />
+                      <div class="icheckbox_flat-green checked">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                        <ins class="iCheck-helper"></ins>
+                      </div>
                       <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                     </div>
-                    <div class="r1">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'B'">{{question.answer_A}}</label>
+                    <div class="r0">
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                     </div>
                     <div class="r0">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'C'">{{question.answer_A}}</label>
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                     </div>
-                    <div class="r1">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'D'">{{question.answer_A}}</label>
+                    <div class="r0">
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                     </div>
                   </div>
                 </div>
@@ -262,20 +343,35 @@
 
                   <div class="answer">
                     <div class="r0">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'A'">{{ question.answer_A}}</label>
-                    </div>
-                    <div class="r1">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'B'">{{ question.answer_A}}</label>
+                      <div class="icheckbox_flat-green checked">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                     </div>
                     <div class="r0">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'C'">{{ question.answer_A}}</label>
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                     </div>
-                    <div class="r1">
-                      <input type="radio" v-bind:name="question.id" />
-                      <label v-bind:for="question.id+'D'">{{ question.answer_A}}</label>
+                    <div class="r0">
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
+                    </div>
+                    <div class="r0">
+                      <div class="icheckbox_flat-green">
+                        <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
+
+                        <ins class="iCheck-helper"></ins>
+                      </div>
+                      <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
                     </div>
                   </div>
                   <p></p>
@@ -283,9 +379,66 @@
               </div>
             </div>
           </div>
-          <div class="card button-publish" v-show="step == 7">
+          <div class="row">
+            <div class="btn-toolbar" style="float: right;">
+              <div class="btn-group">
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(1) }"
+                  type="button"
+                  @click="changeStep(1)"
+                >1</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(2) }"
+                  type="button"
+                  @click="changeStep(2)"
+                >2</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(3) }"
+                  type="button"
+                  @click="changeStep(3)"
+                >3</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(4) }"
+                  type="button"
+                  @click="changeStep(4)"
+                >4</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(5) }"
+                  type="button"
+                  @click="changeStep(5)"
+                >5</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(6) }"
+                  type="button"
+                  @click="changeStep(6)"
+                >6</button>
+                <button
+                  class="btn btn-info"
+                  :class="{ active: isCurrentStep(7) }"
+                  type="button"
+                  @click="changeStep(7)"
+                >7</button>
+              </div>
+            </div>
+          </div>
+          <div class="card button-publish">
             <div class="card-body" style="padding-left: 80px;">
-              <button class="btn btn-success">Publish</button>
+              <button
+                class="btn btn-success"
+                @click="updateStatus(1)"
+                v-if="examination.status == 0"
+              >Publish</button>
+              <button
+                class="btn btn-danger"
+                @click="updateStatus(0)"
+                v-if="examination.status == 1"
+              >UnActive</button>
             </div>
           </div>
         </div>
@@ -364,7 +517,11 @@ export default {
           link: "/"
         }
       ],
-      examination: {}
+      examination: {},
+      status: {
+        0: "unActice",
+        1: "Active"
+      }
     };
   },
   components: {
@@ -373,6 +530,39 @@ export default {
   methods: {
     changeStep(step) {
       this.step = step;
+    },
+    isCurrentStep(step) {
+      return step == this.step;
+    },
+    updateStatus(status) {
+      let flag = confirm(" Are you sure change status examination!");
+      if (flag == true) {
+        this.update(status);
+      }
+    },
+    update(status) {
+      let data = {
+        status: status
+      };
+      request({
+        url: "backend/examinations/publish/" + this.$route.params.code,
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res)
+          let data = res.data.result_data
+          if(data.updated == true) {
+            if(data.status == 1) {
+                alert('Examination has been actived!')
+            }else {
+                alert('Examination has been unactived!')
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
     }
   },
   created() {
@@ -385,3 +575,8 @@ export default {
   }
 };
 </script>
+<style>
+  div.answer label{
+      margin-left: 10px;
+  }
+</style>

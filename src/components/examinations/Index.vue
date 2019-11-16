@@ -60,11 +60,14 @@
                 <a :href="'/management/examinations/detail/' + examination.code" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="/management/examinations/edit" class="btn btn-info btn-xs">
+                <a :href="'/management/examinations/edit/' + examination.code" class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-success btn-xs">
+                <a href="#" class="btn btn-success btn-xs" @click="updateStatus(1, examination.code)" v-if="examination.status == 0">
                   <i class="fa fa-arrow-circle-up"></i> Publish
+                </a>
+                <a href="#" class="btn btn-warning btn-xs" @click="updateStatus(0, examination.code)" v-if="examination.status == 1">
+                  <i class="fa fa-arrow-circle-up"></i> UnActive
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
@@ -95,11 +98,11 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Users management",
+          title: "Examinations management",
           link: "/"
         },
         {
-          title: "List users",
+          title: "List examinations",
           link: "/"
         }
       ],
@@ -124,6 +127,36 @@ export default {
   methods: {
     getStatus(status) {
       return status == 1 ? "ACTIVE": "SPENDING"
+    },
+    updateStatus(status, code) {
+      let flag = confirm(" Are you sure change status examination!");
+      if (flag == true) {
+        this.update(status, code);
+      }
+    },
+    update(status, code) {
+      let data = {
+        status: status
+      };
+      request({
+        url: "backend/examinations/publish/" + code,
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res)
+          let data = res.data.result_data
+          if(data.updated == true) {
+            if(data.status == 1) {
+                alert('Examination has been actived!')
+            }else {
+                alert('Examination has been unactived!')
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
     }
   }
 };

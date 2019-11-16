@@ -65,8 +65,7 @@
           <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control" v-model="examination.type">
-              <option value="FULL_TEST">FULL TEST</option>
-              <option value="SHORT_TEST">SHORT TEST</option>
+              <option v-for="item in examinationTypes" :value="item.id">{{ item.name }}</option>
             </select>
           </div>
         </div>
@@ -128,8 +127,9 @@ export default {
         title: null,
         audio: null,
         type: null,
-        description: null
-      }
+        description: null,
+      },
+      examinationTypes: []
     };
   },
   methods: {
@@ -157,6 +157,16 @@ export default {
           this.$router.push('/management/examinations/list')
         })
     }
+  },
+  created() {
+      request({
+        url: '/backend/examinations/examination-types',
+        method: 'get'
+      }).then(res => {
+          this.examinationTypes = res.data.result_data
+      }).catch(err => {
+        console.log(err.res)
+      })
   }
 };
 </script>

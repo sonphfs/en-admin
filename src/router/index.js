@@ -114,12 +114,12 @@ const routes = [
         component: () => import("@/components/examinations/Create"),
     },
     {
-        path: '/management/examinations/edit',
+        path: '/management/examinations/edit/:code',
         component: () => import("@/components/examinations/Edit"),
     },
     {
-        path: '/management/examinations/edit/part',
-        component: () => import("@/components/examinations/PartEdit"),
+        path: '/management/examinations/part/:code/:part',
+        component: () => import("@/components/examinations/elements/Part1"),
     },
     //learning_words
     {
