@@ -1,11 +1,17 @@
 <template>
   <div class="form-horizontal form-label-left">
-    <div class="form-group">
+    <div class="form-group" v-if="item.no !== 0">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">No</label>
       <div class="col-md-5 col-sm-5 col-xs-12">
         <input type="text" class="form-control" v-model="question.no" />
       </div>
     </div>
+    <div class="form-group" v-if="item.no === 0">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">Example</label>
+      <div class="col-md-5 col-sm-5 col-xs-12">
+      </div>
+    </div>
+
      <div class="form-group" v-if="question.part != 1">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Content</label>
       <div class="col-md-5 col-sm-5 col-xs-12">
@@ -156,12 +162,25 @@ export default {
       this.question.image = this.$refs.questionImage.files[0];
     },
     chooseCorrectAnswer(answer) {
+      console.log(answer)
       this.question.correct_answer = answer;
+    },
+    bindQuestion() {
+      this.$emit("bindQuestion", this.question)
+      console.log("bindQuestion");
     }
   },
   created() {
     if(this.item){
       this.question = this.item
+    }
+  },
+  watch: {
+    question: {
+      deep: true,
+      handler() {
+        this.bindQuestion()
+      }
     }
   }
 };

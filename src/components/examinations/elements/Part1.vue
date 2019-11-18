@@ -38,12 +38,12 @@
       </div>
       <div class="x_content">
         <br />
-        <Question v-for="item in questions" :item="item"></Question>
-        <Question v-for="i in questionCount"></Question>
+        <Question v-for="item in questions" :item="item" v-if="item.no == 0"></Question>
+        <Question v-for="item in questions" :item="item" v-if="item.no != 0"></Question>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <button class="btn btn-success" :disabled="hasExample">Add Example</button>
+            <button class="btn btn-success" :disabled="hasExample" @click="addExample()">Add Example</button>
             <button
               class="btn btn-success"
               :disabled="questionCount == maxQuestionCount"
@@ -67,11 +67,11 @@ export default {
   },
   data() {
     return {
-      paragraph: "",
-      questionCount: 0,
-      maxQuestionCount: 10,
-      hasExample: false,
-      questions: []
+        paragraph: "",
+        questionCount: 0,
+        maxQuestionCount: 10,
+        hasExample: false,
+        questions: []
     };
   },
   methods: {
@@ -84,9 +84,13 @@ export default {
     },
     changeAudio() {},
     addQuestion() {
-      if (this.questionCount < this.maxQuestionCount) {
-        this.questionCount++;
+      if(this.questions.length < 10) {
+        this.questionCount++
+        this.questions.push({})
       }
+    },
+    addExample() {
+      this.questions.push({ no: 0})
     },
     getPart1() {
       request({
