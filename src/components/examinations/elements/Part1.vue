@@ -121,22 +121,18 @@ export default {
         code: this.$route.params.code,
         part: this.$route.params.part
       };
-      let formData = new FormData();
-      formData.append('formData', data)
-      request
-        .post("/backend/examinations/update-part", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
+      request({
+        url: "backend/examinations/update-part",
+        method: "post",
+        data
+      })
         .then(res => {
           console.log(res.data.result_data);
         })
         .catch(err => {
           console.log(err.res);
         });
-    },
-    convertToFormData(questions) {}
+    }
   },
   created() {
     this.getPart1();
