@@ -38,7 +38,12 @@
       </div>
       <div class="x_content">
         <br />
-        <Question v-for="item in questions" :item="item" v-if="item.no == 0"></Question>
+        <Question
+          v-for="item in questions"
+          :item="item"
+          v-if="item.no == 0"
+          :example="hasExample = true"
+        ></Question>
         <Question v-for="item in questions" :item="item" v-if="item.no != 0"></Question>
         <div class="ln_solid"></div>
         <div class="form-group">
@@ -49,7 +54,7 @@
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
             >Add Question</button>
-            <button class="btn btn-primary">Update</button>
+            <button class="btn btn-primary" @click="updateData()">Update</button>
           </div>
         </div>
       </div>
@@ -67,11 +72,11 @@ export default {
   },
   data() {
     return {
-        paragraph: "",
-        questionCount: 0,
-        maxQuestionCount: 10,
-        hasExample: false,
-        questions: []
+      paragraph: "",
+      questionCount: 0,
+      maxQuestionCount: 10,
+      hasExample: false,
+      questions: []
     };
   },
   methods: {
@@ -84,13 +89,13 @@ export default {
     },
     changeAudio() {},
     addQuestion() {
-      if(this.questions.length < 10) {
-        this.questionCount++
-        this.questions.push({})
+      this.questionCount = this.questions.length - this.hasExample;
+      if (this.questionCount < 10) {
+        this.questions.push({ part: 1 });
       }
     },
     addExample() {
-      this.questions.push({ no: 0})
+      this.questions.push({ no: 0, part: 1 });
     },
     getPart1() {
       request({
@@ -104,12 +109,34 @@ export default {
         .then(res => {
           console.log(res);
           this.questions = res.data.result_data;
-          this.maxQuestionCount -= this.questions.length
+          this.maxQuestionCount -= this.questions.length;
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    updateData() {
+      let data = {
+        questions: this.questions,
+        code: this.$route.params.code,
+        part: this.$route.params.part
+      };
+      let formData = new FormData();
+      formData.append('formData', data)
+      request
+        .post("/backend/examinations/update-part", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          console.log(res.data.result_data);
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    },
+    convertToFormData(questions) {}
   },
   created() {
     this.getPart1();
