@@ -47,7 +47,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="subjects">
+        <SortedTable :values="subjects.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -87,7 +87,8 @@
           </tbody>
         </SortedTable>
         <paginate
-          :page-count="5"
+          :page-count="pageCount"
+          :click-handler="getSubjects"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -106,8 +107,31 @@ export default {
   },
   data() {
     return {
-      subjects: []
+      subjects: {
+        data: [],
+        last_page: 0
+      }
     };
+  },
+  created() {
+    this.getSubjects()
+  },
+  computed: {
+    pageCount() {
+      return this.subjects.last_page
+    }
+  },
+  methods: {
+    getSubjects(page) {
+      request({
+        url: '/backend/subjects/list?page=' + page,
+        methods: "get"
+      }).then(res => {
+        this.subjects = res.data.result_data
+      }).catch(err => {
+        console.log(err.res)
+      })
+    }
   }
 };
 </script>

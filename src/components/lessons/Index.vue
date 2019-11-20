@@ -47,7 +47,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="lessons">
+        <SortedTable :values="lessons.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -60,10 +60,10 @@
                 <SortLink name="image">Image</SortLink>
               </th>
               <th scope="col" style="text-align: left; width: 10rem;">
-                <SortLink name="created_at">Created at</SortLink>
+                <SortLink name="unit.name">Unit</SortLink>
               </th>
               <th scope="col" style="text-align: left; width: 10rem;">
-                <SortLink name="unit_id">Unit ID</SortLink>
+                <SortLink name="created_at">Created at</SortLink>
               </th>
               <th scope="col" style="text-align: left; width: 10rem;">Action</th>
             </tr>
@@ -71,10 +71,9 @@
           <tbody slot="body" slot-scope="sort">
             <tr v-for="(lesson, index) in sort.values" :key="lesson.id">
               <td>{{lesson.id}}</td>
-              <td>{{lesson.username}}</td>
-              <td>{{lesson.email}}</td>
-              <td>{{lesson.phone}}</td>
-              <td>{{lesson.address}}</td>
+              <td>{{lesson.title}}</td>
+              <td>{{lesson.image}}</td>
+              <td>{{lesson.unit.name}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
                 <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
@@ -91,7 +90,8 @@
           </tbody>
         </SortedTable>
         <paginate
-          :page-count="5"
+          :page-count="pageCount"
+          :click-handler="getLessons"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -111,12 +111,19 @@ export default {
   },
   data() {
     return {
-      lessons: []
+      lessons: {
+        data: [],
+        last_page: 0
+      }
     };
   },
   created() {
-    request({
-      url: "/backend/lessons/list",
+    this.getLessons()
+  },
+  methods: {
+    getLessons(page=1) {
+      request({
+      url: "/backend/lessons/list?page=" + page,
       method: "get"
     })
       .then(res => {
@@ -125,6 +132,12 @@ export default {
       .catch(err => {
         console.log(err.res);
       });
+    }
+  },
+  computed: {
+     pageCount() {
+       return this.lessons.last_page
+     }
   }
 };
 </script>

@@ -32,7 +32,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="users">
+        <SortedTable :values="users.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -83,7 +83,8 @@
           </tbody>
         </SortedTable>
         <paginate
-          :page-count="5"
+          :page-count="pageCount"
+          :click-handler="getUsers"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -104,7 +105,10 @@ export default {
   },
   data() {
     return {
-      users: [],
+      users: {
+        data: [],
+        last_page: 0
+      },
       breads: [
         {
           title: "Dashboard",
@@ -122,16 +126,26 @@ export default {
     };
   },
   created() {
-    request({
-      url: "/backend/users/list",
-      method: "get"
-    })
-      .then(res => {
-        this.users = res.data.result_data;
+    this.getUsers();
+  },
+  methods: {
+    getUsers(page = 1) {
+      request({
+        url: "/backend/users/list?page=" + page,
+        method: "get"
       })
-      .catch(err => {
-        console.log(err.res);
-      });
+        .then(res => {
+          this.users = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    }
+  },
+  computed: {
+    pageCount() {
+      return this.users.last_page
+    }
   }
 };
 </script>

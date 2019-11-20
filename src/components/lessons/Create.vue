@@ -98,11 +98,11 @@ export default {
   },
   created() {
     request({
-      url: "/backend/units/list",
+      url: "/backend/units/list?page=1",
       method: "get"
     })
       .then(res => {
-        this.units = res.data.result_data;
+        this.units = res.data.result_data.data;
       })
       .catch();
   },
@@ -110,10 +110,10 @@ export default {
     create() {
       let data = this.lesson;
       let formData = new FormData();
-      formData.append("file", this.lesson.file);
       formData.append("unit_id", this.lesson.unit_id);
       formData.append("title", this.lesson.title);
       formData.append("image", this.lesson.image);
+      console.log(data)
       request
         .post("/backend/lessons/create", formData, {
           headers: {
@@ -122,7 +122,7 @@ export default {
         })
         .then(res => {
           console.log(res.data);
-          this.$router.push('/management/lessons/list')
+          // this.$router.push('/management/lessons/list')
         })
         .catch();
     },

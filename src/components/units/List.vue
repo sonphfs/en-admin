@@ -47,7 +47,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="units">
+        <SortedTable :values="units.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -82,7 +82,8 @@
           </tbody>
         </SortedTable>
         <paginate
-          :page-count="5"
+          :page-count="pageCount"
+          :click-handler="getUnits"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -103,18 +104,19 @@ export default {
   },
   data() {
     return {
-      units: []
+      units: {
+        data:[],
+        last_page: 0
+      }
     };
   },
   created() {
-    request({
-      url: "/backend/units/list",
-      method: "get"
-    })
-      .then(res => {
-        this.units = res.data.result_data;
-      })
-      .catch();
+    this.getUnits()
+  },
+  computed: {
+    pageCount(){
+      return this.units.last_page
+    }
   },
   methods: {
     deleteUnit(id) {
@@ -127,6 +129,16 @@ export default {
           .then()
           .catch();
       }
+    },
+    getUnits(page = 1) {
+      request({
+        url: "/backend/units/list?page=" + page,
+        method: "get"
+      })
+        .then(res => {
+          this.units = res.data.result_data;
+        })
+        .catch();
     }
   }
 };

@@ -32,7 +32,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="examinations">
+        <SortedTable :values="examinations.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -106,7 +106,7 @@
         </SortedTable>
         <paginate
           :page-count="pageCount"
-          :click-handler="getItems"
+          :click-handler="getExaminations"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -127,7 +127,10 @@ export default {
   },
   data() {
     return {
-      examinations: [],
+      examinations: {
+        data: [],
+        last_page: 0
+      },
       breads: [
         {
           title: "Dashboard",
@@ -149,16 +152,7 @@ export default {
     };
   },
   created() {
-    request({
-      url: "/backend/examinations/list",
-      method: "get"
-    })
-      .then(res => {
-        this.examinations = res.data.result_data;
-      })
-      .catch(err => {
-        console.log(err.res);
-      });
+    this.getExaminations();
   },
   methods: {
     getStatus(status) {
@@ -193,6 +187,23 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
+    },
+    getExaminations(page) {
+      request({
+        url: "/backend/examinations/list?page=" + page,
+        method: "get"
+      })
+        .then(res => {
+          this.examinations = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    }
+  },
+  computed: {
+    pageCount() {
+      return this.examinations.last_page;
     }
   }
 };

@@ -71,7 +71,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <SortedTable :values="learning_words">
+        <SortedTable :values="learning_words.data">
           <thead>
             <tr>
               <th scope="col" style="text-align: left; width: 10rem;">
@@ -127,7 +127,7 @@
         </SortedTable>
         <paginate
           :page-count="pageCount"
-          :click-handler="getItems"
+          :click-handler="getLearningWords"
           :prev-text="'Prev'"
           :next-text="'Next'"
           :container-class="'pagination'"
@@ -143,28 +143,33 @@ export default {
   name: "ListLearningWords",
   data() {
     return {
-      learning_words: []
+      learning_words: {
+        data: [],
+        last_page: 0
+      }
     };
   },
   created() {
-    request({
-      url: "/backend/learning_words/list",
-      method: "get"
-    })
-      .then(res => {
-        this.learning_words = res.data.result_data;
-      })
-      .catch(err => {
-        console.log(err.res);
-      });
+    this.getLearningWords()
   },
   computed: {
     pageCount() {
-      return Math.ceil(this.learning_words.length / 10);
+      return this.learning_words.last_page;
     }
   },
   methods: {
-    getItems() {}
+    getLearningWords(page = 1) {
+      request({
+        url: "/backend/learning_words/list?page=" + page,
+        method: "get"
+      })
+        .then(res => {
+          this.learning_words = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    }
   }
 };
 </script>

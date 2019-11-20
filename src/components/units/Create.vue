@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       unit: {
-        parent_id: null,
+        parent_id: "",
         name: ""
       },
       listUnits: []
@@ -67,7 +67,7 @@ export default {
       })
         .then(res => {
           console.log(res);
-        this.$router.push('/management/units/list')
+          this.$router.push("/management/units/list");
         })
         .catch();
     }
