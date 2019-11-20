@@ -189,7 +189,7 @@ export default {
   },
   created() {
     if (this.item) {
-      this.question = this.item;
+       this.question = {...this.question, ...this.item};
     }
   }
 };

@@ -54,21 +54,24 @@
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
             >Add Question</button>
-            <button class="btn btn-primary" @click="updateData()">Update</button>
+            <button class="btn btn-primary" @click="confirmModal()">Update</button>
           </div>
         </div>
       </div>
     </div>
+    <ModalConfirm v-if="!modalHidden" :modalData="modalData" @accept="updateData" @onClose="modalHidden=true"></ModalConfirm>
   </div>
 </template>
 
 <script>
 import request from "@/utils/request";
 import Question from "@/components/elements/CreateQuestion.vue";
+import ModalConfirm from "@/components/elements/ModalConfirm.vue";
 export default {
   name: "Part1",
   components: {
-    Question
+    Question,
+    ModalConfirm
   },
   data() {
     return {
@@ -76,7 +79,12 @@ export default {
       questionCount: 0,
       maxQuestionCount: 10,
       hasExample: false,
-      questions: []
+      questions: [],
+      modalHidden: true,
+      modalData: {
+        title: "Confirming!",
+        message: "Are you sure update data!"
+      }
     };
   },
   methods: {
@@ -88,7 +96,7 @@ export default {
       this.$refs.questionAudio.click();
     },
     changeAudio() {},
-    addQuestion() {
+    async addQuestion() {
       this.questionCount = this.questions.length - this.hasExample;
       if (this.questionCount < 10) {
         this.questions.push({ part: 1 });
@@ -133,7 +141,10 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
-    }
+    },
+    confirmModal() {
+      this.modalHidden = false
+    },
   },
   created() {
     this.getPart1();
