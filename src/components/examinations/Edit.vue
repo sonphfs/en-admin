@@ -150,39 +150,37 @@
                 <tr>
                   <th>Part 2</th>
                   <td>
-                    <a href>
-                      <button type="button" class="btn btn-primary">Edit</button>
-                    </a>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/2'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 3</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/3'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 4</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/4'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 5</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/5'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 6</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/6'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 7</th>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/7'" class="btn btn-primary">Edit</a>
                   </td>
                 </tr>
               </tbody>
