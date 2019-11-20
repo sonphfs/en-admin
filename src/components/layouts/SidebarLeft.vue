@@ -134,9 +134,9 @@ export default {
   data() {
     return {
       userMenu: !true,
-      examMenu: true,
+      examMenu: !true,
       lessonMenu: !true,
-      wordMenu: !true,
+      wordMenu: true,
       questionMenu: !true
     };
   },

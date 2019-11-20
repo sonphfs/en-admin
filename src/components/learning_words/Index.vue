@@ -40,25 +40,39 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <p class="text-muted font-13 m-b-30"></p>
-        <table id="datatable-buttons" class="table table-striped table-bordered">
+        <SortedTable :values="learning_words">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Word</th>
-              <th>Type</th>
-              <th>Pronunciation</th>
-              <th>Meaning</th>
-              <th>Image</th>
-              <th>Example</th>
-              <th>Created at</th>
-              <th>#Action</th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="id">#</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="word">Word</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="type">Type</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="pronunciation">Pronunciation</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="meaning">Meaning</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="image">Image</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="example">Example</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">
+                <SortLink name="created_at">Created at</SortLink>
+              </th>
+              <th scope="col" style="text-align: left; width: 10rem;">Action</th>
             </tr>
           </thead>
-
-          <tbody>
-            <tr v-for="(word, index) in learning_words">
-              <td>{{index}}</td>
+          <tbody slot="body" slot-scope="sort">
+            <tr v-for="(word, index) in sort.values" :key="word.id">
+              <td>{{word.id}}</td>
               <td>{{word.word}}</td>
               <td>{{word.type}}</td>
               <td>{{word.pronunciation}}</td>
@@ -79,7 +93,15 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </SortedTable>
+        <paginate
+          :page-count="pageCount"
+          :click-handler="getItems"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :container-class="'pagination'"
+          :page-class="'page-item'"
+        >></paginate>
       </div>
     </div>
   </div>
@@ -104,6 +126,14 @@ export default {
       .catch(err => {
         console.log(err.res);
       });
+  },
+  computed: {
+    pageCount() {
+      return Math.ceil(this.learning_words.length / 10);
+    }
+  },
+  methods: {
+    getItems() {}
   }
 };
 </script>
