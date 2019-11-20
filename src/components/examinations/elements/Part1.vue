@@ -59,7 +59,12 @@
         </div>
       </div>
     </div>
-    <ModalConfirm v-if="!modalHidden" :modalData="modalData" @accept="updateData" @onClose="modalHidden=true"></ModalConfirm>
+    <ModalConfirm
+      v-if="!modalHidden"
+      :modalData="modalData"
+      @accept="updateData"
+      @onClose="modalHidden=true"
+    ></ModalConfirm>
   </div>
 </template>
 
@@ -117,7 +122,7 @@ export default {
         .then(res => {
           console.log(res.data.result_data);
           let data = res.data.result_data;
-          this.questions = Object.keys(data).map(i => data[i])
+          this.questions = Object.keys(data).map(i => data[i]);
           this.maxQuestionCount -= this.questions.length;
         })
         .catch(err => {
@@ -126,7 +131,7 @@ export default {
     },
     updateData() {
       let data = {
-        questions: this.questions,
+        questions: this.questhions,
         code: this.$route.params.code,
         part: this.$route.params.part
       };
@@ -137,14 +142,34 @@ export default {
       })
         .then(res => {
           console.log(res.data.result_data);
+          this.successAlert();
         })
         .catch(err => {
           console.log(err.res);
+          this.errorAlert()
         });
     },
     confirmModal() {
-      this.modalHidden = false
+      this.modalHidden = false;
     },
+    successAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: "Data has been updated!",
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: "Update data failed!",
+        width: 600,
+        padding: "3em"
+      });
+    }
   },
   created() {
     this.getPart1();

@@ -41,14 +41,13 @@ export default {
   created() {
     if (this.modalData == []) {
       this.modalData = {
-        title: "Alo Alo",
-        message: "You know ?"
-      };
+        title: "Confirming!",
+        message: "Are you sure update data!"
+      }
     }
   },
   methods: {
     onSubmit(){
-      console.log(123);
         this.$emit('accept')
     },
     onClose() {
