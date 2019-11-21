@@ -80,10 +80,6 @@ const routes = [
     },
     //units
     {
-        path: '/management/units/create',
-        component: () => import("@/components/units/Create"),
-    },
-    {
         path: '/management/units/edit/:id',
         component: () => import("@/components/units/Edit"),
     },

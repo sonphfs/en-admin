@@ -39,9 +39,7 @@
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
-            <a href="/management/examinations/create" class="collapse-link">
-              <button type="submit" class="btn btn-success">Create new Units</button>
-            </a>
+            <button type="button" class="btn btn-success" @click="modalOpen=true">Create new Units</button>
           </li>
         </ul>
         <div class="clearfix"></div>
@@ -68,13 +66,10 @@
               <td>{{unit.name}}</td>
               <td>{{unit.created_at}}</td>
               <td>
-                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
-                  <i class="fa fa-folder"></i> View
-                </a>
-                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs" @click="showModal(unit)">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -91,31 +86,36 @@
         ></paginate>
       </div>
     </div>
+    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true" :item="unitSelected"></ModalForm>
   </div>
 </template>
 
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
+import ModalForm from "@/components/units/ModalForm";
 export default {
   name: "ListUnit",
   components: {
-    Breadcrumb
+    Breadcrumb,
+    ModalForm
   },
   data() {
     return {
       units: {
-        data:[],
+        data: [],
         last_page: 0
-      }
+      },
+      modalOpen: false,
+      unitSelected: {}
     };
   },
   created() {
-    this.getUnits()
+    this.getUnits();
   },
   computed: {
-    pageCount(){
-      return this.units.last_page
+    pageCount() {
+      return this.units.last_page;
     }
   },
   methods: {
@@ -139,6 +139,12 @@ export default {
           this.units = res.data.result_data;
         })
         .catch();
+    },
+    showModal(unit) {
+      this.modalOpen = true;
+      if (unit) {
+        this.unitSelected = unit;
+      }
     }
   }
 };

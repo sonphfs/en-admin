@@ -2,7 +2,6 @@
   <div>
     <div class="modal-backdrop fade in"></div>
     <div
-      id="CalenderModalNew"
       class="modal fade in"
       tabindex="-1"
       role="dialog"
@@ -32,7 +31,7 @@
               data-dismiss="modal"
               @click="onClose()"
             >Close</button>
-            <button type="button" class="btn btn-primary antosubmit" @click="onSubmit()">Accept</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="onSubmit()">Accept</button>
           </div>
         </div>
       </div>
@@ -66,5 +65,8 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+  .modal-content{
+    border-radius: 0px;
+  }
+</style>>
