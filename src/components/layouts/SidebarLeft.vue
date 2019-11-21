@@ -135,8 +135,8 @@ export default {
     return {
       userMenu: !true,
       examMenu: !true,
-      lessonMenu: !true,
-      wordMenu: true,
+      lessonMenu: true,
+      wordMenu: !true,
       questionMenu: !true
     };
   },
