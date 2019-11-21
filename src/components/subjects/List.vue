@@ -39,8 +39,8 @@
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
-            <a href="/management/examinations/create" class="collapse-link">
-              <button type="submit" class="btn btn-success">Create new Subjects</button>
+            <a @click="modalOpen=true" class="collapse-link">
+              <button type="button" class="btn btn-success">Create new Subjects</button>
             </a>
           </li>
         </ul>
@@ -60,9 +60,6 @@
               <th scope="col" style="text-align: left; width: 10rem;">
                 <SortLink name="created_at">Created at</SortLink>
               </th>
-              <th scope="col" style="text-align: left; width: 10rem;">
-                <SortLink name="unit_id">Unit ID</SortLink>
-              </th>
               <th scope="col" style="text-align: left; width: 10rem;">Action</th>
             </tr>
           </thead>
@@ -73,10 +70,10 @@
               <td>{{subject.image}}</td>
               <td>{{subject.created_at}}</td>
               <td>
-                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
+                <a class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">
@@ -96,41 +93,47 @@
         ></paginate>
       </div>
     </div>
+    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
+import ModalForm from "@/components/subjects/ModalForm";
 export default {
   components: {
-    Breadcrumb
+    Breadcrumb,
+    ModalForm
   },
   data() {
     return {
       subjects: {
         data: [],
         last_page: 0
-      }
+      },
+      modalOpen: false
     };
   },
   created() {
-    this.getSubjects()
+    this.getSubjects();
   },
   computed: {
     pageCount() {
-      return this.subjects.last_page
+      return this.subjects.last_page;
     }
   },
   methods: {
     getSubjects(page) {
       request({
-        url: '/backend/subjects/list?page=' + page,
+        url: "/backend/subjects/list?page=" + page,
         methods: "get"
-      }).then(res => {
-        this.subjects = res.data.result_data
-      }).catch(err => {
-        console.log(err.res)
       })
+        .then(res => {
+          this.subjects = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
     }
   }
 };

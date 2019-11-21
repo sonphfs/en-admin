@@ -69,11 +69,8 @@
               <td>{{user.created_at}}</td>
               <td>{{user.updated_at}}</td>
               <td>
-                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
+                <a href="/management/users/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
-                </a>
-                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
-                  <i class="fa fa-pencil"></i> Edit
                 </a>
                 <a href="#" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete

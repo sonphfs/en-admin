@@ -39,8 +39,8 @@
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
-            <a href="/management/examinations/create" class="collapse-link">
-              <button type="submit" class="btn btn-success">Create new Lesson</button>
+            <a class="collapse-link">
+              <button type="submit" class="btn btn-success" @click="modalOpen=true">Create new Lesson</button>
             </a>
           </li>
         </ul>
@@ -76,13 +76,13 @@
               <td>{{lesson.unit.name}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
-                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
+                <a class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -99,22 +99,26 @@
         ></paginate>
       </div>
     </div>
+    <ModalForm  @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
+import ModalForm from "@/components/lessons/ModalForm";
 export default {
   name: "ListLessons",
   components: {
-    Breadcrumb
+    Breadcrumb,
+    ModalForm
   },
   data() {
     return {
       lessons: {
         data: [],
         last_page: 0
-      }
+      },
+      modalOpen: false
     };
   },
   created() {

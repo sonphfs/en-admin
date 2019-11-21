@@ -62,13 +62,7 @@
                   <a href="/management/learning_words/list">List Learning Words</a>
                 </li>
                 <li>
-                  <a href="/management/learning_words/create">Create new words</a>
-                </li>
-                <li>
                   <a href="/management/learning_words/subjects/list">List Subject</a>
-                </li>
-                <li>
-                  <a href="/management/learning_words/subjects/create">Create Subject</a>
                 </li>
               </ul>
             </li>
@@ -82,13 +76,7 @@
                   <a href="/management/lessons/list">List Lessons</a>
                 </li>
                 <li>
-                  <a href="/management/lessons/create">Create Lessons</a>
-                </li>
-                <li>
                   <a href="/management/units/list">Units</a>
-                </li>
-                <li>
-                  <a href="/management/units/create">Create Units</a>
                 </li>
               </ul>
             </li>

@@ -40,31 +40,7 @@
         <ul class="nav navbar-right panel_toolbox">
           <li>
             <a class="collapse-link">
-              <i class="fa fa-chevron-up"></i>
-            </a>
-          </li>
-          <li class="dropdown">
-            <a
-              href="#"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              role="button"
-              aria-expanded="false"
-            >
-              <i class="fa fa-wrench"></i>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#">Settings 1</a>
-              </li>
-              <li>
-                <a href="#">Settings 2</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="close-link">
-              <i class="fa fa-close"></i>
+              <button type="submit" class="btn btn-success" @click="modalOpen=true">Create new Words</button>
             </a>
           </li>
         </ul>
@@ -112,13 +88,13 @@
               <td>{{word.example}}</td>
               <td>{{word.created_at}}</td>
               <td>
-                <a href="/management/learning_words/detail" class="btn btn-primary btn-xs">
+                <a class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="/management/learning_words/edit" class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -135,18 +111,24 @@
         ></paginate>
       </div>
     </div>
+    <ModalForm  @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
+import ModalForm from "@/components/learning_words/ModalForm";
 export default {
   name: "ListLearningWords",
+  components: {
+    ModalForm
+  },
   data() {
     return {
       learning_words: {
         data: [],
         last_page: 0
-      }
+      },
+      modalOpen: false
     };
   },
   created() {

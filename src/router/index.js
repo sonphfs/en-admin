@@ -123,33 +123,9 @@ const routes = [
         component: () => import("@/components/learning_words/Index"),
     },
     {
-        path: '/management/learning_words/create',
-        component: () => import("@/components/learning_words/Create"),
-    },
-    {
-        path: '/management/learning_words/detail',
-        component: () => import("@/components/learning_words/Show"),
-    },
-    {
-        path: '/management/learning_words/edit',
-        component: () => import("@/components/learning_words/Edit"),
-    },
-    {
         path: '/management/learning_words/subjects/list',
         component: () => import("@/components/subjects/List.vue"),
     },
-    {
-        path: '/management/learning_words/subjects/create',
-        component: () => import("@/components/subjects/Create"),
-    },
-    {
-        path: '/management/learning_words/subjects/edit',
-        component: () => import("@/components/subjects/Edit"),
-    },
-    {
-        path: '/management/learning_words/subjects/detail',
-        component: () => import("@/components/subjects/Edit"),
-    }
 ]
 
 export default new VueRouter({
