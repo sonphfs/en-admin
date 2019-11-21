@@ -126,6 +126,10 @@ const routes = [
         path: '/management/learning_words/subjects/list',
         component: () => import("@/components/subjects/List.vue"),
     },
+    {
+        path: '/upload',
+        component: () => import("@/components/pages/Upload.vue"),
+    },
 ]
 
 export default new VueRouter({

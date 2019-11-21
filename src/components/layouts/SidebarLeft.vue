@@ -89,6 +89,9 @@
                 <li>
                   <a href="/management/questions/list">List Questions</a>
                 </li>
+                <li>
+                  <a href="/upload">Upload file</a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -123,9 +126,9 @@ export default {
     return {
       userMenu: !true,
       examMenu: !true,
-      lessonMenu: true,
+      lessonMenu:!true,
       wordMenu: !true,
-      questionMenu: !true
+      questionMenu: true
     };
   },
   methods: {},

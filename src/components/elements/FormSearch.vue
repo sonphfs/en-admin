@@ -6,9 +6,9 @@
     <div class="title_right">
       <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
         <div class="input-group">
-          <input type="text" placeholder="Search for..." class="form-control" v-model="Keyword" />
+          <input type="text" placeholder="Search for..." class="form-control" v-model="Keyword" @keyup.enter="search"/>
           <span class="input-group-btn">
-            <button type="button" class="btn btn-default">Go!</button>
+            <button type="button" class="btn btn-default" @click="search">Go!</button>
           </span>
         </div>
       </div>
@@ -18,16 +18,21 @@
 
 <script>
 export default {
-  name: "SearchFreeWord",
-  props: ["title", "keyword"],
+  name: "FormSearch",
+  props: ["title"],
   data() {
     return {
       Title: "Welcome to Your Website!",
       Keyword: ""
     };
-  }, created() {
-      this.Title = this.title
-      this.Keyword = this.keyword
-  }
+  },
+  created() {
+    if (this.title) this.Title = this.title;
+  },
+  methods: {
+    search() {
+        this.$emit('listenSearch', this.Keyword)
+    }
+  },
 };
 </script>
