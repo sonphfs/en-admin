@@ -5,7 +5,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          Danh sách 
+          Danh sách
           <small>Thành viên</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
@@ -58,7 +58,7 @@
                 <a href="/management/users/detail" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a @click="deleteUser(user.id)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -75,6 +75,7 @@
         ></paginate>
       </div>
     </div>
+    <ConfirmDelete v-if="modalOpen==true" @onClose="modalOpen=false" @accept="deleteApi"></ConfirmDelete>
   </div>
 </template>
 
@@ -82,11 +83,13 @@
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import FormSearch from "@/components/elements/FormSearch";
+import ConfirmDelete from "@/components/elements/ConfirmDelete";
 export default {
   name: "ListUsers",
   components: {
     Breadcrumb,
-    FormSearch
+    FormSearch,
+    ConfirmDelete
   },
   data() {
     return {
@@ -109,7 +112,9 @@ export default {
         }
       ],
       title: "Management Users",
-      keyword: ""
+      keyword: "",
+      modalOpen: false,
+      selectedUser: 0
     };
   },
   created() {
@@ -129,12 +134,57 @@ export default {
         });
     },
     search(keyword) {
-        console.log(keyword)
+      console.log(keyword);
+    },
+    deleteUser(userId) {
+      this.modalOpen = true;
+      this.selectedUser = userId;
+    },
+    closeModal() {
+      this.modalOpen = false;
+    },
+    deleteApi() {
+      this.closeModal()
+      let data = {
+        id: this.selectedUser
+      };
+      request({
+        url: "/backend/users/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res.data.result_data);
+          this.successAlert();
+          this.getUsers()
+        })
+        .catch(err => {
+          console.log(err.res);
+          this.errorAlert();
+        });
+    },
+    successAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: "User has been deteled!",
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: "Delete failed!",
+        width: 600,
+        padding: "3em"
+      });
     }
   },
   computed: {
     pageCount() {
-      return this.users.last_page
+      return this.users.last_page;
     }
   }
 };

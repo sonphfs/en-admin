@@ -84,7 +84,7 @@
                 <a
                   href="#"
                   class="btn btn-success btn-xs"
-                  @click="updateStatus(1, examination.code)"
+                  @click="confirmPublish(examination)"
                   v-if="examination.status == 0"
                 >
                   <i class="fa fa-arrow-circle-up"></i> Publish
@@ -92,12 +92,12 @@
                 <a
                   href="#"
                   class="btn btn-warning btn-xs"
-                  @click="updateStatus(0, examination.code)"
+                  @click="confirmPublish(examination)"
                   v-if="examination.status == 1"
                 >
                   <i class="fa fa-arrow-circle-up"></i> UnActive
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a @click="confirmDelete(examination)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -114,16 +114,30 @@
         ></paginate>
       </div>
     </div>
+    <ConfirmDelete
+      v-if="modal.deleteConfirm==true"
+      @onClose="closeConfirmModal('delete')"
+      @accept="deleteExam"
+    ></ConfirmDelete>
+    <ModalConfirm
+      v-if="modal.publishConfirm==true"
+      @click="closeConfirmModal('publish')"
+      @accept="updateStatus"
+    ></ModalConfirm>
   </div>
 </template>
 
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
+import ConfirmDelete from "@/components/elements/ConfirmDelete";
+import ModalConfirm from "@/components/elements/ModalConfirm";
 export default {
   name: "ListExaminations",
   components: {
-    Breadcrumb
+    Breadcrumb,
+    ConfirmDelete,
+    ModalConfirm
   },
   data() {
     return {
@@ -148,7 +162,12 @@ export default {
       status: {
         0: "SPENDING",
         1: "ACTIVE"
-      }
+      },
+      modal: {
+        deleteConfirm: false,
+        publishConfirm: false
+      },
+      examinationSelected: {}
     };
   },
   created() {
@@ -158,34 +177,49 @@ export default {
     getStatus(status) {
       return status == 1 ? "ACTIVE" : "SPENDING";
     },
-    updateStatus(status, code) {
-      let flag = confirm(" Are you sure change status examination!");
-      if (flag == true) {
-        this.update(status, code);
-      }
+    confirmPublish(examination) {
+      this.examinationSelected = examination;
+      this.modal.publishConfirm = true;
     },
-    update(status, code) {
+    confirmDelete(examination) {
+      this.examinationSelected = examination;
+      this.modal.deleteConfirm = true;
+    },
+    updateStatus() {
+      let examination = this.examinationSelected;
+      if (examination.status == 0) {
+        status = 1;
+      } else {
+        status = 0;
+      }
+      this.update(status, examination);
+    },
+    update(status, examination) {
       let data = {
         status: status
       };
       request({
-        url: "backend/examinations/publish/" + code,
+        url: "backend/examinations/publish/" + examination.code,
         method: "post",
         data
       })
         .then(res => {
           console.log(res);
           let data = res.data.result_data;
+          this.closeConfirmModal("publish");
+
           if (data.updated == true) {
             if (data.status == 1) {
-              alert("Examination has been actived!");
+              this.successAlert("Examination has been actived!");
             } else {
-              alert("Examination has been unactived!");
+              this.successAlert("Examination has been unactived!");
             }
+            examination.status = data.status;
           }
         })
         .catch(err => {
           console.log(err.res);
+          this.errorAlert();
         });
     },
     getExaminations(page) {
@@ -199,6 +233,47 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
+    },
+    closeConfirmModal(type) {
+      if (type == "delete") {
+        this.modal.deleteConfirm = false;
+      }
+      if (type == "publish") {
+        this.modal.publishConfirm = false;
+      }
+    },
+    deleteExam() {
+      let data = {
+        code: this.examinationSelected.code
+      }
+      request({
+        url: '/backend/examinations/delete',
+        method: 'post'
+      }).then(res => {
+          this.closeConfirmModal('delete')
+          this.successAlert('Delete success!')
+      }).catch(err => {
+        this.closeConfirmModal('delete')
+        this.errorAlert('Delete exam failed!')
+      })
+    },
+    successAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
     }
   },
   computed: {

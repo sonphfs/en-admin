@@ -41,22 +41,20 @@
 
 <script>
 export default {
-  name: "ModalConfirm",
+  name: "ConfirmDelete",
   props: ["modalData"],
   data() {
     return {
       item: {
         title: "Confirming!",
-        message: "Are you sure update data!"
+        message: "Are you sure delete data!"
       }
     };
   },
   created() {
-    if (this.modalData != undefined) {
-      this.modalData = {
-        title: "Confirming!",
-        message: "Are you sure update data!"
-      };
+    if (this.modalData !== undefined) {
+        console.log(1231);
+      this.item = this.modalData
     }
   },
   methods: {

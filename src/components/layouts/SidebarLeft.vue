@@ -124,11 +124,11 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      userMenu: !true,
+      userMenu: true,
       examMenu: !true,
       lessonMenu:!true,
       wordMenu: !true,
-      questionMenu: true
+      questionMenu: !true
     };
   },
   methods: {},
