@@ -18,7 +18,7 @@
               aria-expanded="false"
               @click="drawer=!drawer"
             >
-              <img src="images/img.jpg" alt />Son PH
+              <img :src="'http://localhost:8001/' + userInfos.avatar" alt />{{userInfos.username}}
               <span class="fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right show" v-if="drawer">
@@ -131,9 +131,11 @@ import request from "@/utils/request";
 import { removeToken } from "@/utils/auth";
 export default {
   name: "MenuTop",
+  props: ["adminInfos"],
   data() {
     return {
-      drawer: false
+      drawer: false,
+      userInfos: {}
     }
   },
   methods: {
@@ -148,6 +150,14 @@ export default {
     },
     mouseOver() {
       this.active = !this.active;
+    }
+  },
+  created() {
+    this.userInfos = this.adminInfos;
+  },
+  watch: {
+    adminInfos() {
+      this.userInfos = this.adminInfos;
     }
   }
 };

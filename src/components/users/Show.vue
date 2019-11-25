@@ -1,65 +1,49 @@
 <template>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-      <Breadcrumb></Breadcrumb>
+      <Breadcrumb :breads="breads"></Breadcrumb>
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Management Users</h3>
+        </div>
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" placeholder="Search for..." class="form-control" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="x_panel">
         <div class="x_title">
           <h2>
-            My Profile
+            Detail user
             <small></small>
           </h2>
-          <ul class="nav navbar-right panel_toolbox">
-            <li>
-              <a class="collapse-link">
-                <i class="fa fa-chevron-up"></i>
-              </a>
-            </li>
-            <li class="dropdown">
-              <a
-                href="#"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-              >
-                <i class="fa fa-wrench"></i>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="#">Settings 1</a>
-                </li>
-                <li>
-                  <a href="#">Settings 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a class="close-link">
-                <i class="fa fa-close"></i>
-              </a>
-            </li>
-          </ul>
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
-          <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+          <div class="col-md-2 col-sm-2 col-xs-12 profile_left">
             <div class="profile_img">
               <div id="crop-avatar">
                 <!-- Current avatar -->
                 <img
                   class="img-responsive avatar-view"
-                  src="/img/user.ee262c61.png"
+                  :src="'http://localhost:8001/' + userInfos.avatar"
                   alt="Avatar"
                   title="Change the avatar"
                 />
               </div>
             </div>
           </div>
-          <div class="col-md-9 col-sm-9 col-xs-12">
+          <div class="col-md-8 col-sm-8 col-xs-12">
             <br />
             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="username">
                   Username
                   <span class="required">*</span>
                 </label>
@@ -69,11 +53,12 @@
                     id="username"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
+                    v-model="userInfos.username"
                   />
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="email">
                   Email
                   <span class="required">*</span>
                 </label>
@@ -84,11 +69,12 @@
                     name="email"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
+                    v-model="userInfos.email"
                   />
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="phone">
                   Phone
                   <span class="required">*</span>
                 </label>
@@ -99,11 +85,12 @@
                     name="phone"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
+                    v-model="userInfos.phone"
                   />
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">
                   Address
                   <span class="required">*</span>
                 </label>
@@ -114,26 +101,22 @@
                     name="address"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
+                    v-model="userInfos.address"
                   />
                 </div>
               </div>
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gender">
-                  Gender
-                  <span class="required">*</span>
-                </label>
+              <div class="item form-group">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12">Gender</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input
-                    type="text"
-                    id="gender"
-                    name="gender"
-                    required="gender"
-                    class="form-control col-md-7 col-xs-12"
-                  />
+                  <select class="form-control" v-model="userInfos.gender">
+                    <option value="1">MALE</option>
+                    <option value="2">FEMALE</option>
+                    <option value="3">OTHER</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="dateofbirth">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="dateofbirth">
                   Date of Birth
                   <span class="required">*</span>
                 </label>
@@ -144,6 +127,7 @@
                     name="dateofbirth"
                     required="required"
                     class="form-control col-md-7 col-xs-12"
+                    v-model="userInfos.birthday"
                   />
                 </div>
               </div>
@@ -158,8 +142,46 @@
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
+  name: "profile",
   components: {
     Breadcrumb
+  },
+  data() {
+    return {
+      userInfos: {
+        email: "",
+        username: "",
+        phone: "",
+        address: "",
+        birthday: "",
+        gender: 1,
+        avatar: ""
+      },
+      breads: [
+        {
+          title: "Dashboard",
+          link: "/dashboard"
+        },
+        {
+          title: "Users management",
+          link: "/"
+        },
+        {
+          title: "Detail user",
+          link: "/"
+        }
+      ]
+    };
+  },
+  created() {
+    request({
+      url: "/backend/users/show/" + this.$route.params.id,
+      method: "get"
+    })
+      .then(res => {
+        this.userInfos = res.data.result_data;
+      })
+      .catch({});
   }
 };
 </script>

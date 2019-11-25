@@ -55,7 +55,7 @@
               <td>{{user.created_at}}</td>
               <td>{{user.updated_at}}</td>
               <td>
-                <a href="/management/users/detail" class="btn btn-primary btn-xs">
+                <a :href="'/management/users/detail/' + user.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
                 <a @click="deleteUser(user.id)" class="btn btn-danger btn-xs">
@@ -121,13 +121,14 @@ export default {
     this.getUsers();
   },
   methods: {
-    getUsers(page = 1) {
+    getUsers(page = 1, keyword="") {
       request({
-        url: "/backend/users/list?page=" + page,
+        url: "/backend/users/list?page=" + page+ '&keyword=' +keyword,
         method: "get"
       })
         .then(res => {
           this.users = res.data.result_data;
+          console.log(res);
         })
         .catch(err => {
           console.log(err.res);
@@ -135,6 +136,7 @@ export default {
     },
     search(keyword) {
       console.log(keyword);
+      this.getUsers(1, keyword);
     },
     deleteUser(userId) {
       this.modalOpen = true;

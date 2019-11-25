@@ -54,7 +54,7 @@ const routes = [
         component: () => import("@/components/users/Create"),
     },
     {
-        path: '/management/users/detail',
+        path: '/management/users/detail/:id',
         component: () => import("@/components/users/Show"),
     },
     {
