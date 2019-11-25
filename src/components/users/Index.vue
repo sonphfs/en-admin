@@ -121,9 +121,9 @@ export default {
     this.getUsers();
   },
   methods: {
-    getUsers(page = 1, keyword="") {
+    getUsers(page = 1) {
       request({
-        url: "/backend/users/list?page=" + page+ '&keyword=' +keyword,
+        url: "/backend/users/list?page=" + page+ '&keyword=' +this.keyword,
         method: "get"
       })
         .then(res => {
@@ -135,8 +135,8 @@ export default {
         });
     },
     search(keyword) {
-      console.log(keyword);
-      this.getUsers(1, keyword);
+      this.keyword = keyword
+      this.getUsers(1);
     },
     deleteUser(userId) {
       this.modalOpen = true;
