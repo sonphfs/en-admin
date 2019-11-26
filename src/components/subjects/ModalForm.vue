@@ -29,8 +29,8 @@
                     <input type="text" class="form-control" v-model="subject.name" />
                   </div>
                 </div>
-                <div class="item form-group">
-                  <label for="file-image" class="control-label col-md-3">Image</label>
+                <div class="form-group">
+                  <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Image</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <button
                       type="button"
@@ -38,7 +38,7 @@
                       @click="chooseImage()"
                     >Upload Image</button>
                     <p style="margin-top: 10px">
-                      <span v-if="subject.image">{{ subject.image.name}}</span>
+                      <span v-if="subject.image">{{ subject.image}}</span>
                     </p>
                     <input
                       id="file-image"
@@ -52,6 +52,12 @@
                       accept="image/*"
                       @change="changeImage()"
                     />
+                    <img
+                      v-if="subject.image"
+                      :src="'http://127.0.0.1:8001/'+ subject.image"
+                      width="300px"
+                      height="300px"
+                    />
                   </div>
                 </div>
               </form>
@@ -64,7 +70,7 @@
               data-dismiss="modal"
               @click="close()"
             >Cancel</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="create()">Create</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="createSubject()">Create</button>
           </div>
         </div>
       </div>
@@ -83,22 +89,93 @@ export default {
       subject: {
         name: "",
         image: ""
-      }
+      },
+      fileUpload: ""
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     close() {
       this.$emit("onClose");
     },
-    create() {},
     chooseImage() {
       this.$refs.subjectImage.click();
     },
     changeImage() {
-      this.subject.image = this.$refs.subjectImage.files[0];
+      this.fileUpload = this.$refs.subjectImage.files[0];
+      this.uploadImage();
     },
+    uploadImage(type = "IMAGE", object = "SUBJECT") {
+      let formData = new FormData();
+      formData.append("file", this.fileUpload);
+      formData.append("type", type);
+      formData.append("object", object);
+      if (this.subject.image != "") {
+        this.deleteFile(this.subject.image);
+      }
+      request
+        .post("/backend/files/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          let data = res.data.result_data;
+          this.subject.image = data.filePath;
+        });
+    },
+    deleteFile(fileSrc) {
+      let data = {
+        filePath: fileSrc
+      };
+      console.log(data);
+      request({
+        url: "/backend/files/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    createSubject() {
+      let data = this.subject;
+      request({
+        url: "/backend/subjects/create",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res.data.result_data);
+          this.close()
+          this.successAlert();
+        })
+        .catch(err => {
+          console.log(err.res);
+          this.close()
+          this.errorAlert();
+        });
+    },
+    successAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: "Subject has been created",
+        showConfirmButton: false,
+        timer: 3000
+      });
+    },
+    errorAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: "Oops...",
+        text: "Create subject failed!",
+      });
+    }
   }
 };
 </script>

@@ -1,36 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_content">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/dashboard">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="/">Examinations management</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="/">List examinations</a>
-          </li>
-        </ol>
-      </nav>
-    </div>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>Welcome to Your Website!</h3>
-      </div>
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-          <div class="input-group">
-            <input type="text" placeholder="Search for..." class="form-control" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default">Go!</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <Breadcrumb :breads="breads"></Breadcrumb>
+    <FormSearch :title="title" @listenSearch="search"></FormSearch>
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -76,7 +47,7 @@
                 <a class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a href="#" class="btn btn-danger btn-xs">
+                <a @click="confirmDelete(subject.id)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -100,10 +71,12 @@
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import ModalForm from "@/components/subjects/ModalForm";
+import FormSearch from "@/components/elements/FormSearch";
 export default {
   components: {
     Breadcrumb,
-    ModalForm
+    ModalForm,
+    FormSearch
   },
   data() {
     return {
@@ -111,7 +84,24 @@ export default {
         data: [],
         last_page: 0
       },
-      modalOpen: false
+      breads: [
+        {
+          title: "Dashboard",
+          link: "/dashboard"
+        },
+        {
+          title: "Words management",
+          link: "/"
+        },
+        {
+          title: "List subjects",
+          link: "/"
+        }
+      ],
+      title: "",
+      keyword: "",
+      modalOpen: false,
+      selectedSubject: 0
     };
   },
   created() {
@@ -125,11 +115,51 @@ export default {
   methods: {
     getSubjects(page) {
       request({
-        url: "/backend/subjects/list?page=" + page,
+        url: "/backend/subjects/list?page=" + page + "&keyword=" + this.keyword,
         methods: "get"
       })
         .then(res => {
           this.subjects = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    },
+    search(keyword) {
+      this.keyword = keyword;
+      this.getSubjects();
+    },
+    confirmDelete(subjectId) {
+      this.selectedSubject = subjectId;
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to delete this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            this.deleteSubject();
+            this.getSubjects();
+          }
+        });
+    },
+    deleteSubject() {
+      let data = {
+        id: this.selectedSubject
+      };
+      request({
+        url: "/backend/subjects/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res.data.result_data);
+          this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
         })
         .catch(err => {
           console.log(err.res);

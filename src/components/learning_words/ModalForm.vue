@@ -84,7 +84,7 @@
                       @click="chooseImage()"
                     >Upload Image</button>
                     <p style="margin-top: 10px">
-                      <span v-if="learning_word.image">{{ learning_word.image.name}}</span>
+                      <span v-if="learning_word.image">{{ learning_word.image}}</span>
                     </p>
                     <input
                       id="file-image"
@@ -115,7 +115,7 @@
                       @click="chooseAudio()"
                     >Upload Audio</button>
                     <p style="margin-top: 10px">
-                      <span v-if="learning_word.audio">{{ learning_word.audio.name}}</span>
+                      <span v-if="learning_word.audio">{{ learning_word.audio}}</span>
                     </p>
                     <input
                       id="file-audio"
