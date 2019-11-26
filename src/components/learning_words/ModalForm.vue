@@ -26,9 +26,14 @@
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
-                    <select class="select2_group form-control" v-model="learning_word.subject_id">
-                      <option v-for="subject in listSubject" :value="subject.id">{{subject.name}}</option>
-                    </select>
+                    <multiselect
+                      v-model="subjectSelected"
+                      :options="listSubject"
+                      :custom-label="nameWithLang"
+                      placeholder="Select one"
+                      label="name"
+                      track-by="name"
+                    ></multiselect>
                   </div>
                 </div>
                 <div class="form-group">
@@ -37,7 +42,6 @@
                     <input type="text" class="form-control" v-model="learning_word.word" />
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Type</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
@@ -71,8 +75,8 @@
                     ></textarea>
                   </div>
                 </div>
-                <div class="item form-group">
-                  <label for="file-image" class="control-label col-md-3">Image</label>
+                <div class="form-group">
+                  <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Image</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <button
                       type="button"
@@ -94,10 +98,16 @@
                       accept="image/*"
                       @change="changeImage()"
                     />
+                    <img
+                      v-if="learning_word.image"
+                      :src="'http://127.0.0.1:8001/'+ learning_word.image"
+                      width="300px"
+                      height="300px"
+                    />
                   </div>
                 </div>
-                <div class="item form-group">
-                  <label for="file-image" class="control-label col-md-3">Audio</label>
+                <div class="form-group">
+                  <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Audio</label>
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <button
                       type="button"
@@ -119,6 +129,12 @@
                       accept="audio/*"
                       @change="changeAudio()"
                     />
+                    <audio controls controlslist="nodownload" v-if="learning_word.audio">
+                      <source
+                        :src="'http://127.0.0.1:8001/'+ learning_word.audio"
+                        type="audio/mpeg"
+                      />
+                    </audio>
                   </div>
                 </div>
               </form>
@@ -131,7 +147,7 @@
               data-dismiss="modal"
               @click="close()"
             >Cancel</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="create()">Create</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="createWord()">Create</button>
           </div>
         </div>
       </div>
@@ -142,8 +158,13 @@
 
 <script>
 import request from "@/utils/request";
+import Multiselect from "vue-multiselect";
+
 export default {
   name: "ModalForm",
+  components: {
+    Multiselect
+  },
   props: ["item"],
   data() {
     return {
@@ -151,11 +172,13 @@ export default {
         image: "",
         audio: ""
       },
-      listSubject: []
+      fileUpload: "",
+      listSubject: [],
+      subjectSelected: { name: "Select one" }
     };
   },
   created() {
-    this.getSubjects()
+    this.getSubjects();
   },
   methods: {
     close() {
@@ -166,23 +189,91 @@ export default {
       this.$refs.imageWord.click();
     },
     changeImage() {
-      this.learning_word.image = this.$refs.imageWord.files[0];
+      this.fileUpload = this.$refs.imageWord.files[0];
+      this.uploadImage("IMAGE", "LEARNING_WORD");
     },
     chooseAudio() {
       this.$refs.wordAudio.click();
     },
     changeAudio() {
-      this.learning_word.audio = this.$refs.wordAudio.files[0];
+      this.fileUpload = this.$refs.wordAudio.files[0];
+      this.uploadImage("AUDIO", "LEARNING_WORD");
     },
     getSubjects(page) {
       request({
-        url: '/backend/subjects/list?page=' + page,
+        url: "/backend/subjects/list?page=" + page,
         methods: "get"
+      })
+        .then(res => {
+          this.listSubject = res.data.result_data.data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    },
+    nameWithLang({ name }) {
+      return `${name}`;
+    },
+    uploadImage(type = "IMAGE", object = "LEARNING_WORD") {
+      let formData = new FormData();
+      formData.append("file", this.fileUpload);
+      formData.append("type", type);
+      formData.append("object", object);
+      if(type == 'IMAGE' && this.learning_word.image != "") {
+        this.deleteFile(this.learning_word.image)
+      }
+      if(type == 'AUDIO' && this.learning_word.audio != "") {
+        this.deleteFile(this.learning_word.audio)
+      }
+      request
+        .post("/backend/files/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          let data = res.data.result_data;
+          if (data.typeFile == "IMAGE") {
+            this.learning_word.image = data.filePath;
+          }
+          if (data.typeFile == "AUDIO") {
+            this.learning_word.audio = data.filePath;
+          }
+        });
+    },
+    deleteFile(fileSrc) {
+      let data = {
+        filePath: fileSrc
+      };
+      console.log(data);
+      request({
+        url: "/backend/files/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    createWord(){
+      let data = this.learning_word
+      request({
+        url: "/backend/learning_words/create",
+        method: "post",
+        data
       }).then(res => {
-        this.listSubject = res.data.result_data.data
+          console.log(res)
       }).catch(err => {
         console.log(err.res)
       })
+    }
+  },
+  watch: {
+    subjectSelected() {
+      this.learning_word.subject_id = this.subjectSelected.id;
     }
   }
 };
@@ -191,5 +282,12 @@ export default {
 <style scoped>
 .modal-content {
   border-radius: 0px;
+}
+</style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style scoped>
+div.modal-body {
+  height: 500px;
+  overflow-y: auto;
 }
 </style>
