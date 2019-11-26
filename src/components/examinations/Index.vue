@@ -1,21 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
     <Breadcrumb :breads="breads"></Breadcrumb>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>Welcome to Your Website!</h3>
-      </div>
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-          <div class="input-group">
-            <input type="text" placeholder="Search for..." class="form-control" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default">Go!</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <FormSearch :title="title" @listenSearch="search"></FormSearch>
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -121,7 +107,7 @@
     ></ConfirmDelete>
     <ModalConfirm
       v-if="modal.publishConfirm==true"
-      @click="closeConfirmModal('publish')"
+      @onClose="closeConfirmModal('publish')"
       @accept="updateStatus"
     ></ModalConfirm>
   </div>
@@ -132,12 +118,14 @@ import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import ConfirmDelete from "@/components/elements/ConfirmDelete";
 import ModalConfirm from "@/components/elements/ModalConfirm";
+import FormSearch from "@/components/elements/FormSearch";
 export default {
   name: "ListExaminations",
   components: {
     Breadcrumb,
     ConfirmDelete,
-    ModalConfirm
+    ModalConfirm,
+    FormSearch
   },
   data() {
     return {
@@ -167,7 +155,9 @@ export default {
         deleteConfirm: false,
         publishConfirm: false
       },
-      examinationSelected: {}
+      examinationSelected: {},
+      keyword: "",
+      title: "Management Examinations",
     };
   },
   created() {
@@ -222,9 +212,9 @@ export default {
           this.errorAlert();
         });
     },
-    getExaminations(page) {
+    getExaminations(page=1) {
       request({
-        url: "/backend/examinations/list?page=" + page,
+        url: "/backend/examinations/list?page=" + page + "&keyword=" + this.keyword,
         method: "get"
       })
         .then(res => {
@@ -274,6 +264,10 @@ export default {
         width: 600,
         padding: "3em"
       });
+    },
+    search(keyword){
+      this.keyword = keyword
+      this.getExaminations()
     }
   },
   computed: {

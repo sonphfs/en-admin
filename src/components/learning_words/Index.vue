@@ -1,36 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_content">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/dashboard">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="/">Examinations management</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="/">List examinations</a>
-          </li>
-        </ol>
-      </nav>
-    </div>
-    <div class="page-title">
-      <div class="title_left">
-        <h3>Welcome to Your Website!</h3>
-      </div>
-      <div class="title_right">
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-          <div class="input-group">
-            <input type="text" placeholder="Search for..." class="form-control" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default">Go!</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <Breadcrumb :breads="breads"></Breadcrumb>
+    <FormSearch :title="title" @listenSearch="search"></FormSearch>
     <div class="x_panel">
       <div class="x_title">
         <h2>
@@ -111,16 +82,20 @@
         ></paginate>
       </div>
     </div>
-    <ModalForm  @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
+    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
 import ModalForm from "@/components/learning_words/ModalForm";
+import Breadcrumb from "@/components/elements/Breadcrumb";
+import FormSearch from "@/components/elements/FormSearch";
 export default {
   name: "ListLearningWords",
   components: {
-    ModalForm
+    ModalForm,
+    Breadcrumb,
+    FormSearch,
   },
   data() {
     return {
@@ -128,11 +103,27 @@ export default {
         data: [],
         last_page: 0
       },
-      modalOpen: false
+      modalOpen: false,
+      breads: [
+        {
+          title: "Dashboard",
+          link: "/dashboard"
+        },
+        {
+          title: "LearningWords management",
+          link: "/"
+        },
+        {
+          title: "List words",
+          link: "/"
+        }
+      ],
+      title: "Management Words",
+      keyword: "",
     };
   },
   created() {
-    this.getLearningWords()
+    this.getLearningWords();
   },
   computed: {
     pageCount() {
@@ -142,7 +133,7 @@ export default {
   methods: {
     getLearningWords(page = 1) {
       request({
-        url: "/backend/learning_words/list?page=" + page,
+        url: "/backend/learning_words/list?page=" + page+ "&keyword=" + this.keyword,
         method: "get"
       })
         .then(res => {
@@ -151,6 +142,10 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
+    },
+    search(keyword) {
+      this.keyword = keyword
+      this.getLearningWords()
     }
   }
 };
