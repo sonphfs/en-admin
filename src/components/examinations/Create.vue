@@ -86,30 +86,40 @@
             />
           </div>
         </div>
-        <div class="item form-group">
-          <label for="file-audio" class="control-label col-md-3">Audio</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <button type="button" class="btn btn-default" @click="chooseFile()">Upload Audio</button>
-            <span v-if="examination.audio">{{ examination.audio.name}}</span>
+        <div class="form-group">
+          <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Audio</label>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <button type="button" class="btn btn-default" @click="chooseAudio()">Upload Audio</button>
+            <p style="margin-top: 10px">
+              <span v-if="examination.audio">{{ examination.audio}}</span>
+            </p>
             <input
               id="file-audio"
               type="file"
-              name="audio"
+              name="examinationAudio"
               data-validate-length="6,8"
               class="form-control col-md-7 col-xs-12"
               required="required"
               ref="examinationAudio"
               style="display: none"
               accept="audio/*"
-              @change="changeFile()"
+              @change="changeAudio()"
             />
+            <audio controls controlslist="nodownload" v-if="examination.audio">
+              <source :src="'http://127.0.0.1:8001/'+ examination.audio" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-6 col-md-offset-3">
             <button type="button" class="btn btn-primary">Cancel</button>
-            <button id="send" type="button" class="btn btn-success" @click="createExamination()">Create</button>
+            <button
+              id="send"
+              type="button"
+              class="btn btn-success"
+              @click="createExamination()"
+            >Create</button>
           </div>
         </div>
       </form>
@@ -118,7 +128,7 @@
 </template>
 
 <script>
-import request from '@/utils/request'
+import request from "@/utils/request";
 export default {
   name: "CreateExamination",
   data() {
@@ -127,17 +137,18 @@ export default {
         title: null,
         audio: null,
         type: null,
-        description: null,
+        description: null
       },
       examinationTypes: []
     };
   },
   methods: {
-    chooseFile() {
+    chooseAudio() {
       this.$refs.examinationAudio.click();
     },
-    changeFile() {
-      this.examination.audio = this.$refs.examinationAudio.files[0];
+    changeAudio() {
+      this.fileUpload = this.$refs.examinationAudio.files[0];
+      this.uploadAudio("AUDIO", "EXAMINATION");
     },
     createExamination() {
       let data = this.examination;
@@ -153,20 +164,58 @@ export default {
           }
         })
         .then(res => {
-          console.log(res.data.result_data)
-          this.$router.push('/management/examinations/list')
+          console.log(res.data.result_data);
+          this.$router.push("/management/examinations/list");
+        });
+    },
+    uploadAudio(type = "AUDIO", object = "EXAMINATION") {
+      let formData = new FormData();
+      formData.append("file", this.fileUpload);
+      formData.append("type", type);
+      formData.append("object", object);
+      this.deleteFile(this.examination.audio)
+      request
+        .post("/backend/files/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         })
-    }
+        .then(res => {
+          let data = res.data.result_data;
+          if (data.typeFile == "AUDIO") {
+            this.examination.audio = data.filePath;
+          }
+        });
+    },
+    deleteFile(fileSrc) {
+      let data = {
+        filePath: fileSrc
+      };
+      console.log(data);
+      request({
+        url: "/backend/files/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
   },
   created() {
-      request({
-        url: '/backend/examinations/examination-types',
-        method: 'get'
-      }).then(res => {
-          this.examinationTypes = res.data.result_data
-      }).catch(err => {
-        console.log(err.res)
+    request({
+      url: "/backend/examinations/examination-types",
+      method: "get"
+    })
+      .then(res => {
+        this.examinationTypes = res.data.result_data;
       })
+      .catch(err => {
+        console.log(err.res);
+      });
   }
 };
 </script>

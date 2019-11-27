@@ -89,6 +89,17 @@ export default {
       modalData: {
         title: "Confirming!",
         message: "Are you sure update data!"
+      },
+      questionDataSeed: {
+        no: null,
+        content: "Dít is noi dung question?",
+        audio: null,
+        image: null,
+        answer_A: "Đáp án A",
+        answer_B: "Đáp án D",
+        answer_C: "Đáp án C",
+        answer_D: "Đáp án B",
+        correct_answer: "A"
       }
     };
   },
@@ -104,11 +115,11 @@ export default {
     async addQuestion() {
       this.questionCount = this.questions.length - this.hasExample;
       if (this.questionCount < 10) {
-        this.questions.push({ part: 1 });
+        this.questions.push(Object.assign({ part: 1 }, this.questionDataSeed));
       }
     },
     addExample() {
-      this.questions.push({ no: 0, part: 1 });
+      this.questions.push(Object.assign({ no: 0, part: 1 }, this.questionDataSeed));
     },
     getPart1() {
       request({
@@ -131,7 +142,7 @@ export default {
     },
     updateData() {
       let data = {
-        questions: this.questhions,
+        questions: this.questions,
         code: this.$route.params.code,
         part: this.$route.params.part
       };
@@ -146,7 +157,7 @@ export default {
         })
         .catch(err => {
           console.log(err.res);
-          this.errorAlert()
+          this.errorAlert();
         });
     },
     confirmModal() {

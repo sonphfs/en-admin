@@ -53,10 +53,7 @@ export default {
   },
   created() {
     if (this.modalData != undefined) {
-      this.modalData = {
-        title: "Confirming!",
-        message: "Are you sure update data!"
-      };
+      this.item = this.modalData
     }
   },
   methods: {

@@ -129,8 +129,8 @@ export default {
   props: ["adminInfos"],
   data() {
     return {
-      userMenu: true,
-      examMenu: !true,
+      userMenu: !true,
+      examMenu: true,
       lessonMenu: !true,
       wordMenu: !true,
       questionMenu: !true,
