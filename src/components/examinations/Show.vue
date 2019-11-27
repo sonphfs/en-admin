@@ -16,33 +16,40 @@
               <p>
                 <strong>Directions:</strong> For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time. Look at the example item below.
               </p>
-              <p>
+              <div v-for="question in examination.questions" v-if="question.part == 1 && question.no == 0">
+                <p>
                 <strong>Example:</strong>
               </p>
               <p>
                 <img
-                  src="https://enza.com.vn/toeic/image/sample/c-they-re-standing-near-the-table.jpg"
-                  alt="Image File"
-                  title="ENZA.VN"
+                  :src="serverUrl + question.image"
+                  alt="Example"
                 />
               </p>
               <p>Statement (C), "They're standing near the table," is the best description of the picture, so you should select answer (C) and mark it on your answer sheet.</p>
               <hr />
-              <div v-for="question in examination.questions" v-if="question.part == 1">
+              </div>
+              <div v-for="question in examination.questions" v-if="question.part == 1 && question.no != 0">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <p v-if="question.image">
-                  <img v-bind:src="question.image" alt="img01" title="ENZA.VN" />
+                  <img v-bind:src="serverUrl+question.image" alt="img01" />
                 </p>
                 <div class="answer">
                   <div class="r0">
-                    <div class="icheckbox_flat-green checked">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('A', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('B', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -50,7 +57,10 @@
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('c', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -77,41 +87,52 @@
               <p>
                 <strong>Directions:</strong> You will hear a question or statement and three responses spoken in English. They will be spoken only one time and will not be printed in your test book. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.
               </p>
-              <p>
+              <div v-for="question in examination.questions" v-if="question.part == 2 && question.no == 0">
+                <p>
                 <strong>Example</strong>
               </p>
               <p>
                 You will hear:
-                <strong>What are you doing?</strong>
+                <strong>{{question.content}}</strong>
               </p>
               <p>You will also hear:</p>
               <ul>
-                <li>(A) I am doing fine.</li>
-                <li>(B) I am looking for something.</li>
-                <li>(C) I can't do it.</li>
+                <li>(A) {{question.answer_A}}</li>
+                <li>(B) {{question.answer_B}}</li>
+                <li>(C) {{question.answer_C}}</li>
               </ul>
-              <p>The best response to the question "What are you doing?" is choice (B), "I am looking for something," so (B) is the correct answer. You should mark answer (B) on you answer sheet.</p>
+              <p>The best response to the question "{{question.content}}" is choice ({{question.correct_answer}}), "I am looking for something," so ({{question.correct_answer}}) is the correct answer. You should mark answer ({{question.correct_answer}}) on you answer sheet.</p>
               <hr />
+              </div>
               <p></p>
-              <div v-for="question in examination.questions" v-if="question.part == 2">
+              <div v-for="question in examination.questions" v-if="question.part == 2 && question.no != 0">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <div class="icheckbox_flat-green checked">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('A', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
-                    <label v-bind:for="question.id+'A'">{{  question.answer_A}}</label>
+                    <label v-bind:for="question.id+'A'">{{ question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('B', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('C', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
@@ -134,32 +155,41 @@
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <div class="icheckbox_flat-green checked">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('A', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('B', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
-
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('C', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
-
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('D', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
-
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'D'">{{question.answer_D}}</label>
@@ -182,22 +212,30 @@
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <div class="icheckbox_flat-green checked">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('A', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('B', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
-
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('C', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -205,7 +243,10 @@
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('D', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -229,14 +270,20 @@
                 <h5>{{question.no}}. {{question.content}}</h5>
                 <div class="answer">
                   <div class="r0">
-                    <div class="icheckbox_flat-green checked">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('A', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                       <ins class="iCheck-helper"></ins>
                     </div>
                     <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('B', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -244,7 +291,10 @@
                     <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('C', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -252,7 +302,10 @@
                     <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                   </div>
                   <div class="r0">
-                    <div class="icheckbox_flat-green">
+                    <div
+                      class="icheckbox_flat-green"
+                      :class="getCheckedClass('D', question.correct_answer)"
+                    >
                       <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                       <ins class="iCheck-helper"></ins>
@@ -280,14 +333,20 @@
                   <h5>{{question.no}}. {{question.content}}</h5>
                   <div class="answer">
                     <div class="r0">
-                      <div class="icheckbox_flat-green checked">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('A', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                         <ins class="iCheck-helper"></ins>
                       </div>
                       <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('B', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -295,7 +354,10 @@
                       <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('C', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -303,7 +365,10 @@
                       <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('D', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -343,14 +408,20 @@
 
                   <div class="answer">
                     <div class="r0">
-                      <div class="icheckbox_flat-green checked">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('A', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
                         <ins class="iCheck-helper"></ins>
                       </div>
                       <label v-bind:for="question.id+'A'">{{question.answer_A}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('B', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -358,7 +429,10 @@
                       <label v-bind:for="question.id+'B'">{{question.answer_B}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('C', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -366,7 +440,10 @@
                       <label v-bind:for="question.id+'C'">{{question.answer_C}}</label>
                     </div>
                     <div class="r0">
-                      <div class="icheckbox_flat-green">
+                      <div
+                        class="icheckbox_flat-green"
+                        :class="getCheckedClass('D', question.correct_answer)"
+                      >
                         <input type="radio" name="correct_answer" class="flat" style="opacity: 0" />
 
                         <ins class="iCheck-helper"></ins>
@@ -521,7 +598,8 @@ export default {
       status: {
         0: "unActice",
         1: "Active"
-      }
+      },
+      serverUrl: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   components: {
@@ -550,19 +628,24 @@ export default {
         data
       })
         .then(res => {
-          console.log(res)
-          let data = res.data.result_data
-          if(data.updated == true) {
-            if(data.status == 1) {
-                alert('Examination has been actived!')
-            }else {
-                alert('Examination has been unactived!')
+          console.log(res);
+          let data = res.data.result_data;
+          if (data.updated == true) {
+            if (data.status == 1) {
+              alert("Examination has been actived!");
+            } else {
+              alert("Examination has been unactived!");
             }
           }
         })
         .catch(err => {
           console.log(err.res);
         });
+    },
+    getCheckedClass(answer, correctAnswer) {
+      return {
+        checked: answer == correctAnswer
+      };
     }
   },
   created() {
@@ -576,7 +659,7 @@ export default {
 };
 </script>
 <style>
-  div.answer label{
-      margin-left: 10px;
-  }
+div.answer label {
+  margin-left: 10px;
+}
 </style>
