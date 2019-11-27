@@ -38,13 +38,11 @@
             <tr v-for="(subject, index) in sort.values" :key="subject.id">
               <td>{{subject.id}}</td>
               <td>{{subject.name}}</td>
-              <td>{{subject.image}}</td>
+              <td v-if="subject.image"><img :src="serverUri + subject.image" width="50px" height=50px></td>
+              <td v-else>EMPTY</td>
               <td>{{subject.created_at}}</td>
               <td>
-                <a class="btn btn-primary btn-xs">
-                  <i class="fa fa-folder"></i> View
-                </a>
-                <a class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs"  @click="edit(subject)">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
                 <a @click="confirmDelete(subject.id)" class="btn btn-danger btn-xs">
@@ -64,7 +62,7 @@
         ></paginate>
       </div>
     </div>
-    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
+    <ModalForm @onClose="closeModal()" v-if="modalOpen==true" :item="itemModal"></ModalForm>
   </div>
 </template>
 <script>
@@ -101,7 +99,9 @@ export default {
       title: "",
       keyword: "",
       modalOpen: false,
-      selectedSubject: 0
+      selectedSubject: 0,
+      itemModal: {},
+      serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   created() {
@@ -124,6 +124,14 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
+    },
+    edit(subject){
+      this.itemModal = subject
+      this.modalOpen = true
+    },
+    closeModal(){
+      this.modalOpen=false
+      this.itemModal = false
     },
     search(keyword) {
       this.keyword = keyword;
@@ -158,8 +166,10 @@ export default {
         data
       })
         .then(res => {
-          console.log(res.data.result_data);
-          this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
+          let result_data = res.data.result_data
+          if(result_data.deleted_at) {
+            this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
+          }
         })
         .catch(err => {
           console.log(err.res);

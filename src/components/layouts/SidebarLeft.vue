@@ -14,7 +14,7 @@
       <div class="profile clearfix">
         <div class="profile_pic">
           <img
-            :src="'http://localhost:8001/' + userInfos.avatar"
+            :src="serverUri + userInfos.avatar"
             alt="..."
             class="img-circle profile_img"
           />
@@ -134,7 +134,8 @@ export default {
       lessonMenu: !true,
       wordMenu: !true,
       questionMenu: !true,
-      userInfos: {}
+      userInfos: {},
+      serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   methods: {},
