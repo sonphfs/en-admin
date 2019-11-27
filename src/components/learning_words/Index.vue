@@ -11,7 +11,7 @@
         <ul class="nav navbar-right panel_toolbox">
           <li>
             <a class="collapse-link">
-              <button type="submit" class="btn btn-success" @click="modalOpen=true">Create new Words</button>
+              <button type="submit" class="btn btn-success" @click="createWord">Create new Words</button>
             </a>
           </li>
         </ul>
@@ -55,17 +55,18 @@
               <td>{{word.type}}</td>
               <td>{{word.pronunciation}}</td>
               <td>{{word.meaning}}</td>
-              <td>{{word.image}}</td>
+              <td v-if="word.image"><img :src="serverUri + word.image" width="50px" height=50px></td>
+              <td v-else>EMPTY</td>
               <td>{{word.example}}</td>
               <td>{{word.created_at}}</td>
               <td>
                 <a class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a class="btn btn-info btn-xs">
+                <a class="btn btn-info btn-xs" @click="edit(word)">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a class="btn btn-danger btn-xs">
+                <a class="btn btn-danger btn-xs" @click="confirmDelete(word)">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -82,7 +83,7 @@
         ></paginate>
       </div>
     </div>
-    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
+    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true" :item="wordSelected"></ModalForm>
   </div>
 </template>
 <script>
@@ -120,6 +121,8 @@ export default {
       ],
       title: "Management Words",
       keyword: "",
+      wordSelected: {},
+      serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   created() {
@@ -146,6 +149,68 @@ export default {
     search(keyword) {
       this.keyword = keyword
       this.getLearningWords()
+    },
+    createWord(){
+      this.wordSelected = {}
+      this.modalOpen=true
+    },
+    edit(word) {
+      this.wordSelected = word
+      this.modalOpen = true
+    },
+    confirmDelete(word) {
+      this.wordSelected = word;
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to delete this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            this.deleteWord();
+          }
+        });
+    },
+    deleteWord() {
+      let data = {
+        id: this.wordSelected.id
+      }
+      request({
+        url: '/backend/learning_words/delete',
+        method: 'post',
+        data
+      }).then(res => {
+        let result_data = res.data.result_data
+        if(result_data.deleted_at) {
+          console.log(result_data.deleted_at)
+          this.successAlert('Delete success!')
+        }
+      }).catch(err => {
+        this.errorAlert('Delete exam failed!')
+      })
+    },
+   successAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
     }
   }
 };

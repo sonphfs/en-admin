@@ -18,7 +18,7 @@
               aria-hidden="true"
               @click="close()"
             >×</button>
-            <h4 class="modal-title" id="myModalLabel">New Word</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ action }} Word</h4>
           </div>
           <div class="modal-body">
             <div id="testmodal" style="padding: 5px 20px;">
@@ -147,7 +147,7 @@
               data-dismiss="modal"
               @click="close()"
             >Cancel</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="createWord()">Create</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="createOrUpdateWord()">{{ action }}</button>
           </div>
         </div>
       </div>
@@ -162,6 +162,7 @@ import Multiselect from "vue-multiselect";
 
 export default {
   name: "ModalForm",
+  props: ['word'],
   components: {
     Multiselect
   },
@@ -174,10 +175,15 @@ export default {
       },
       fileUpload: "",
       listSubject: [],
-      subjectSelected: { name: "Select one" }
+      subjectSelected: { name: "Select one" },
+      action: ""
     };
   },
   created() {
+    if(this.item.id) {
+      this.action = "Update"
+      this.learning_word = Object.assign({}, this.item)
+    }
     this.getSubjects();
   },
   methods: {
@@ -258,10 +264,10 @@ export default {
           console.log(err);
         });
     },
-    createWord(){
+    createOrUpdateWord(){
       let data = this.learning_word
       request({
-        url: "/backend/learning_words/create",
+        url: "/backend/learning_words/create-or-update",
         method: "post",
         data
       }).then(res => {

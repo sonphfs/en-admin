@@ -18,7 +18,7 @@
               aria-expanded="false"
               @click="drawer=!drawer"
             >
-              <img :src="'http://localhost:8001/' + userInfos.avatar" alt />{{userInfos.username}}
+              <img :src="serverUri + userInfos.avatar" alt />{{userInfos.username}}
               <span class="fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right show" v-if="drawer">
@@ -135,7 +135,8 @@ export default {
   data() {
     return {
       drawer: false,
-      userInfos: {}
+      userInfos: {},
+      serverUri: process.env.VUE_APP_BASE_SERVER_URL
     }
   },
   methods: {

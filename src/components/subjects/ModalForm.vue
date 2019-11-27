@@ -18,7 +18,7 @@
               aria-hidden="true"
               @click="close()"
             >×</button>
-            <h4 class="modal-title" id="myModalLabel">New Subject</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ action }} Subject</h4>
           </div>
           <div class="modal-body">
             <div id="testmodal" style="padding: 5px 20px;">
@@ -70,7 +70,7 @@
               data-dismiss="modal"
               @click="close()"
             >Cancel</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="createSubject()">Create</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="createOrUpdateSubject()">{{ action }}</button>
           </div>
         </div>
       </div>
@@ -90,10 +90,16 @@ export default {
         name: "",
         image: ""
       },
-      fileUpload: ""
+      fileUpload: "",
+      action: "Create"
     };
   },
-  created() {},
+  created() {
+      if(this.item.id) {
+        this.subject = Object.assign({}, this.item);
+        this.action = "Update"
+      }
+  },
   methods: {
     close() {
       this.$emit("onClose");
@@ -141,10 +147,10 @@ export default {
           console.log(err);
         });
     },
-    createSubject() {
+    createOrUpdateSubject() {
       let data = this.subject;
       request({
-        url: "/backend/subjects/create",
+        url: "/backend/subjects/create-or-update",
         method: "post",
         data
       })

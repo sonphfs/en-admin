@@ -32,7 +32,7 @@
                 <!-- Current avatar -->
                 <img
                   class="img-responsive avatar-view"
-                  :src="'http://localhost:8001/' + userInfos.avatar"
+                  :src="serverUri + userInfos.avatar"
                   alt="Avatar"
                   title="Change the avatar"
                 />
@@ -170,7 +170,8 @@ export default {
           title: "Detail user",
           link: "/"
         }
-      ]
+      ],
+      serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   created() {
