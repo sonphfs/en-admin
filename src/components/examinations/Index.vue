@@ -157,7 +157,7 @@ export default {
       },
       examinationSelected: {},
       keyword: "",
-      title: "Management Examinations",
+      title: "Management Examinations"
     };
   },
   created() {
@@ -212,9 +212,13 @@ export default {
           this.errorAlert();
         });
     },
-    getExaminations(page=1) {
+    getExaminations(page = 1) {
       request({
-        url: "/backend/examinations/list?page=" + page + "&keyword=" + this.keyword,
+        url:
+          "/backend/examinations/list?page=" +
+          page +
+          "&keyword=" +
+          this.keyword,
         method: "get"
       })
         .then(res => {
@@ -235,17 +239,23 @@ export default {
     deleteExam() {
       let data = {
         code: this.examinationSelected.code
-      }
+      };
       request({
-        url: '/backend/examinations/delete',
-        method: 'post'
-      }).then(res => {
-          this.closeConfirmModal('delete')
-          this.successAlert('Delete success!')
-      }).catch(err => {
-        this.closeConfirmModal('delete')
-        this.errorAlert('Delete exam failed!')
+        url: "/backend/examinations/delete",
+        method: "post",
+        data
       })
+        .then(res => {
+          if (res.data.result_data.deleted_at) {
+            this.getExaminations();
+            this.closeConfirmModal("delete");
+            this.successAlert("Delete success!");
+          }
+        })
+        .catch(err => {
+          this.closeConfirmModal("delete");
+          this.errorAlert("Delete exam failed!");
+        });
     },
     successAlert(message) {
       this.$swal.fire({
@@ -265,9 +275,9 @@ export default {
         padding: "3em"
       });
     },
-    search(keyword){
-      this.keyword = keyword
-      this.getExaminations()
+    search(keyword) {
+      this.keyword = keyword;
+      this.getExaminations();
     }
   },
   computed: {

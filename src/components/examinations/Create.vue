@@ -158,7 +158,7 @@ export default {
       formData.append("type", this.examination.type);
       formData.append("description", this.examination.description);
       request
-        .post("/backend/examinations/create", formData, {
+        .post("/backend/examinations/create-or-update", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

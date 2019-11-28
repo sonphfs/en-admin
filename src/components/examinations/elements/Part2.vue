@@ -54,21 +54,29 @@
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
             >Add Question</button>
-            <button class="btn btn-primary" @click="updateData()">Update</button>
+            <button class="btn btn-primary" @click="confirmModal()">Update</button>
           </div>
         </div>
       </div>
     </div>
+    <ModalConfirm
+      v-if="!modalHidden"
+      :modalData="modalData"
+      @accept="updateData"
+      @onClose="modalHidden=true"
+    ></ModalConfirm>
   </div>
 </template>
 
 <script>
 import request from "@/utils/request";
 import Question from "@/components/elements/CreateQuestion.vue";
+import ModalConfirm from "@/components/elements/ModalConfirm.vue";
 export default {
-  name: "Part1",
+  name: "Part2",
   components: {
-    Question
+    Question,
+    ModalConfirm
   },
   data() {
     return {
@@ -76,7 +84,22 @@ export default {
       questionCount: 0,
       maxQuestionCount: 10,
       hasExample: false,
-      questions: []
+      questions: [],
+      modalHidden: true,
+      modalData: {
+        title: "Confirming!",
+        message: "Are you sure update data!"
+      },
+      questionDataSeed: {
+        content: "Dít is noi dung question?",
+        audio: null,
+        image: null,
+        answer_A: "Đáp án A",
+        answer_B: "Đáp án D",
+        answer_C: "Đáp án C",
+        answer_D: "Đáp án B",
+        correct_answer: "A"
+      }
     };
   },
   methods: {
@@ -88,16 +111,16 @@ export default {
       this.$refs.questionAudio.click();
     },
     changeAudio() {},
-    addQuestion() {
+    async addQuestion() {
       this.questionCount = this.questions.length - this.hasExample;
       if (this.questionCount < 10) {
-        this.questions.push({ part: 1 });
+        this.questions.push(Object.assign({no: null, part: 2 }, this.questionDataSeed));
       }
     },
     addExample() {
-      this.questions.push({ no: 0, part: 1 });
+      this.questions.push(Object.assign({ no: 0, part: 2 }, this.questionDataSeed));
     },
-    getPart1() {
+    getPart2() {
       request({
         url:
           "/backend/examinations/questions/" +
@@ -109,7 +132,7 @@ export default {
         .then(res => {
           console.log(res.data.result_data);
           let data = res.data.result_data;
-          this.questions = Object.keys(data).map(i => data[i])
+          this.questions = Object.keys(data).map(i => data[i]);
           this.maxQuestionCount -= this.questions.length;
         })
         .catch(err => {
@@ -129,14 +152,39 @@ export default {
       })
         .then(res => {
           console.log(res.data.result_data);
+          this.modalHidden = true;
+          this.successAlert();
         })
         .catch(err => {
           console.log(err.res);
+          this.modalHidden = true;
+          this.errorAlert();
         });
+    },
+    confirmModal() {
+      this.modalHidden = false;
+    },
+    successAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: "Data has been updated!",
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert() {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: "Update data failed!",
+        width: 600,
+        padding: "3em"
+      });
     }
   },
   created() {
-    this.getPart1();
+    this.getPart2();
   }
 };
 </script>

@@ -90,23 +90,28 @@
             />
           </div>
         </div>
-        <div class="item form-group">
-          <label for="file-audio" class="control-label col-md-3">Audio</label>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <button type="button" class="btn btn-default" @click="chooseFile()">Upload Audio</button>
-            <span v-if="examination.audio">{{ examination.audio.name}}</span>
+        <div class="form-group">
+          <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Audio</label>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <button type="button" class="btn btn-default" @click="chooseAudio()">Upload Audio</button>
+            <p style="margin-top: 10px">
+              <span v-if="examination.audio">{{ examination.audio}}</span>
+            </p>
             <input
               id="file-audio"
               type="file"
-              name="audio"
+              name="examinationAudio"
               data-validate-length="6,8"
               class="form-control col-md-7 col-xs-12"
               required="required"
               ref="examinationAudio"
               style="display: none"
               accept="audio/*"
-              @change="changeFile()"
+              @change="changeAudio()"
             />
+            <audio controls controlslist="nodownload" v-if="examination.audio">
+              <source :src="'http://127.0.0.1:8001/'+ examination.audio" type="audio/mpeg" />
+            </audio>
           </div>
         </div>
         <div class="item form-group">
@@ -129,7 +134,7 @@
               id="send"
               type="button"
               class="btn btn-success"
-              @click="createExamination()"
+              @click="updateExamination()"
             >Update</button>
           </div>
         </div>
@@ -144,43 +149,64 @@
                 <tr>
                   <th>Part 1</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/1'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/1'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 2</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/2'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/2'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 3</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/3'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/3'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 4</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/4'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/4'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 5</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/5'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/5'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 6</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/6'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/6'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
                 <tr>
                   <th>Part 7</th>
                   <td>
-                    <a :href="'/management/examinations/part/' + this.$route.params.code + '/7'" class="btn btn-primary">Edit</a>
+                    <a
+                      :href="'/management/examinations/part/' + this.$route.params.code + '/7'"
+                      class="btn btn-primary"
+                    >Edit</a>
                   </td>
                 </tr>
               </tbody>
@@ -204,17 +230,55 @@ export default {
         type: null,
         description: null
       },
-      examinationTypes: []
+      examinationTypes: [],
+      fileUpload: ""
     };
   },
   methods: {
-    chooseFile() {
+    chooseAudio() {
       this.$refs.examinationAudio.click();
     },
-    changeFile() {
-      this.examination.audio = this.$refs.examinationAudio.files[0];
+    changeAudio() {
+      this.fileUpload = this.$refs.examinationAudio.files[0];
+      this.uploadAudio();
     },
-    createExamination() {
+    uploadAudio(type = "AUDIO", object = "EXAMINATION") {
+      let formData = new FormData();
+      formData.append("file", this.fileUpload);
+      formData.append("type", type);
+      formData.append("object", object);
+      if (this.examination.audio != "") {
+        this.deleteFile(this.examination.audio);
+      }
+      request
+        .post("/backend/files/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          let data = res.data.result_data;
+          this.examination.audio = data.filePath;
+        });
+    },
+    deleteFile(fileSrc) {
+      let data = {
+        filePath: fileSrc
+      };
+      console.log(data);
+      request({
+        url: "/backend/files/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    updateExamination() {
       let data = this.examination;
       let formData = new FormData();
       formData.append("title", this.examination.title);
@@ -222,7 +286,7 @@ export default {
       formData.append("type", this.examination.type);
       formData.append("description", this.examination.description);
       request
-        .post("/backend/examinations/create", formData, {
+        .post("/backend/examinations/create-or-update", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

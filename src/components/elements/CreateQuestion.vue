@@ -25,6 +25,33 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Image</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <button type="button" class="btn btn-default" @click="chooseImage()">Upload Image</button>
+          <p style="margin-top: 10px">
+            <span v-model="question.image" v-if="question.image">{{ question.image}}</span>
+          </p>
+          <input
+            id="file-image"
+            type="file"
+            name="questionImage"
+            data-validate-length="6,8"
+            class="form-control col-md-7 col-xs-12"
+            required="required"
+            ref="questionImage"
+            style="display: none"
+            accept="image/*"
+            @change="changeImage()"
+          />
+          <img
+            v-if="question.image"
+            :src="'http://127.0.0.1:8001/'+ question.image"
+            width="300px"
+            height="300px"
+          />
+        </div>
+      </div>
+      <div class="form-group">
         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
           Đáp án A
           <br />
@@ -121,41 +148,12 @@
       </div>
       <hr />
     </div>
-    <div class="col-md-4">
-      <div class="item form-group" v-if="question.part == 1">
-        <div class="x_content">
-          <span>Click here to upload image</span>
-          <form
-            action="form_upload.html"
-            class="dropzone dz-clickable"
-            @click="chooseImage()"
-            style="min-height: 200px;"
-          >
-            <div class="dz-default dz-message">
-              <img
-                src="http://www.flyhigh.edu.vn/uploads/imgBaiViet/061-1477292327.jpg"
-                alt="click to upload"
-                width="300px" height="auto"
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <input
-        type="file"
-        data-validate-length="6,8"
-        class="form-control col-md-7 col-xs-12"
-        required="required"
-        ref="questionImage"
-        style="display: none"
-        accept="image/*"
-        @change="changeImage()"
-      />
-    </div>
+    <div class="col-md-4"></div>
   </div>
 </template>
 
 <script>
+import request from "@/utils/request"
 export default {
   name: "CreateQuestion",
   components: {},
@@ -172,7 +170,8 @@ export default {
         answer_C: "",
         answer_D: "",
         correct_answer: ""
-      }
+      },
+      fileUpload: ""
     };
   },
   methods: {
@@ -180,16 +179,49 @@ export default {
       this.$refs.questionImage.click();
     },
     changeImage() {
-      this.question.image = this.$refs.questionImage.files[0];
+      this.fileUpload = this.$refs.questionImage.files[0];
+      this.uploadImage();
     },
-    chooseCorrectAnswer(answer) {
-      console.log(answer);
-      this.question.correct_answer = answer;
+    uploadImage(type = "IMAGE", object = "EXAMINATION") {
+      let formData = new FormData();
+      formData.append("file", this.fileUpload);
+      formData.append("type", type);
+      formData.append("object", object);
+      if (this.question.image != "") {
+        this.deleteFile(this.question.image);
+      }
+      request
+        .post("/backend/files/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          let data = res.data.result_data;
+          this.question.image = data.filePath;
+        });
+    },
+    deleteFile(fileSrc) {
+      let data = {
+        filePath: fileSrc
+      };
+      console.log(data);
+      request({
+        url: "/backend/files/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created() {
     if (this.item) {
-       this.question = {...this.question, ...this.item};
+      this.question = this.item;
     }
   }
 };

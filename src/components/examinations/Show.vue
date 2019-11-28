@@ -24,6 +24,7 @@
                 <img
                   :src="serverUrl + question.image"
                   alt="Example"
+                  width="300px" height="300px"
                 />
               </p>
               <p>Statement (C), "They're standing near the table," is the best description of the picture, so you should select answer (C) and mark it on your answer sheet.</p>
@@ -32,7 +33,7 @@
               <div v-for="question in examination.questions" v-if="question.part == 1 && question.no != 0">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <p v-if="question.image">
-                  <img v-bind:src="serverUrl+question.image" alt="img01" />
+                  <img v-bind:src="serverUrl+question.image" alt="img01" width="300px" height="300px"/>
                 </p>
                 <div class="answer">
                   <div class="r0">

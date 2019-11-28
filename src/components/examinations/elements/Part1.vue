@@ -91,7 +91,6 @@ export default {
         message: "Are you sure update data!"
       },
       questionDataSeed: {
-        no: null,
         content: "Dít is noi dung question?",
         audio: null,
         image: null,
@@ -115,7 +114,7 @@ export default {
     async addQuestion() {
       this.questionCount = this.questions.length - this.hasExample;
       if (this.questionCount < 10) {
-        this.questions.push(Object.assign({ part: 1 }, this.questionDataSeed));
+        this.questions.push(Object.assign({no: null, part: 1 }, this.questionDataSeed));
       }
     },
     addExample() {
@@ -153,10 +152,12 @@ export default {
       })
         .then(res => {
           console.log(res.data.result_data);
+          this.modalHidden = true;
           this.successAlert();
         })
         .catch(err => {
           console.log(err.res);
+          this.modalHidden = true;
           this.errorAlert();
         });
     },
