@@ -39,7 +39,7 @@
       <div class="x_content">
         <br />
         <Question v-for="i in questionCount"></Question>
-        <!-- <VueEditor v-model="paragraph"></VueEditor> -->
+        <VueEditor v-model="paragraph"></VueEditor>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">

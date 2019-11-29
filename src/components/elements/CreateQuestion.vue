@@ -24,7 +24,7 @@
           <input type="text" class="form-control" v-model="question.content" />
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="question.part==1">
         <label for="file-image" class="control-label col-md-3 col-sm-3 col-xs-12">Image</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
           <button type="button" class="btn btn-default" @click="chooseImage()">Upload Image</button>
@@ -123,7 +123,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="question.part!=2">
         <label class="col-md-3 col-sm-3 col-xs-12 control-label">
           Đáp án D
           <br />

@@ -82,7 +82,7 @@ export default {
     return {
       paragraph: "",
       questionCount: 0,
-      maxQuestionCount: 10,
+      maxQuestionCount: 30,
       hasExample: false,
       questions: [],
       modalHidden: true,
@@ -113,7 +113,7 @@ export default {
     changeAudio() {},
     async addQuestion() {
       this.questionCount = this.questions.length - this.hasExample;
-      if (this.questionCount < 10) {
+      if (this.questionCount < 30) {
         this.questions.push(Object.assign({no: null, part: 2 }, this.questionDataSeed));
       }
     },
@@ -125,8 +125,7 @@ export default {
         url:
           "/backend/examinations/questions/" +
           this.$route.params.code +
-          "/" +
-          this.$route.params.part,
+          "/2",
         method: "get"
       })
         .then(res => {
@@ -143,7 +142,7 @@ export default {
       let data = {
         questions: this.questions,
         code: this.$route.params.code,
-        part: this.$route.params.part
+        part: 2
       };
       request({
         url: "backend/examinations/update-part",

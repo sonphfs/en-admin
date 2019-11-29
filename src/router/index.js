@@ -114,8 +114,36 @@ const routes = [
         component: () => import("@/components/examinations/Edit"),
     },
     {
-        path: '/management/examinations/part/:code/:part',
+        path: '/management/examinations/part/:code/1',
         component: () => import("@/components/examinations/elements/Part1"),
+    },
+    {
+        path: '/management/examinations/part/:code/2',
+        component: () => import("@/components/examinations/elements/Part2"),
+    },
+    {
+        path: '/management/examinations/part/:code/3',
+        component: () => import("@/components/examinations/elements/Part3"),
+    },
+    {
+        path: '/management/examinations/part/:code/4',
+        component: () => import("@/components/examinations/elements/Part4"),
+    },
+    {
+        path: '/management/examinations/part/:code/5',
+        component: () => import("@/components/examinations/elements/Part5"),
+    },
+    {
+        path: '/management/examinations/part/:code/6',
+        component: () => import("@/components/examinations/elements/Part6"),
+    },
+    {
+        path: '/management/examinations/part/:code/7',
+        component: () => import("@/components/examinations/elements/Part7"),
+    },
+    {
+        path: '/management/examinations/part/edit',
+        component: () => import("@/components/examinations/PartEdit"),
     },
     //learning_words
     {

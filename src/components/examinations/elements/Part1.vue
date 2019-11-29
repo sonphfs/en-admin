@@ -125,8 +125,7 @@ export default {
         url:
           "/backend/examinations/questions/" +
           this.$route.params.code +
-          "/" +
-          this.$route.params.part,
+          "/1",
         method: "get"
       })
         .then(res => {
@@ -143,7 +142,7 @@ export default {
       let data = {
         questions: this.questions,
         code: this.$route.params.code,
-        part: this.$route.params.part
+        part: 1
       };
       request({
         url: "backend/examinations/update-part",
