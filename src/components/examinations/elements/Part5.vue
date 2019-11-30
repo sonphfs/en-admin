@@ -1,5 +1,6 @@
 <template>
   <div class="col-md-12 col-sm-12 col-xs-12">
+    <Breadcrumb :breads="breads"></Breadcrumb>
     <div class="x_panel">
       <div class="x_title">
         <h2>Part 5</h2>
@@ -72,11 +73,13 @@
 import request from "@/utils/request";
 import Question from "@/components/elements/CreateQuestion.vue";
 import ModalConfirm from "@/components/elements/ModalConfirm.vue";
+import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
   name: "Part1",
   components: {
     Question,
-    ModalConfirm
+    ModalConfirm,
+    Breadcrumb
   },
   data() {
     return {
@@ -99,7 +102,21 @@ export default {
         answer_C: "Đáp án C",
         answer_D: "Đáp án B",
         correct_answer: "A"
-      }
+      },
+      breads: [
+        {
+          title: "Dashboard",
+          link: "/dashboard"
+        },
+        {
+          title: "Examinations management",
+          link: "/"
+        },
+        {
+          title: "Edit examinations",
+          link: "/"
+        }
+      ]
     };
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="form-horizontal form-label-left col-md-8">
-      <div class="form-group" v-if="item.no !== 0">
+      <div class="form-group" v-if="question.no !== 0">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">No</label>
         <div class="col-md-5 col-sm-5 col-xs-12">
           <input
@@ -14,7 +14,7 @@
           />
         </div>
       </div>
-      <div class="form-group" v-if="item.no === 0">
+      <div class="form-group" v-if="question.no === 0">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Example</label>
         <div class="col-md-5 col-sm-5 col-xs-12"></div>
       </div>
@@ -220,7 +220,7 @@ export default {
     }
   },
   created() {
-    if (this.item) {
+    if (this.item !== undefined) {
       this.question = this.item;
     }
   }
