@@ -7,14 +7,10 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <br />
-        <Question v-for="i in questionCount"></Question>
-        <VueEditor v-model="paragraph"></VueEditor>
-        <div class="ln_solid"></div>
+        <NewParagraph v-for="item in part7"></NewParagraph>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <button class="btn btn-primary" @click="addQuestion">Add Question</button>
-            <button class="btn btn-success">Add Paragraph</button>
+            <button class="btn btn-success" @click="addParagraph">Add Paragraph</button>
           </div>
         </div>
       </div>
@@ -23,13 +19,13 @@
 </template>
 
 <script>
-import Question from "@/components/elements/CreateQuestion.vue";
+import NewParagraph from "@/components/elements/NewParagraph.vue";
 import { VueEditor } from "vue2-editor";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
-  name: "Part1",
+  name: "Part7",
   components: {
-    Question,
+    NewParagraph,
     VueEditor,
     Breadcrumb
   },
@@ -53,27 +49,12 @@ export default {
           link: "/"
         }
       ],
-      questions: [],
-      questionDataSeed: {
-        content: "Dít is noi dung question?",
-        audio: null,
-        image: null,
-        answer_A: "Đáp án A",
-        answer_B: "Đáp án D",
-        answer_C: "Đáp án C",
-        answer_D: "Đáp án B",
-        correct_answer: "A"
-      }
+      part7: []
     };
   },
   methods: {
-    addQuestion() {
-      this.questionCount = this.questions.length - this.hasExample;
-      if (this.questionCount < 10) {
-        this.questions.push(
-          Object.assign({ no: null, part: 1 }, this.questionDataSeed)
-        );
-      }
+    addParagraph() {
+      this.part7.push(Object.assign({ part: 7, paragraph: "", content: "" }, {}));
     }
   }
 };

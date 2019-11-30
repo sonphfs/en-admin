@@ -217,6 +217,9 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    chooseCorrectAnswer(answer) {
+      this.question.correct_answer = answer;
     }
   },
   created() {
