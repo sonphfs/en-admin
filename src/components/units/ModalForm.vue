@@ -69,6 +69,7 @@
 
 <script>
 import request from "@/utils/request";
+import { successAlert, errorAlert } from "@/utils/alert"
 export default {
   name: "ModalForm",
   props: ['item'],
@@ -98,8 +99,12 @@ export default {
       })
         .then(res => {
           console.log(res);
+          successAlert();
+          this.close();
         })
-        .catch(err => {});
+        .catch(err => {
+          errorAlert()
+        });
     },
     getUnits() {
       request({

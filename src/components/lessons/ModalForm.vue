@@ -32,9 +32,9 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Unit</label>
                   <div class="col-sm-9">
-                    <select class="select2_group form-control">
+                    <select class="select2_group form-control" v-model="lesson.unit_id">
                       <option value>Select unit</option>
-                      <option v-for="unit in listUnits" v-if="unit.parent_id == 0" :value="unit.id">{{ unit.name}}</option>
+                      <option v-for="unit in listUnits" v-if="unit.parent_id != 0" :value="unit.id">{{ unit.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -87,7 +87,7 @@ export default {
     return {
       lesson: {
           title: "",
-          unit_id: 0,
+          unit_id: null,
           image: ""
       },
       listUnits: []

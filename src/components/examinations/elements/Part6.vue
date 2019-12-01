@@ -72,12 +72,12 @@ export default {
         data
       })
         .then(res => {
-          console.log(res.data.result_data);
-          this.this.getPartData()
+          this.getPartData()
           this.successAlert();
         })
         .catch(err => {
-          console.log(err.res);
+          console.log(err);
+          this.getPartData()
           this.errorAlert();
         });
     },
