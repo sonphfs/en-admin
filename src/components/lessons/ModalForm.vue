@@ -34,7 +34,7 @@
                   <div class="col-sm-9">
                     <select class="select2_group form-control">
                       <option value>Select unit</option>
-                      <option v-for="unit in listUnits" v-if="unit.parent_id == 0">{{ unit.name}}</option>
+                      <option v-for="unit in listUnits" v-if="unit.parent_id == 0" :value="unit.id">{{ unit.name}}</option>
                     </select>
                   </div>
                 </div>

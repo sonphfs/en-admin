@@ -72,7 +72,7 @@
             <tr v-for="(lesson, index) in sort.values" :key="lesson.id">
               <td>{{lesson.id}}</td>
               <td>{{lesson.title}}</td>
-              <td>{{lesson.image}}</td>
+              <td><img :src="serverUrl + lesson.image" width="150px" height="150px"></td>
               <td>{{lesson.unit.name}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
@@ -118,7 +118,8 @@ export default {
         data: [],
         last_page: 0
       },
-      modalOpen: false
+      modalOpen: false,
+      serverUrl: process.env.VUE_APP_BASE_SERVER_URL
     };
   },
   created() {
