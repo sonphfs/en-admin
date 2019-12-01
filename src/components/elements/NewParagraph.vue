@@ -8,10 +8,7 @@
               <label class="control-label col-md-1 col-sm-1 col-xs-12">Content</label>
               <div class="col-md-5 col-sm-5 col-xs-12">
                 <input
-                  type="number"
                   class="form-control"
-                  min="0"
-                  max="200"
                   v-model="bigQuestion.content"
                   placeholder="Questions 153-154 refer to the following e-mail."
                   required
@@ -44,6 +41,7 @@ export default {
     VueEditor,
     Breadcrumb
   },
+  props: ["item"],
   data() {
     return {
       hasExample: false,
@@ -87,6 +85,11 @@ export default {
           Object.assign({ no: null}, this.questionDataSeed)
         );
       }
+    }
+  },
+  created(){
+    if (this.item !== undefined) {
+      this.bigQuestion = this.item;
     }
   }
 };
