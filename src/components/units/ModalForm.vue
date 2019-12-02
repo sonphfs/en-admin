@@ -39,7 +39,7 @@
                   <label class="col-sm-3 control-label">Parent unit</label>
                   <div class="col-sm-9">
                     <select class="select2_group form-control" v-model="unit.parent_id">
-                      <option value>Select parent unit</option>
+                      <option value>ROOT</option>
                       <option
                         v-for="item in listUnits.data"
                         v-if="item.parent_id==0"

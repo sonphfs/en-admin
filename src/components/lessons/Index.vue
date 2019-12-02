@@ -40,7 +40,11 @@
         <ul class="nav navbar-right panel_toolbox">
           <li>
             <a class="collapse-link">
-              <button type="submit" class="btn btn-success" @click="modalOpen=true">Create new Lesson</button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                @click="modalOpen=true"
+              >Create new Lesson</button>
             </a>
           </li>
         </ul>
@@ -72,7 +76,9 @@
             <tr v-for="(lesson, index) in sort.values" :key="lesson.id">
               <td>{{lesson.id}}</td>
               <td>{{lesson.title}}</td>
-              <td><img :src="serverUrl + lesson.image" width="150px" height="150px"></td>
+              <td>
+                <img :src="serverUrl + lesson.image" width="150px" height="150px" />
+              </td>
               <td>{{lesson.unit.name}}</td>
               <td>{{lesson.created_at}}</td>
               <td>
@@ -82,7 +88,7 @@
                 <a class="btn btn-info btn-xs">
                   <i class="fa fa-pencil"></i> Edit
                 </a>
-                <a class="btn btn-danger btn-xs">
+                <a class="btn btn-danger btn-xs" @click="deleteLesson(lesson)">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -99,13 +105,19 @@
         ></paginate>
       </div>
     </div>
-    <ModalForm  @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
+    <ModalForm @onClose="modalOpen=false" v-if="modalOpen==true"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import ModalForm from "@/components/lessons/ModalForm";
+import {
+  successAlert,
+  errorAlert,
+  deleteFailed,
+  deleteSuccess
+} from "@/utils/alert";
 export default {
   name: "ListLessons",
   components: {
@@ -123,26 +135,62 @@ export default {
     };
   },
   created() {
-    this.getLessons()
+    this.getLessons();
   },
   methods: {
-    getLessons(page=1) {
+    getLessons(page = 1) {
       request({
-      url: "/backend/lessons/list?page=" + page,
-      method: "get"
-    })
-      .then(res => {
-        this.lessons = res.data.result_data;
+        url: "/backend/lessons/list?page=" + page,
+        method: "get"
       })
-      .catch(err => {
-        console.log(err.res);
-      });
+        .then(res => {
+          this.lessons = res.data.result_data;
+        })
+        .catch(err => {
+          console.log(err.res);
+        });
+    },
+    deleteLesson(lesson) {
+      console.log(lesson);
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to delete this!",
+          type: "warning",
+          showCancelButton: true,
+          customClass: "swal-wide",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            this.detele(lesson);
+          }
+        });
+    },
+    detele(lesson) {
+      let data = {
+        id: lesson.id
+      };
+      request({
+        url: "/backend/lessons/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          this.getLessons();
+          deleteSuccess();
+        })
+        .catch(err => {
+          deleteFailed();
+        });
     }
   },
   computed: {
-     pageCount() {
-       return this.lessons.last_page
-     }
+    pageCount() {
+      return this.lessons.last_page;
+    }
   }
 };
 </script>

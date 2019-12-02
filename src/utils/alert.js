@@ -19,3 +19,19 @@ export function errorAlert(message = "Update data failed!") {
     padding: "3em"
   });
 }
+
+export function deleteSuccess(message) {
+  Swal.fire(
+    "Deleted!",
+    message,
+    "success"
+  );
+}
+
+export function deleteFailed(message) {
+  Swal.fire(
+    "Failed!",
+    message,
+    "error"
+  )
+}

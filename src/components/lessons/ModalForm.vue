@@ -34,7 +34,11 @@
                   <div class="col-sm-9">
                     <select class="select2_group form-control" v-model="lesson.unit_id">
                       <option value>Select unit</option>
-                      <option v-for="unit in listUnits" v-if="unit.parent_id != 0" :value="unit.id">{{ unit.name}}</option>
+                      <option
+                        v-for="unit in listUnits"
+                        v-if="unit.parent_id != 0"
+                        :value="unit.id"
+                      >{{ unit.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -43,7 +47,7 @@
                   <div class="col-md-9 col-sm-9 col-xs-12">
                     <button type="button" class="btn btn-default" @click="chooseFile()">Upload Image</button>
                     <p style="margin-top: 10px">
-                        <span v-if="lesson.image">{{ lesson.image.name}}</span>
+                      <span v-if="lesson.image">{{ lesson.image.name}}</span>
                     </p>
                     <input
                       id="file-audio"
@@ -86,15 +90,15 @@ export default {
   data() {
     return {
       lesson: {
-          title: "",
-          unit_id: null,
-          image: ""
+        title: "",
+        unit_id: null,
+        image: ""
       },
       listUnits: []
     };
   },
   created() {
-      this.getUnits()
+    this.getUnits();
   },
   methods: {
     close() {
@@ -106,15 +110,16 @@ export default {
     changeFile() {
       this.lesson.image = this.$refs.lessonImage.files[0];
     },
-    getUnits(page = 1) {
+    getUnits() {
       request({
-        url: "/backend/units/list?page=" + page,
+        url: "/backend/units/all",
         method: "get"
       })
         .then(res => {
-          this.listUnits = res.data.result_data.data;
+          let data = res.data.result_data;
+          this.listUnits = data.filter(e => e.parent_id != 0);
         })
-        .catch();
+        .catch(err => {});
     },
     create() {
       let data = this.lesson;
@@ -122,7 +127,7 @@ export default {
       formData.append("unit_id", this.lesson.unit_id);
       formData.append("title", this.lesson.title);
       formData.append("image", this.lesson.image);
-      console.log(data)
+      console.log(data);
       request
         .post("/backend/lessons/create", formData, {
           headers: {
@@ -133,7 +138,7 @@ export default {
           console.log(res.data);
         })
         .catch();
-    },
+    }
   }
 };
 </script>

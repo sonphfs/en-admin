@@ -14,10 +14,14 @@
           <li>
             <a class="collapse-link">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <select class="form-control">
-                  <option>Choose option</option>
-                  <option>Option one</option>
-                </select>
+                <multiselect
+                  v-model="unitSelected"
+                  :options="units"
+                  placeholder="Select one"
+                  label="name"
+                  track-by="name"
+                  @select="changeUnitSelected"
+                ></multiselect>
               </div>
             </a>
           </li>
@@ -25,10 +29,14 @@
           <li>
             <a class="collapse-link">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <select class="form-control">
-                  <option>Choose option</option>
-                  <option>Option one</option>
-                </select>
+                <multiselect
+                  v-model="lessonSelected"
+                  :options="lessons"
+                  placeholder="Select one"
+                  label="title"
+                  track-by="title"
+                  @select="changeLessonSelected"
+                ></multiselect>
               </div>
             </a>
           </li>
@@ -36,10 +44,14 @@
           <li>
             <a class="collapse-link">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <select class="form-control">
-                  <option>Choose option</option>
-                  <option>Option one</option>
-                </select>
+                <multiselect
+                  v-model="subjectSelected"
+                  :options="subjects"
+                  placeholder="Select one"
+                  label="name"
+                  track-by="name"
+                  @select="changeSubjectSelected"
+                ></multiselect>
               </div>
             </a>
           </li>
@@ -47,16 +59,24 @@
           <li>
             <a class="collapse-link">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <select class="form-control">
-                  <option>Choose option</option>
-                  <option>Option one</option>
-                </select>
+                <multiselect
+                  v-model="learningWordSelected"
+                  :options="learning_words"
+                  placeholder="Select one"
+                  label="word"
+                  track-by="word"
+                  @select="changeWordSelected"
+                ></multiselect>
               </div>
             </a>
           </li>
           <li>
             <a class="collapse-link">
-              <button type="submit" class="btn btn-success">Create new Question</button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                @click="modalOpen=true"
+              >Create new Question</button>
             </a>
           </li>
         </ul>
@@ -132,17 +152,22 @@
         ></paginate>
       </div>
     </div>
+    <ModalForm v-if="modalOpen==true" @onClose="modalOpen=false"></ModalForm>
   </div>
 </template>
 <script>
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import FormSearch from "@/components/elements/FormSearch";
+import ModalForm from "@/components/questions/ModalForm";
+import Multiselect from "vue-multiselect";
 export default {
   name: "ListQuestions",
   components: {
     Breadcrumb,
-    FormSearch
+    FormSearch,
+    ModalForm,
+    Multiselect
   },
   data() {
     return {
@@ -165,7 +190,16 @@ export default {
         }
       ],
       title: "",
-      keyword: ""
+      keyword: "",
+      modalOpen: false,
+      units: [],
+      lessons: [],
+      subjects: [],
+      learning_words: [],
+      unitSelected: null,
+      lessonSelected: null,
+      subjectSelected: null,
+      learningWordSelected: null
     };
   },
   methods: {
@@ -174,9 +208,15 @@ export default {
       this.getQuestions();
     },
     getQuestions(page = 1) {
+      let baseUrl = "/backend/questions/list?page=" + page + "&keyword=" + this.keyword
+      if(this.learningWordSelected != null) {
+        baseUrl += "&word_id=" + this.learningWordSelected.id
+      }
+      if(this.lessonSelected != null) {
+        baseUrl += "&lesson_id="+ this.lessonSelected.id
+      }
       request({
-        url:
-          "/backend/questions/list?page=" + page + "&keyword=" + this.keyword,
+        url: baseUrl,
         method: "get"
       })
         .then(res => {
@@ -185,10 +225,72 @@ export default {
         .catch(err => {
           console.log(err.res);
         });
+    },
+    getUnits() {
+      request({
+        url: "/backend/units/all",
+        method: "get"
+      })
+        .then(res => {
+          let data = res.data.result_data;
+          this.units = data.filter(e => e.parent_id == 0);
+        })
+        .catch(err => {});
+    },
+    getLessons() {
+      request({
+        url: "/backend/lessons/list-by-unit-id/" + this.unitSelected.id,
+        method: "get"
+      })
+        .then(res => {
+          this.lessons = res.data.result_data;
+        })
+        .catch(err => {});
+    },
+    getSubjects() {
+      request({
+        url: "/backend/subjects/all",
+        method: "get"
+      })
+        .then(res => {
+          this.subjects = res.data.result_data;
+        })
+        .catch(err => {});
+    },
+    getLearningWords() {
+      request({
+        url:
+          "/backend/learning_words/list-by-subject-id/" +
+          this.subjectSelected.id,
+        method: "get"
+      })
+        .then(res => {
+          console.log(res)
+          this.learning_words = res.data.result_data;
+        })
+        .catch(err => {});
+    },
+    changeUnitSelected() {
+      this.subjectSelected = null;
+      this.learningWordSelected = null;
+      this.getLessons();
+    },
+    changeLessonSelected() {
+      this.getQuestions()
+    },
+    changeSubjectSelected() {
+      this.unitSelected = null;
+      this.lessonSelected = null;
+      this.getLearningWords();
+    },
+    changeWordSelected() {
+      this.getQuestions()
     }
   },
   created() {
     this.getQuestions();
+    this.getUnits();
+    this.getSubjects();
   },
   computed: {
     pageCount() {
@@ -197,3 +299,9 @@ export default {
   }
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style scoped>
+li.multiselect__element span span {
+  color: #000 !important;
+}
+</style>

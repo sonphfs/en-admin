@@ -205,17 +205,15 @@ export default {
       this.fileUpload = this.$refs.wordAudio.files[0];
       this.uploadImage("AUDIO", "LEARNING_WORD");
     },
-    getSubjects(page) {
+    getSubjects() {
       request({
-        url: "/backend/subjects/list?page=" + page,
-        methods: "get"
+        url: "/backend/subjects/all",
+        method: "get"
       })
         .then(res => {
-          this.listSubject = res.data.result_data.data;
+          this.listSubject = res.data.result_data;
         })
-        .catch(err => {
-          console.log(err.res);
-        });
+        .catch(err => {});
     },
     nameWithLang({ name }) {
       return `${name}`;
