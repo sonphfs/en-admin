@@ -147,7 +147,11 @@
               data-dismiss="modal"
               @click="close()"
             >Cancel</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="createOrUpdateWord()">{{ action }}</button>
+            <button
+              type="button"
+              class="btn btn-danger antosubmit"
+              @click="createOrUpdateWord()"
+            >{{ action }}</button>
           </div>
         </div>
       </div>
@@ -158,11 +162,12 @@
 
 <script>
 import request from "@/utils/request";
+import { successAlert, errorAlert } from "@/utils/alert";
 import Multiselect from "vue-multiselect";
 
 export default {
   name: "ModalForm",
-  props: ['word'],
+  props: ["word"],
   components: {
     Multiselect
   },
@@ -171,18 +176,20 @@ export default {
     return {
       learning_word: {
         image: "",
-        audio: ""
+        audio: "",
+        pronunciation: "pronun",
+        example: "example"
       },
       fileUpload: "",
       listSubject: [],
       subjectSelected: { name: "Select one" },
-      action: ""
+      action: "Create"
     };
   },
   created() {
-    if(this.item.id) {
-      this.action = "Update"
-      this.learning_word = Object.assign({}, this.item)
+    if (this.item.id) {
+      this.action = "Update";
+      this.learning_word = Object.assign({}, this.item);
     }
     this.getSubjects();
   },
@@ -223,11 +230,11 @@ export default {
       formData.append("file", this.fileUpload);
       formData.append("type", type);
       formData.append("object", object);
-      if(type == 'IMAGE' && this.learning_word.image != "") {
-        this.deleteFile(this.learning_word.image)
+      if (type == "IMAGE" && this.learning_word.image != "") {
+        this.deleteFile(this.learning_word.image);
       }
-      if(type == 'AUDIO' && this.learning_word.audio != "") {
-        this.deleteFile(this.learning_word.audio)
+      if (type == "AUDIO" && this.learning_word.audio != "") {
+        this.deleteFile(this.learning_word.audio);
       }
       request
         .post("/backend/files/upload", formData, {
@@ -262,17 +269,29 @@ export default {
           console.log(err);
         });
     },
-    createOrUpdateWord(){
-      let data = this.learning_word
+    createOrUpdateWord() {
+      let data = this.learning_word;
       request({
         url: "/backend/learning_words/create-or-update",
         method: "post",
         data
-      }).then(res => {
-          console.log(res)
-      }).catch(err => {
-        console.log(err.res)
       })
+        .then(res => {
+          this.close();
+
+          this.$swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          console.log(res);
+        })
+        .catch(err => {
+          errorAlert();
+          console.log(err.res);
+        });
     }
   },
   watch: {

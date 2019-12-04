@@ -62,7 +62,7 @@ export default {
   name: "Login",
   data() {
     return {
-      email: "sonph@gmail.com",
+      email: "phamhungsonk60@gmail.com",
       password: "admin123",
       token: ""
     };

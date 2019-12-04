@@ -20,7 +20,6 @@
                   placeholder="Select one"
                   label="name"
                   track-by="name"
-                  @select="changeUnitSelected"
                 ></multiselect>
               </div>
             </a>
@@ -35,7 +34,6 @@
                   placeholder="Select one"
                   label="title"
                   track-by="title"
-                  @select="changeLessonSelected"
                 ></multiselect>
               </div>
             </a>
@@ -50,7 +48,6 @@
                   placeholder="Select one"
                   label="name"
                   track-by="name"
-                  @select="changeSubjectSelected"
                 ></multiselect>
               </div>
             </a>
@@ -65,7 +62,6 @@
                   placeholder="Select one"
                   label="word"
                   track-by="word"
-                  @select="changeWordSelected"
                 ></multiselect>
               </div>
             </a>
@@ -233,7 +229,7 @@ export default {
       })
         .then(res => {
           let data = res.data.result_data;
-          this.units = data.filter(e => e.parent_id == 0);
+          this.units = data.filter(e => e.parent_id != 0);
         })
         .catch(err => {});
     },
@@ -271,20 +267,34 @@ export default {
         .catch(err => {});
     },
     changeUnitSelected() {
-      this.subjectSelected = null;
-      this.learningWordSelected = null;
       this.getLessons();
     },
     changeLessonSelected() {
       this.getQuestions()
     },
     changeSubjectSelected() {
-      this.unitSelected = null;
-      this.lessonSelected = null;
       this.getLearningWords();
     },
     changeWordSelected() {
       this.getQuestions()
+    }
+  },
+  watch: {
+    unitSelected(){
+      console.log(this.unitSelected.name)
+      this.changeUnitSelected()
+    },
+    lessonSelected(){
+      this.changeLessonSelected()
+      console.log(this.lessonSelected.title)
+    },
+    subjectSelected(){
+      this.changeSubjectSelected()
+      console.log(this.subjectSelected.name)
+    },
+    learningWordSelected(){
+      this.changeWordSelected()
+      console.log(this.learningWordSelected.word)
     }
   },
   created() {
