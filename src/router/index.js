@@ -67,16 +67,8 @@ const routes = [
         component: () => import("@/components/lessons/Index"),
     },
     {
-        path: '/management/lessons/create',
-        component: () => import("@/components/lessons/Create"),
-    },
-    {
-        path: '/management/lessons/edit/:id',
-        component: () => import("@/components/lessons/Edit"),
-    },
-    {
-        path: '/management/lessons/detail/:id',
-        component: () => import("@/components/lessons/Show"),
+        path: '/management/lessons/questions',
+        component: () => import("@/components/lessons/Question"),
     },
     //units
     {
@@ -157,6 +149,10 @@ const routes = [
     {
         path: '/management/learning_words/subjects/list',
         component: () => import("@/components/subjects/List.vue"),
+    },
+    {
+        path: '/management/learning_words/questions',
+        component: () => import("@/components/learning_words/Question.vue"),
     },
     {
         path: '/upload',

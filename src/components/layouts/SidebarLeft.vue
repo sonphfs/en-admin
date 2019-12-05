@@ -66,6 +66,9 @@
                   <a href="/management/learning_words/list">List Learning Words</a>
                 </li>
                 <li>
+                  <a href="/management/learning_words/questions">Questions</a>
+                </li>
+                <li>
                   <a href="/management/learning_words/subjects/list">List Subject</a>
                 </li>
               </ul>
@@ -78,6 +81,9 @@
               <ul class="nav child_menu" style="display: block" v-show="lessonMenu">
                 <li>
                   <a href="/management/lessons/list">List Lessons</a>
+                </li>
+                <li>
+                  <a href="/management/lessons/questions">Questions</a>
                 </li>
                 <li>
                   <a href="/management/units/list">Units</a>
