@@ -97,16 +97,6 @@
               </div>
             </div>
             <div class="item form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <select class="form-control" v-model="user.gender">
-                  <option value="1">MALE</option>
-                  <option value="2">FEMALE</option>
-                  <option value="3">OTHER</option>
-                </select>
-              </div>
-            </div>
-            <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">
                 Date of Birth
                 <span class="required">*</span>
@@ -169,7 +159,6 @@ export default {
         phone: "",
         address: "",
         birthday: "",
-        gender: 1,
         confirm_email: ""
       }
     };

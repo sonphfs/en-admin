@@ -16,20 +16,7 @@
               <p>
                 <strong>Directions:</strong> For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time. Look at the example item below.
               </p>
-              <div v-for="question in examination.questions" v-if="question.part == 1 && question.no == 0">
-                <p>
-                <strong>Example:</strong>
-              </p>
-              <p>
-                <img
-                  :src="serverUrl + question.image"
-                  alt="Example"
-                  width="300px" height="300px"
-                />
-              </p>
-              <p>Statement (C), "They're standing near the table," is the best description of the picture, so you should select answer (C) and mark it on your answer sheet.</p>
-              <hr />
-              </div>
+              <hr>
               <div v-for="question in examination.questions" v-if="question.part == 1 && question.no != 0">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <p v-if="question.image">
@@ -88,24 +75,7 @@
               <p>
                 <strong>Directions:</strong> You will hear a question or statement and three responses spoken in English. They will be spoken only one time and will not be printed in your test book. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.
               </p>
-              <div v-for="question in examination.questions" v-if="question.part == 2 && question.no == 0">
-                <p>
-                <strong>Example</strong>
-              </p>
-              <p>
-                You will hear:
-                <strong>{{question.content}}</strong>
-              </p>
-              <p>You will also hear:</p>
-              <ul>
-                <li>(A) {{question.answer_A}}</li>
-                <li>(B) {{question.answer_B}}</li>
-                <li>(C) {{question.answer_C}}</li>
-              </ul>
-              <p>The best response to the question "{{question.content}}" is choice ({{question.correct_answer}}), "I am looking for something," so ({{question.correct_answer}}) is the correct answer. You should mark answer ({{question.correct_answer}}) on you answer sheet.</p>
-              <hr />
-              </div>
-              <p></p>
+              <hr>
               <div v-for="question in examination.questions" v-if="question.part == 2 && question.no != 0">
                 <h5>{{question.no}}. {{ question.content }}</h5>
                 <div class="answer">
@@ -393,14 +363,8 @@
               <hr />
               <div v-for="question in examination.questions" v-if="question.part == 7">
                 <div class="paragraph" v-if="question.paragraph">
-                  <pre><strong>Questions 153-154 refer to the following e-mail.</strong></pre>
-                  <p>
-                    To: All families in our community
-                    <br />From: The San Jose Museum of Art
-                  </p>
-                  <p>It's my pleasure to notify you that we are having our December Kids Art Sunday on December 11, 2007. With the objective of making the artwork on view accessible to young audiences, the Museum's Education Department will present a stimulating range of hands-on art workshops. A speech by the curator Benito Juarez, gallery tours and other activities related to the current exhibitions will be also available to the visitors. There is no admission charge, and no reservations are required. However, you need to be at the Museum no later than 3 P.M. if you do not want to miss a single event.</p>
-                  <p>If you are interested in a setting with more one-on-one attention, join us for the members only portion of Kids Art Sunday, Side by Side. It takes place in the SJ annex and includes a gallery discussion and structured hands-on art activities. Pre-registration is required for Side by Side and only one child is allowed per adult. To register or become a member, please call (408) 555-6867.</p>
-                  <hr />
+                  <pre><strong>{{question.content}}</strong></pre>
+                  <p v-html="question.paragraph"></p>
                   <p></p>
                 </div>
 

@@ -18,7 +18,7 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Example</label>
         <div class="col-md-5 col-sm-5 col-xs-12"></div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="question.part != 1">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Content</label>
         <div class="col-md-5 col-sm-5 col-xs-12">
           <input type="text" class="form-control" v-model="question.content" />

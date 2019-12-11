@@ -4,52 +4,14 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>Part 4</h2>
-        <ul class="nav navbar-right panel_toolbox">
-          <li>
-            <a class="collapse-link">
-              <i class="fa fa-chevron-up"></i>
-            </a>
-          </li>
-          <li class="dropdown">
-            <a
-              href="#"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              role="button"
-              aria-expanded="false"
-            >
-              <i class="fa fa-wrench"></i>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#">Settings 1</a>
-              </li>
-              <li>
-                <a href="#">Settings 2</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="close-link">
-              <i class="fa fa-close"></i>
-            </a>
-          </li>
-        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
         <br />
-        <Question
-          v-for="item in questions"
-          :item="item"
-          v-if="item.no == 0"
-          :example="hasExample = true"
-        ></Question>
         <Question v-for="item in questions" :item="item" v-if="item.no != 0"></Question>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <button class="btn btn-success" :disabled="hasExample" @click="addExample()">Add Example</button>
             <button
               class="btn btn-success"
               :disabled="questionCount == maxQuestionCount"
@@ -86,7 +48,6 @@ export default {
       paragraph: "",
       questionCount: 0,
       maxQuestionCount: 30,
-      hasExample: false,
       questions: [],
       modalHidden: true,
       modalData: {
@@ -94,13 +55,13 @@ export default {
         message: "Are you sure update data!"
       },
       questionDataSeed: {
-        content: "Dít is noi dung question?",
+        content: "",
         audio: null,
         image: null,
-        answer_A: "Đáp án A",
-        answer_B: "Đáp án D",
-        answer_C: "Đáp án C",
-        answer_D: "Đáp án B",
+        answer_A: "",
+        answer_B: "",
+        answer_C: "",
+        answer_D: "",
         correct_answer: "A"
       },
       breads: [
@@ -129,7 +90,6 @@ export default {
     },
     changeAudio() {},
     async addQuestion() {
-      this.questionCount = this.questions.length - this.hasExample;
       if (this.questionCount < 30) {
         this.questions.push(Object.assign({no: null, part: 4 }, this.questionDataSeed));
       }
