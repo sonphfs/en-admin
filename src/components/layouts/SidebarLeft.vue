@@ -55,6 +55,11 @@
                   <a href="/management/examinations/list">List Examinations</a>
                 </li>
               </ul>
+               <ul class="nav child_menu" style="display: block" v-show="examMenu">
+                <li>
+                  <a href="/management/examinations/score-table">Score table</a>
+                </li>
+              </ul>
             </li>
             <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
               <a>

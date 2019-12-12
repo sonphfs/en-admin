@@ -102,6 +102,10 @@ const routes = [
         component: () => import("@/components/examinations/Create"),
     },
     {
+        path: '/management/examinations/score-table',
+        component: () => import("@/components/examinations/ScoreConvert"),
+    },
+    {
         path: '/management/examinations/edit/:code',
         component: () => import("@/components/examinations/Edit"),
     },
