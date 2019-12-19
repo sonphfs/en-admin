@@ -53,6 +53,7 @@ export default {
         })
         .catch(err => {
           console.log(err.res);
+          return this.$router.push('/login')
         });
     }
   }

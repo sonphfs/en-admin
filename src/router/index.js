@@ -50,6 +50,10 @@ const routes = [
         component: () => import("@/components/users/Index"),
     },
     {
+        path: '/management/users/login-histories',
+        component: () => import("@/components/users/LoginHistories"),
+    },
+    {
         path: '/management/users/create',
         component: () => import("@/components/users/Create"),
     },
@@ -61,6 +65,12 @@ const routes = [
         path: '/my-profile',
         component: () => import("@/components/pages/Profile"),
     },
+    //contact
+    {
+        path: '/management/contacts/list',
+        component: () => import("@/components/contacts/Index"),
+    },
+    
     //lesson
     {
         path: '/management/lessons/list',

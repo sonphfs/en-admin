@@ -43,6 +43,9 @@
                 <li>
                   <a href="/management/users/list">List Users</a>
                 </li>
+                <li>
+                  <a href="/management/users/login-histories">Login history</a>
+                </li>
               </ul>
             </li>
             <li @click="examMenu = !examMenu" v-bind:class="{ active : examMenu}">
@@ -109,6 +112,17 @@
                 </li>
               </ul>
             </li>
+            <li @click="contactMenu = !contactMenu" v-bind:class="{ active : contactMenu}">
+              <a>
+                <i class="fa fa-bar-chart-o"></i> Contact Management
+                <span class="fa fa-chevron-down"></span>
+              </a>
+              <ul class="nav child_menu" style="display: block" v-show="contactMenu">
+                <li>
+                  <a href="/management/contacts/list">List Contact</a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -145,6 +159,7 @@ export default {
       lessonMenu: !true,
       wordMenu: !true,
       questionMenu: !true,
+      contactMenu: !true,
       userInfos: {},
       serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };

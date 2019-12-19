@@ -52,7 +52,7 @@
               <td>{{examination.title}}</td>
               <td>{{examination.examination_type.name}}</td>
               <td>{{examination.description}}</td>
-              <td>{{ getStatus(examination.status) }}</td>
+              <td v-html="getStatus(examination.status)"></td>
               <td>{{examination.created_at}}</td>
               <td>
                 <a
@@ -165,7 +165,7 @@ export default {
   },
   methods: {
     getStatus(status) {
-      return status == 1 ? "ACTIVE" : "SPENDING";
+      return status == 1 ? '<button type="button" class="btn btn-primary btn-xs">Active</button>' : '<button type="button" class="btn btn-success btn-xs">Spending</button>';
     },
     confirmPublish(examination) {
       this.examinationSelected = examination;
