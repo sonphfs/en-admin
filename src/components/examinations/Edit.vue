@@ -4,7 +4,7 @@
     <div class="x_panel">
       <div class="x_content">
         <form class="form-horizontal form-label-left" novalidate>
-          <span class="section">Update examination</span>
+          <span class="section">Chỉnh sửa</span>
 
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -207,11 +207,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Edit examination",
+          title: "Bài thi",
+          link: "/"
+        },
+        {
+          title: "Chỉnh sửa",
           link: "/"
         }
       ]

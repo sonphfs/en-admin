@@ -18,7 +18,7 @@
               aria-hidden="true"
               @click="close()"
             >×</button>
-            <h4 class="modal-title" id="myModalLabel">{{ action }} Word</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ action }} câu hỏi mới</h4>
           </div>
           <div class="modal-body">
             <div id="testmodal" style="padding: 5px 20px;">
@@ -236,7 +236,7 @@ export default {
         correct_answer: ""
       },
       fileUpload: "",
-      action: "Create"
+      action: "Tạo"
     };
   },
   methods: {

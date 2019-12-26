@@ -87,11 +87,11 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Create examination",
+          title: "Thang điểm",
           link: "/"
         }
       ],

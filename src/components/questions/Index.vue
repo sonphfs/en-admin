@@ -6,73 +6,17 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          List
-          <small>Questions</small>
+          Danh sách
+          <small>Câu hỏi</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
-          <li>Unit</li>
-          <li>
-            <a class="collapse-link">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <multiselect
-                  v-model="unitSelected"
-                  :options="units"
-                  placeholder="Select one"
-                  label="name"
-                  track-by="name"
-                ></multiselect>
-              </div>
-            </a>
-          </li>
-          <li>Lesson</li>
-          <li>
-            <a class="collapse-link">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <multiselect
-                  v-model="lessonSelected"
-                  :options="lessons"
-                  placeholder="Select one"
-                  label="title"
-                  track-by="title"
-                ></multiselect>
-              </div>
-            </a>
-          </li>
-          <li>Subject</li>
-          <li>
-            <a class="collapse-link">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <multiselect
-                  v-model="subjectSelected"
-                  :options="subjects"
-                  placeholder="Select one"
-                  label="name"
-                  track-by="name"
-                ></multiselect>
-              </div>
-            </a>
-          </li>
-          <li>Word</li>
-          <li>
-            <a class="collapse-link">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <multiselect
-                  v-model="learningWordSelected"
-                  :options="learning_words"
-                  placeholder="Select one"
-                  label="word"
-                  track-by="word"
-                ></multiselect>
-              </div>
-            </a>
-          </li>
           <li>
             <a class="collapse-link">
               <button
                 type="submit"
                 class="btn btn-success"
                 @click="modalOpen=true"
-              >Create new Question</button>
+              >Thêm câu hỏi</button>
             </a>
           </li>
         </ul>
@@ -177,15 +121,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Questions management",
+          title: "Quản lý câu hỏi",
           link: "/"
         },
         {
-          title: "List questions",
+          title: "Danh sách câu hỏi",
           link: "/"
         }
       ],
-      title: "",
+      title: "Quản lý câu hỏi",
       keyword: "",
       modalOpen: false,
       units: [],

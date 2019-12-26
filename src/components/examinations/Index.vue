@@ -5,13 +5,13 @@
     <div class="x_panel">
       <div class="x_title">
         <h2>
-          List
-          <small>Examinations</small>
+          Danh sách
+          <small>Bài thi</small>
         </h2>
         <ul class="nav navbar-right panel_toolbox">
           <li>
             <a class="collapse-link" href="/management/examinations/create">
-              <button type="submit" class="btn btn-success">Create new Examination</button>
+              <button type="submit" class="btn btn-success">Thêm bài thi</button>
             </a>
           </li>
         </ul>
@@ -139,11 +139,11 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "List examinations",
+          title: "Danh sách bài thi",
           link: "/"
         }
       ],
@@ -157,7 +157,7 @@ export default {
       },
       examinationSelected: {},
       keyword: "",
-      title: "Management Examinations"
+      title: "Quản lý bài thi"
     };
   },
   created() {

@@ -15,7 +15,7 @@
               class="btn btn-success"
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
-            >Add Question</button>
+            >Thêm câu hỏi</button>
             <button class="btn btn-primary" @click="confirmModal()">Update</button>
           </div>
         </div>
@@ -69,11 +69,21 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Edit examinations",
+          title: "Bài thi",
+          link: "/"
+        }
+        ,
+        {
+          title: "Chỉnh sửa",
+          link: "/"
+        }
+        ,
+        {
+          title: "Part 1",
           link: "/"
         }
       ]

@@ -10,7 +10,7 @@
         <NewParagraph v-for="item in questions" :item="item"></NewParagraph>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <button class="btn btn-success" @click="addParagraph">Add Paragraph</button>
+            <button class="btn btn-success" @click="addParagraph">Thêm đoạn văn</button>
             <button class="btn btn-primary" @click="updateData">Update</button>
           </div>
         </div>
@@ -43,11 +43,21 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Edit examinations",
+          title: "Bài thi",
+          link: "/"
+        }
+        ,
+        {
+          title: "Chỉnh sửa",
+          link: "/"
+        }
+        ,
+        {
+          title: "Part 6",
           link: "/"
         }
       ],

@@ -13,11 +13,7 @@
       <!-- menu profile quick info -->
       <div class="profile clearfix">
         <div class="profile_pic">
-          <img
-            :src="serverUri + userInfos.avatar"
-            alt="..."
-            class="img-circle profile_img"
-          />
+          <img :src="serverUri + userInfos.avatar" alt="..." class="img-circle profile_img" />
         </div>
         <div class="profile_info">
           <span>Welcome,</span>
@@ -36,35 +32,35 @@
           <ul class="nav side-menu">
             <li class @click="userMenu = !userMenu" v-bind:class="{ active : userMenu}">
               <a>
-                <i class="fa fa-home"></i> Users Management
+                <i class="fa fa-home"></i> Quản lý thành viên
                 <span class="fa fa-chevron-down"></span>
               </a>
               <ul class="nav child_menu user_menu" style="display: block" v-show="userMenu">
                 <li>
-                  <a href="/management/users/list">List Users</a>
+                  <a href="/management/users/list">Thành viên</a>
                 </li>
                 <li>
-                  <a href="/management/users/login-histories">Login history</a>
+                  <a href="/management/users/login-histories">Lịch sử truy cập</a>
                 </li>
               </ul>
             </li>
             <li @click="examMenu = !examMenu" v-bind:class="{ active : examMenu}">
               <a>
-                <i class="fa fa-edit"></i> Exam Management
+                <i class="fa fa-edit"></i> Quản lý bài thi
                 <span class="fa fa-chevron-down"></span>
               </a>
               <ul class="nav child_menu" style="display: block" v-show="examMenu">
                 <li>
-                  <a href="/management/examinations/list">List Examinations</a>
+                  <a href="/management/examinations/list">Bài thi</a>
                 </li>
               </ul>
-               <ul class="nav child_menu" style="display: block" v-show="examMenu">
+              <ul class="nav child_menu" style="display: block" v-show="examMenu">
                 <li>
-                  <a href="/management/examinations/score-table">Score table</a>
+                  <a href="/management/examinations/score-table">Thang điểm</a>
                 </li>
               </ul>
             </li>
-            <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
+            <!-- <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
               <a>
                 <i class="fa fa-desktop"></i> Learning Words
                 <span class="fa fa-chevron-down"></span>
@@ -97,29 +93,26 @@
                   <a href="/management/units/list">Units</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <li @click="questionMenu = !questionMenu" v-bind:class="{ active : questionMenu}">
               <a>
-                <i class="fa fa-bar-chart-o"></i> Questions Management
+                <i class="fa fa-bar-chart-o"></i> Quản lý câu hỏi
                 <span class="fa fa-chevron-down"></span>
               </a>
               <ul class="nav child_menu" style="display: block" v-show="questionMenu">
                 <li>
-                  <a href="/management/questions/list">List Questions</a>
-                </li>
-                <li>
-                  <a href="/upload">Upload file</a>
+                  <a href="/management/questions/list">Câu hỏi</a>
                 </li>
               </ul>
             </li>
             <li @click="contactMenu = !contactMenu" v-bind:class="{ active : contactMenu}">
               <a>
-                <i class="fa fa-bar-chart-o"></i> Contact Management
+                <i class="fa fa-bar-chart-o"></i> Quản lý liên hệ
                 <span class="fa fa-chevron-down"></span>
               </a>
               <ul class="nav child_menu" style="display: block" v-show="contactMenu">
                 <li>
-                  <a href="/management/contacts/list">List Contact</a>
+                  <a href="/management/contacts/list">Liên hệ</a>
                 </li>
               </ul>
             </li>

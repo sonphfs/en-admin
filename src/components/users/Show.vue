@@ -2,25 +2,10 @@
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <Breadcrumb :breads="breads"></Breadcrumb>
-      <div class="page-title">
-        <div class="title_left">
-          <h3>Management Users</h3>
-        </div>
-        <div class="title_right">
-          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-            <div class="input-group">
-              <input type="text" placeholder="Search for..." class="form-control" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default">Go!</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="x_panel">
         <div class="x_title">
           <h2>
-            Detail user
+            Thông tin thành viên
             <small></small>
           </h2>
           <div class="clearfix"></div>
@@ -35,6 +20,8 @@
                   :src="serverUri + userInfos.avatar"
                   alt="Avatar"
                   title="Change the avatar"
+                  width="300"
+                  height="300"
                 />
               </div>
             </div>
@@ -105,16 +92,6 @@
                   />
                 </div>
               </div>
-              <div class="item form-group">
-                <label class="control-label col-md-2 col-sm-2 col-xs-12">Gender</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select class="form-control" v-model="userInfos.gender">
-                    <option value="1">MALE</option>
-                    <option value="2">FEMALE</option>
-                    <option value="3">OTHER</option>
-                  </select>
-                </div>
-              </div>
               <div class="form-group">
                 <label class="control-label col-md-2 col-sm-2 col-xs-12" for="dateofbirth">
                   Date of Birth
@@ -163,11 +140,11 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Users management",
+          title: "Quản lý thành viên",
           link: "/"
         },
         {
-          title: "Detail user",
+          title: "Thông tin thành viên",
           link: "/"
         }
       ],

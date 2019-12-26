@@ -83,15 +83,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Users management",
+          title: "Quản lý thành viên",
           link: "/"
         },
         {
-          title: "List users",
+          title: "Lịch sử truy cập",
           link: "/"
         }
       ],
-      title: "Management Users",
+      title: "Quản lý thành viên",
       keyword: "",
     };
   },

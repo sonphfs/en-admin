@@ -5,7 +5,7 @@
 
       <div class="x_panel">
         <div class="x_title">
-          <h2>Create new User</h2>
+          <h2>Thêm thành viên</h2>
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -145,11 +145,11 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Users management",
+          title: "Quản lý thành viên",
           link: "/"
         },
         {
-          title: "Detail user",
+          title: "Thành viên mới",
           link: "/"
         }
       ],

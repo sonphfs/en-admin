@@ -11,7 +11,7 @@
         <ul class="nav navbar-right panel_toolbox">
           <li>
             <a class="collapse-link" href="/management/users/create">
-              <button type="submit" class="btn btn-success">Create new user</button>
+              <button type="submit" class="btn btn-success">Thêm thành viên</button>
             </a>
           </li>
         </ul>
@@ -103,15 +103,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Users management",
+          title: "Quản lý thành viên",
           link: "/"
         },
         {
-          title: "List users",
+          title: "Danh sách thành viên",
           link: "/"
         }
       ],
-      title: "Management Users",
+      title: "Quản lý thành viên",
       keyword: "",
       modalOpen: false,
       selectedUser: 0

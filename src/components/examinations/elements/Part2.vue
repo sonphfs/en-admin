@@ -16,7 +16,7 @@
               class="btn btn-success"
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
-            >Add Question</button>
+            >Thêm câu hỏi</button>
             <button class="btn btn-primary" @click="confirmModal()">Update</button>
           </div>
         </div>
@@ -71,11 +71,19 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Edit examinations",
+          title: "Bài thi",
+          link: "/"
+        },
+        {
+          title: "Chỉnh sửa",
+          link: "/"
+        },
+        {
+          title: "Part 2",
           link: "/"
         }
       ]
@@ -92,18 +100,20 @@ export default {
     changeAudio() {},
     async addQuestion() {
       if (this.questionCount < 30) {
-        this.questions.push(Object.assign({no: null, part: 2 }, this.questionDataSeed));
+        this.questions.push(
+          Object.assign({ no: null, part: 2 }, this.questionDataSeed)
+        );
       }
     },
     addExample() {
-      this.questions.push(Object.assign({ no: 0, part: 2 }, this.questionDataSeed));
+      this.questions.push(
+        Object.assign({ no: 0, part: 2 }, this.questionDataSeed)
+      );
     },
     getPart2() {
       request({
         url:
-          "/backend/examinations/questions/" +
-          this.$route.params.code +
-          "/2",
+          "/backend/examinations/questions/" + this.$route.params.code + "/2",
         method: "get"
       })
         .then(res => {

@@ -2,7 +2,7 @@
   <div class>
     <Breadcrumb :breads="breads"></Breadcrumb>
     <div class="col-md-9" style="display-inline">
-      <h3>Examinations</h3>
+      <h3>Xem trước bài thi</h3>
     </div>
     <div class="clearfix"></div>
     <div class="row">
@@ -551,11 +551,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Examinations management",
+          title: "Quản lý bài thi",
           link: "/"
         },
         {
-          title: "Show",
+          title: "Bài thi",
+          link: "/"
+        },
+        {
+          title: "Chi tiết",
           link: "/"
         }
       ],

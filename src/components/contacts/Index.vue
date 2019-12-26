@@ -99,15 +99,15 @@ export default {
           link: "/dashboard"
         },
         {
-          title: "Contact management",
+          title: "Quản lý liên hệ",
           link: "/"
         },
         {
-          title: "List contact",
+          title: "Liên hệ",
           link: "/"
         }
       ],
-      title: "Management Contact",
+      title: "Danh sách liên hệ",
       keyword: ""
     };
   },

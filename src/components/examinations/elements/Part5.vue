@@ -16,7 +16,7 @@
               class="btn btn-success"
               :disabled="questionCount == maxQuestionCount"
               @click="addQuestion()"
-            >Add Question</button>
+            >Thêm câu hỏi</button>
             <button class="btn btn-primary" @click="confirmModal()">Update</button>
           </div>
         </div>
