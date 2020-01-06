@@ -35,15 +35,15 @@
               <th scope="col" style="text-align: left; width: 10rem;">
                 <SortLink name="updated_at">Updated at</SortLink>
               </th>
-              
+
               <th scope="col" style="text-align: left; width: 10rem;">
-                <SortLink name="">Action</SortLink>
+                <SortLink name>Action</SortLink>
               </th>
             </tr>
           </thead>
           <tbody slot="body" slot-scope="sort">
             <tr v-for="(item, index) in sort.values" :key="index">
-              <td>{{index}}</td>
+              <td>{{++index}}</td>
               <td>{{item.first_name}}</td>
               <td>{{item.last_name}}</td>
               <td>{{item.email}}</td>
@@ -52,10 +52,14 @@
               <td v-html="getStatus(item.flag)"></td>
               <td>{{item.updated_at}}</td>
               <td>
-                <a @click="updateContact(item.id)" class="btn btn-primary btn-xs" v-if="item.flag != 1">
+                <a
+                  @click="confirmAction('update', item.id)"
+                  class="btn btn-primary btn-xs"
+                  v-if="item.flag != 1"
+                >
                   <i class="fa fa-edit"></i>Update status
                 </a>
-                <a @click="deleteContact(item.id)" class="btn btn-danger btn-xs">
+                <a @click="confirmAction('delete', item.id)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -80,7 +84,12 @@
 import request from "@/utils/request";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 import FormSearch from "@/components/elements/FormSearch";
-import {successAlert, errorAlert, deleteSuccess, deleteFailed} from "@/utils/alert"
+import {
+  successAlert,
+  errorAlert,
+  deleteSuccess,
+  deleteFailed
+} from "@/utils/alert";
 export default {
   name: "ContactList",
   components: {
@@ -120,6 +129,40 @@ export default {
         this.contacts = res.data.result_data;
       });
     },
+    confirmAction(type = "update", contactId) {
+      //type= "update" or "delete"
+      let title = "Cập nhật trạng thái liên hệ này?";
+      let text = "Trạng thái liên hệ sẽ được cập nhật!";
+      let action = "Cập nhật";
+      if (type == "delete") {
+        title = "Bạn muốn xóa liên hệ này?";
+        text = "Thông tin liên hệ này sẽ bị xóa!";
+        action = "Xóa";
+      }
+      this.$swal
+        .fire({
+          title: title,
+          text: text,
+          type: "warning",
+          position: "top",
+          showCancelButton: true,
+          width: 600,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: action
+        })
+        .then(result => {
+          if (result.value) {
+            if (type == "update") {
+              this.updateContact(contactId);
+            }
+            if (type == "delete") {
+              this.deleteContact(contactId);
+            }
+          }
+        })
+        .catch(err => {});
+    },
     deleteContact(id) {
       let data = {
         id: id
@@ -131,39 +174,39 @@ export default {
       })
         .then(res => {
           if (res.data.result_data.deleted_at) {
-            deleteSuccess()
+            deleteSuccess();
             this.getContactList(1);
           }
         })
         .catch(err => {
-          deleteFailed()
+          deleteFailed();
         });
     },
     updateContact(id) {
       request({
         url: "/backend/contacts/update/" + id,
-        method: "post",
+        method: "post"
       })
         .then(res => {
           if (res.data.result_data.updated == 1) {
-            successAlert("Contact status has been updated!")
+            successAlert("Trạng thái liên hệ đã được cập nhật!");
             this.getContactList(1);
           }
         })
         .catch(err => {
-          errorAlert()
+          errorAlert();
         });
     },
     search(keyword) {
-      this.keyword = keyword
+      this.keyword = keyword;
       this.getContactList(1);
     },
     getStatus(flag) {
-      if(flag === 1) {
-          return '<button type="button" class="btn btn-success btn-xs">Replied</button>'
+      if (flag === 1) {
+        return '<button type="button" class="btn btn-success btn-xs">Replied</button>';
       }
-      if(flag === 0){
-        return '<button type="button" class="btn btn-danger btn-xs">New</button>'
+      if (flag === 0) {
+        return '<button type="button" class="btn btn-danger btn-xs">New</button>';
       }
     }
   },

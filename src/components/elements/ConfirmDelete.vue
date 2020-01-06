@@ -31,7 +31,7 @@
               data-dismiss="modal"
               @click="onClose()"
             >Close</button>
-            <button type="button" class="btn btn-danger antosubmit" @click="onSubmit()">Accept</button>
+            <button type="button" class="btn btn-danger antosubmit" @click="onSubmit()">OK</button>
           </div>
         </div>
       </div>
@@ -53,8 +53,8 @@ export default {
   },
   created() {
     if (this.modalData !== undefined) {
-        console.log(1231);
-      this.item = this.modalData
+      console.log(1231);
+      this.item = this.modalData;
     }
   },
   methods: {

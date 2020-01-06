@@ -145,7 +145,7 @@ export default {
         phone: "",
         address: "",
         birthday: "",
-        avatar: "",
+        avatar: ""
       },
       serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };
@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style scoped>
-  .profile_left {
-    text-align: center
-  }
+.profile_left {
+  text-align: center;
+}
 </style>

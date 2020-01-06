@@ -104,11 +104,13 @@
       v-if="modal.deleteConfirm==true"
       @onClose="closeConfirmModal('delete')"
       @accept="deleteExam"
+      :modalData="confirmDeleteMsg"
     ></ConfirmDelete>
     <ModalConfirm
       v-if="modal.publishConfirm==true"
       @onClose="closeConfirmModal('publish')"
       @accept="updateStatus"
+      :modalData="confirmPublishMsg"
     ></ModalConfirm>
   </div>
 </template>
@@ -157,7 +159,15 @@ export default {
       },
       examinationSelected: {},
       keyword: "",
-      title: "Quản lý bài thi"
+      title: "Quản lý bài thi",
+      confirmDeleteMsg: {
+        title: "Xác nhận",
+        message: "Bạn muốn xóa bài thi này?"
+      },
+      confirmPublishMsg: {
+        title: "Xác nhận",
+        message: "Bạn muốn thay đổi trạng thái bài thi này?"
+      }
     };
   },
   created() {
@@ -165,7 +175,7 @@ export default {
   },
   methods: {
     getStatus(status) {
-      return status == 1 ? '<button type="button" class="btn btn-primary btn-xs">Active</button>' : '<button type="button" class="btn btn-success btn-xs">Spending</button>';
+      return status == 1 ? '<a type="button" class="btn btn-primary btn-xs">Active</a>' : '<a type="button" class="btn btn-success btn-xs">Spending</a>';
     },
     confirmPublish(examination) {
       this.examinationSelected = examination;

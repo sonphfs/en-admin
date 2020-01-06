@@ -163,3 +163,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+input.form-control {
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+</style>

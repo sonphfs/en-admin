@@ -38,7 +38,7 @@
           </thead>
           <tbody slot="body" slot-scope="sort">
             <tr v-for="(item, index) in sort.values" :key="index">
-              <td>{{index}}</td>
+              <td>{{++index}}</td>
               <td>{{item.username}}</td>
               <td>{{item.email}}</td>
               <td>{{item.phone}}</td>

@@ -147,12 +147,12 @@ export default {
   props: ["adminInfos"],
   data() {
     return {
-      userMenu: !true,
+      userMenu: true,
       examMenu: true,
-      lessonMenu: !true,
-      wordMenu: !true,
-      questionMenu: !true,
-      contactMenu: !true,
+      lessonMenu: true,
+      wordMenu: true,
+      questionMenu: true,
+      contactMenu: true,
       userInfos: {},
       serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };

@@ -172,31 +172,32 @@ export default {
         data
       })
         .then(res => {
-          console.log(res.data.result_data);
+          this.$swal.fire("Created!", "Thành viên đã được tạo thành công!", "success");
+          this.$router.push("/management/users/list");
         })
         .catch(err => {
-          console.log(err.res);
+          this.$swal.fire("Failed!", "Thành viên được tạo không thành công!.", "error");
         });
     },
     confirmCreateUser() {
-      this.$swal.fire({
-        title: "Are you sure?",
-        text: "Create new user with this infos!",
-        type: "warning",
-        position: "top",
-        showCancelButton: true,
-        width: 600,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Create"
-      }).then(result => {
-        if (result.value) {
-          this.$swal.fire("Created!", "Your file has been deleted.", "success");
-          this.createUser()
-        }
-      }).catch(err => {
-        this.$swal.fire("Failed!", "Create user failed!.", "error");
-      });
+      this.$swal
+        .fire({
+          title: "Thêm thành viên mới?",
+          text: "Thêm thành viên mới với các thông tin dưới!",
+          type: "warning",
+          position: "top",
+          showCancelButton: true,
+          width: 600,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Tạo mới"
+        })
+        .then(result => {
+          if (result.value) {
+            this.createUser();
+          }
+        })
+        .catch(err => {});
     }
   }
 };

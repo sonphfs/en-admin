@@ -98,7 +98,7 @@
                 id="send"
                 type="button"
                 class="btn btn-success"
-                @click="updateExamination()"
+                @click="confirmUpdate()"
               >Update</button>
             </div>
           </div>
@@ -308,11 +308,31 @@ export default {
           return this.$router.push("/page-404");
         });
     },
+    confirmUpdate() {
+      this.$swal
+        .fire({
+          title: "Cập nhật thông tin bài thi?",
+          text: "Thông tin bài thi sẽ được cập nhật!",
+          type: "warning",
+          position: "top",
+          showCancelButton: true,
+          width: 600,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Cập nhật"
+        })
+        .then(result => {
+          if (result.value) {
+            this.updateExamination();
+          }
+        })
+        .catch(err => {});
+    },
     successAlert() {
       this.$swal.fire({
         position: "top",
         type: "success",
-        title: "Data has been updated!",
+        title: "Bài thi đã cập nhật thành công!",
         width: 600,
         padding: "3em"
       });
@@ -321,7 +341,7 @@ export default {
       this.$swal.fire({
         position: "top",
         type: "error",
-        title: "Update data failed!",
+        title: "Bài thi cập nhật không thất bại!",
         width: 600,
         padding: "3em"
       });

@@ -58,7 +58,7 @@
                 <a :href="'/management/users/detail/' + user.id" class="btn btn-primary btn-xs">
                   <i class="fa fa-folder"></i> View
                 </a>
-                <a @click="deleteUser(user.id)" class="btn btn-danger btn-xs">
+                <a v-if="!checkCurrentAdmin(user.id)" @click="deleteUser(user.id)" class="btn btn-danger btn-xs">
                   <i class="fa fa-trash-o"></i> Delete
                 </a>
               </td>
@@ -75,7 +75,7 @@
         ></paginate>
       </div>
     </div>
-    <ConfirmDelete v-if="modalOpen==true" @onClose="modalOpen=false" @accept="deleteApi"></ConfirmDelete>
+    <ConfirmDelete v-if="modalOpen==true" @onClose="modalOpen=false" @accept="deleteApi" :modalData="confirmDelete"></ConfirmDelete>
   </div>
 </template>
 
@@ -114,7 +114,11 @@ export default {
       title: "Quản lý thành viên",
       keyword: "",
       modalOpen: false,
-      selectedUser: 0
+      selectedUser: 0,
+      confirmDelete: {
+        title: "Xác nhận!",
+        message: "Bạn có muốn xóa thành viên này?"
+      }
     };
   },
   created() {
@@ -134,13 +138,18 @@ export default {
           console.log(err.res);
         });
     },
+    checkCurrentAdmin(userId){
+      return this.$route.meta.userId == userId
+    },
     search(keyword) {
       this.keyword = keyword
       this.getUsers(1);
     },
     deleteUser(userId) {
-      this.modalOpen = true;
+      if(!this.checkCurrentAdmin(userId)) {
+        this.modalOpen = true;
       this.selectedUser = userId;
+      }
     },
     closeModal() {
       this.modalOpen = false;

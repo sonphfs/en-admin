@@ -49,7 +49,7 @@ export default {
       })
         .then(res => {
           this.adminInfos = res.data.result_data;
-          console.log(res.data.result_data);
+          this.$route.meta.userId = this.adminInfos.id
         })
         .catch(err => {
           console.log(err.res);
