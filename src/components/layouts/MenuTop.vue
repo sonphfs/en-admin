@@ -58,9 +58,9 @@ export default {
         url: "/logout",
         method: "post"
       }).then(res => {
+        this.$router.push('/')
         removeToken();
-        this.$router.push('/login')
-      });
+      }).catch();
     },
     mouseOver() {
       this.active = !this.active;

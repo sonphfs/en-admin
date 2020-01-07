@@ -175,7 +175,9 @@ export default {
   },
   methods: {
     getStatus(status) {
-      return status == 1 ? '<a type="button" class="btn btn-primary btn-xs">Active</a>' : '<a type="button" class="btn btn-success btn-xs">Spending</a>';
+      return status == 1
+        ? '<a type="button" class="btn btn-primary btn-xs">Active</a>'
+        : '<a type="button" class="btn btn-success btn-xs">Spending</a>';
     },
     confirmPublish(examination) {
       this.examinationSelected = examination;

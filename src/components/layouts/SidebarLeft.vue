@@ -56,6 +56,11 @@
               </ul>
               <ul class="nav child_menu" style="display: block" v-show="examMenu">
                 <li>
+                  <a href="/management/examinations/histories">Kết quả</a>
+                </li>
+              </ul>
+              <ul class="nav child_menu" style="display: block" v-show="examMenu">
+                <li>
                   <a href="/management/examinations/score-table">Thang điểm</a>
                 </li>
               </ul>

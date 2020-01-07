@@ -197,6 +197,11 @@ const routes = [
         component: () => import("@/components/elements/NewParagraph"),
         beforeEnter: ifAuthenticated,
     },
+    {
+        path: '/management/examinations/histories',
+        component: () => import("@/components/examinations/Histories"),
+        beforeEnter: ifAuthenticated,
+    },
     //learning_words
     {
         path: '/management/learning_words/list',

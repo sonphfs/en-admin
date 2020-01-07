@@ -80,6 +80,7 @@ export default {
         data
       })
         .then(res => {
+          console.log(res)
           this.token = res.data.result_data.token;
           setToken(this.token)
           request.defaults.headers.common['Authorization'] = 'Bearer '+ getToken()
