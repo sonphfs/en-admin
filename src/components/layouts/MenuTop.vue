@@ -18,7 +18,8 @@
               aria-expanded="false"
               @click="drawer=!drawer"
             >
-              <img :src="serverUri + userInfos.avatar" alt />{{userInfos.username}}
+              <img v-if="userInfos.avatar" :src="serverUri + userInfos.avatar" />
+              <img v-if="!userInfos.avatar" :src="serverUri + 'enc/uploads/users/avatars/default-userAvatar.png'" />{{userInfos.username}}
               <span class="fa fa-angle-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-usermenu pull-right show" v-if="drawer">

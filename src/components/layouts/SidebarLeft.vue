@@ -13,7 +13,8 @@
       <!-- menu profile quick info -->
       <div class="profile clearfix">
         <div class="profile_pic">
-          <img :src="serverUri + userInfos.avatar" alt="..." class="img-circle profile_img" />
+          <img v-if="userInfos.avatar" :src="serverUri + userInfos.avatar" alt="..." class="img-circle profile_img" />
+          <img v-if="!userInfos.avatar" :src="serverUri + 'enc/uploads/users/avatars/default-userAvatar.png'" alt="..." class="img-circle profile_img" />
         </div>
         <div class="profile_info">
           <span>Welcome,</span>

@@ -13,6 +13,11 @@
             required
           />
         </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="checkbox">
+            <button type="button" class="btn btn-danger" @click="deleteQuestion">Xóa</button>
+          </div>
+        </div>
       </div>
       <div class="form-group" v-if="question.no === 0">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Example</label>
@@ -153,7 +158,7 @@
 </template>
 
 <script>
-import request from "@/utils/request"
+import request from "@/utils/request";
 export default {
   name: "CreateQuestion",
   components: {},
@@ -177,6 +182,9 @@ export default {
   methods: {
     chooseImage() {
       this.$refs.questionImage.click();
+    },
+    deleteQuestion() {
+      return this.$emit("delete-row");
     },
     changeImage() {
       this.fileUpload = this.$refs.questionImage.files[0];

@@ -14,10 +14,17 @@
                   required
                 />
               </div>
+              <div class="col-md-1 col-sm-1 col-md-offset-5 col-xs-12">
+                  <button type="button" class="btn btn-danger">Xóa</button>
+              </div>
             </div>
             <VueEditor v-model="bigQuestion.paragraph"></VueEditor>
             <hr />
-            <Question v-for="item in bigQuestion.questions" :item="item"></Question>
+            <Question
+              v-for="(item, index) in bigQuestion.questions"
+              :item="item"
+              @delete-row="deleteThisQuestion(item, index)"
+            ></Question>
             <div class="form-group">
               <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                 <button class="btn btn-primary" @click="addQuestion">Add Question for this paragraph</button>
@@ -82,12 +89,75 @@ export default {
       if (this.questionCount < 5) {
         this.questionCount++;
         this.bigQuestion.questions.push(
-          Object.assign({ no: null}, this.questionDataSeed)
+          Object.assign({ no: null }, this.questionDataSeed)
         );
       }
+    },
+    deleteThisQuestion(item, index) {
+      let question = item;
+      if (question.id == undefined) {
+        this.bigQuestion.questions.splice(index, 1);
+      } else {
+        this.$swal
+          .fire({
+            title: "Xác nhận?",
+            text: "Câu hỏi này sẽ bị xóa?",
+            type: "warning",
+            position: "top",
+            showCancelButton: true,
+            width: 600,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xóa"
+          })
+          .then(res => {
+            if (res.value) {
+              this.deleteQuestion(question, index);
+            }
+          });
+      }
+    },
+    deleteQuestion(question, index) {
+      console.log(index);
+      let data = {
+        id: question.id
+      };
+      request({
+        url: "/backend/questions/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(this.bigQuestion.questions);
+          this.bigQuestion.questions.splice(index, 1);
+          this.bigQuestion = this.item;
+          this.successAlert("Xóa câu hỏi thành công!");
+        })
+        .catch(err => {
+          console.log(err.res);
+          this.successAlert("Lỗi xóa câu hỏi!");
+        });
+    },
+    successAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "success",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
+    },
+    errorAlert(message) {
+      this.$swal.fire({
+        position: "top",
+        type: "error",
+        title: message,
+        width: 600,
+        padding: "3em"
+      });
     }
   },
-  created(){
+  created() {
     if (this.item !== undefined) {
       this.bigQuestion = this.item;
     }
@@ -96,7 +166,7 @@ export default {
 </script>
 
 <style scoped>
-.x_title{
+.x_title {
   border-bottom: 0px;
 }
 </style>

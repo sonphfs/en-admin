@@ -8,13 +8,18 @@
       </div>
       <div class="x_content">
         <br />
-        <Question v-for="item in questions" :item="item" v-if="item.no != 0"></Question>
+        <Question
+          v-for="(item, index) in questions"
+          :item="item"
+          v-if="item.no != 0"
+          @delete-row="deleteThisQuestion(item, index)"
+        ></Question>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
             <button
               class="btn btn-success"
-              :disabled="questionCount == maxQuestionCount"
+              :disabled="questionCount >=30"
               @click="addQuestion()"
             >Thêm câu hỏi</button>
             <button class="btn btn-primary" @click="confirmModal()">Update</button>
@@ -37,7 +42,7 @@ import Question from "@/components/elements/CreateQuestion.vue";
 import ModalConfirm from "@/components/elements/ModalConfirm.vue";
 import Breadcrumb from "@/components/elements/Breadcrumb";
 export default {
-  name: "Part1",
+  name: "Part5",
   components: {
     Question,
     ModalConfirm,
@@ -88,21 +93,68 @@ export default {
     chooseAudio() {
       this.$refs.questionAudio.click();
     },
+    deleteThisQuestion(item, index) {
+      let question = item;
+      if (question.id == undefined) {
+        this.questions.splice(index, 1);
+      } else {
+        this.$swal
+          .fire({
+            title: "Xác nhận?",
+            text: "Câu hỏi này sẽ bị xóa?",
+            type: "warning",
+            position: "top",
+            showCancelButton: true,
+            width: 600,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xóa"
+          })
+          .then(res => {
+            if (res.value) {
+              this.deleteQuestion(question, index);
+            }
+          });
+      }
+    },
+    deleteQuestion(question, index) {
+      console.log(index);
+      let data = {
+        id: question.id
+      };
+      request({
+        url: "/backend/questions/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          console.log(res.data.result_data);
+          this.questions.splice(index, 1);
+          this.questions = this.getPart1()
+          this.successAlert("Xóa câu hỏi thành công!");
+        })
+        .catch(err => {
+          console.log(err.res);
+          this.successAlert("Lỗi xóa câu hỏi!");
+        });
+    },
     changeAudio() {},
     async addQuestion() {
-      if (this.questionCount < 10) {
-        this.questions.push(Object.assign({no: null, part: 5 }, this.questionDataSeed));
+      if (this.questionCount < 30) {
+        this.questions.push(
+          Object.assign({ no: null, part: 5 }, this.questionDataSeed)
+        );
       }
     },
     addExample() {
-      this.questions.push(Object.assign({ no: 0, part: 5 }, this.questionDataSeed));
+      this.questions.push(
+        Object.assign({ no: 0, part: 5 }, this.questionDataSeed)
+      );
     },
     getPart1() {
       request({
         url:
-          "/backend/examinations/questions/" +
-          this.$route.params.code +
-          "/5",
+          "/backend/examinations/questions/" + this.$route.params.code + "/5",
         method: "get"
       })
         .then(res => {
@@ -129,31 +181,31 @@ export default {
         .then(res => {
           console.log(res.data.result_data);
           this.modalHidden = true;
-          this.successAlert();
+          this.successAlert("Data has been updated!");
         })
         .catch(err => {
           console.log(err.res);
           this.modalHidden = true;
-          this.errorAlert();
+          this.errorAlert("Update data failed!");
         });
     },
     confirmModal() {
       this.modalHidden = false;
     },
-    successAlert() {
+    successAlert(message) {
       this.$swal.fire({
         position: "top",
         type: "success",
-        title: "Data has been updated!",
+        title: message,
         width: 600,
         padding: "3em"
       });
     },
-    errorAlert() {
+    errorAlert(message) {
       this.$swal.fire({
         position: "top",
         type: "error",
-        title: "Update data failed!",
+        title: message,
         width: 600,
         padding: "3em"
       });

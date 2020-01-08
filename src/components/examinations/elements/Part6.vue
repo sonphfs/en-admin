@@ -83,12 +83,12 @@ export default {
       })
         .then(res => {
           this.getPartData()
-          this.successAlert();
+          this.successAlert("Data has been updated!");
         })
         .catch(err => {
           console.log(err);
           this.getPartData()
-          this.errorAlert();
+          this.errorAlert("Update data failed!");
         });
     },
     getPartData() {
@@ -128,20 +128,20 @@ export default {
         })
         this.questions = formatData
     },
-    successAlert() {
+    successAlert(message) {
       this.$swal.fire({
         position: "top",
         type: "success",
-        title: "Data has been updated!",
+        title: message,
         width: 600,
         padding: "3em"
       });
     },
-    errorAlert() {
+    errorAlert(message) {
       this.$swal.fire({
         position: "top",
         type: "error",
-        title: "Update data failed!",
+        title: message,
         width: 600,
         padding: "3em"
       });
