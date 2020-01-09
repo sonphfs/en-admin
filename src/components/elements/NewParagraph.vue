@@ -15,14 +15,15 @@
                 />
               </div>
               <div class="col-md-1 col-sm-1 col-md-offset-5 col-xs-12">
-                  <button type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-danger" @click="deleteParagraph">Xóa</button>
               </div>
             </div>
             <VueEditor v-model="bigQuestion.paragraph"></VueEditor>
             <hr />
             <Question
-              v-for="(item, index) in bigQuestion.questions"
+              v-for="(item, index) in qs"
               :item="item"
+              :key="index"
               @delete-row="deleteThisQuestion(item, index)"
             ></Question>
             <div class="form-group">
@@ -81,17 +82,23 @@ export default {
         content: "",
         paragraph: "",
         questions: []
-      }
+      },
+      qs: []
     };
   },
   methods: {
     addQuestion() {
-      if (this.questionCount < 5) {
-        this.questionCount++;
-        this.bigQuestion.questions.push(
-          Object.assign({ no: null }, this.questionDataSeed)
-        );
-      }
+      console.log(this.qs);
+      // question = Object.assign({ no: null }, this.questionDataSeed)
+      this.qs.push(
+        Object.assign({ no: null }, this.questionDataSeed)
+      );
+      // this.$set(this.qs,'name','1212')
+      // this.$set(this.bigQuestion.questions,'name',2342323)
+       console.log(this.bigQuestion)
+    },
+    deleteParagraph() {
+      return this.$emit("delete-p");
     },
     deleteThisQuestion(item, index) {
       let question = item;
@@ -160,6 +167,7 @@ export default {
   created() {
     if (this.item !== undefined) {
       this.bigQuestion = this.item;
+      this.qs = this.bigQuestion.questions;
     }
   }
 };

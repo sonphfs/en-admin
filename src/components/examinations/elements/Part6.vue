@@ -7,7 +7,9 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <NewParagraph v-for="item in questions" :item="item"></NewParagraph>
+        <NewParagraph v-for="(item, index) in questions"
+                    :key="index" 
+                    :item="item" @delete-p="deleteParagraph(item, index)"></NewParagraph>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
             <button class="btn btn-success" @click="addParagraph">Thêm đoạn văn</button>
@@ -70,6 +72,9 @@ export default {
     addParagraph() {
       this.questions.push({ isParent: true, part: 6, paragraph: "", content: "" , questions: []});
     },
+    deleteParagraph(item, index){
+        this.questions.splice(index, 1);
+    },
     updateData() {
       let data = {
         questions: this.questions,
@@ -111,6 +116,7 @@ export default {
     },
     formatData() {
       let tmp = this.part
+      console.log(tmp)
         let formatData = tmp.filter(e => {
             if(e.paragraph != null) {
               e.questions = []
@@ -127,6 +133,8 @@ export default {
           })
         })
         this.questions = formatData
+        console.log(1111122)
+        console.log(this.questions)
     },
     successAlert(message) {
       this.$swal.fire({

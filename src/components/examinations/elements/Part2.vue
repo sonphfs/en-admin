@@ -136,16 +136,14 @@ export default {
         url: "/backend/questions/delete",
         method: "post",
         data
-      })
-        .then(res => {
-          console.log(res.data.result_data);
+      }).then(res => {
+          console.log(res);
           this.questions.splice(index, 1);
-          this.questions = this.getPart1();
+          this.questions = this.getPart2();
           this.successAlert("Xóa câu hỏi thành công!");
-        })
-        .catch(err => {
-          console.log(err.res);
-          this.successAlert("Lỗi xóa câu hỏi!");
+        }).catch(err => {
+          // console.log(err.res);
+          this.errorAlert("Lỗi xóa câu hỏi!");
         });
     },
     async addQuestion() {

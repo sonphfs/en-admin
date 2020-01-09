@@ -7,7 +7,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <Question v-for="item in questions" :item="item" v-if="item.no != 0"></Question>
+        <Question v-for="(item, index) in questions" :item="item" v-if="item.no != 0" @delete-row="deleteThisQuestion(item, index)"></Question>
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
