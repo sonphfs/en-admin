@@ -21,6 +21,7 @@
             <VueEditor v-model="bigQuestion.paragraph"></VueEditor>
             <hr />
             <Question
+              v-if="qs"
               v-for="(item, index) in qs"
               :item="item"
               :key="index"
@@ -42,6 +43,7 @@
 import Question from "@/components/elements/CreateQuestion.vue";
 import { VueEditor } from "vue2-editor";
 import Breadcrumb from "@/components/elements/Breadcrumb";
+import request from "@/utils/request"
 export default {
   name: "NewParagraph",
   components: {
@@ -81,26 +83,22 @@ export default {
       bigQuestion: {
         content: "",
         paragraph: "",
-        questions: []
       },
       qs: []
     };
   },
   methods: {
     addQuestion() {
-      console.log(this.qs);
-      // question = Object.assign({ no: null }, this.questionDataSeed)
       this.qs.push(
         Object.assign({ no: null }, this.questionDataSeed)
       );
-      // this.$set(this.qs,'name','1212')
-      // this.$set(this.bigQuestion.questions,'name',2342323)
-       console.log(this.bigQuestion)
+      this.$set(this.bigQuestion,'questions',this.qs);
     },
     deleteParagraph() {
       return this.$emit("delete-p");
     },
     deleteThisQuestion(item, index) {
+      console.log(item)
       let question = item;
       if (question.id == undefined) {
         this.bigQuestion.questions.splice(index, 1);
@@ -142,7 +140,7 @@ export default {
         })
         .catch(err => {
           console.log(err.res);
-          this.successAlert("Lỗi xóa câu hỏi!");
+          this.errorAlert("Lỗi xóa câu hỏi!");
         });
     },
     successAlert(message) {
@@ -167,7 +165,7 @@ export default {
   created() {
     if (this.item !== undefined) {
       this.bigQuestion = this.item;
-      this.qs = this.bigQuestion.questions;
+      this.qs = this.item.questions
     }
   }
 };
