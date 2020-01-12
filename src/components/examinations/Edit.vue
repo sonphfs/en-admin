@@ -86,7 +86,7 @@
                 v-model="examination.status"
                 :selected="examination.status"
               >
-                <option value="0">SPENDING</option>
+                <option value="0">PENDING</option>
                 <option value="1">ACTIVE</option>
               </select>
             </div>

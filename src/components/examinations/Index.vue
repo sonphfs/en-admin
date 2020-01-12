@@ -177,7 +177,7 @@ export default {
     getStatus(status) {
       return status == 1
         ? '<a type="button" class="btn btn-primary btn-xs">Active</a>'
-        : '<a type="button" class="btn btn-success btn-xs">Spending</a>';
+        : '<a type="button" class="btn btn-success btn-xs">Pending</a>';
     },
     confirmPublish(examination) {
       this.examinationSelected = examination;
