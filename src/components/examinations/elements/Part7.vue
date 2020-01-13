@@ -7,7 +7,12 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <NewParagraph v-for="item in questions" :item="item"></NewParagraph>
+        <NewParagraph
+          v-for="(item, index) in questions"
+          :key="index"
+          :item="item"
+          @delete-p="deleteParagraph(item, index)"
+        ></NewParagraph>
         <div class="form-group">
           <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
             <button class="btn btn-success" @click="addParagraph">Thêm đoạn văn</button>
@@ -23,7 +28,7 @@
 import NewParagraph from "@/components/elements/NewParagraph.vue";
 import { VueEditor } from "vue2-editor";
 import Breadcrumb from "@/components/elements/Breadcrumb";
-import request from "@/utils/request"
+import request from "@/utils/request";
 export default {
   name: "Part6",
   components: {
@@ -49,13 +54,11 @@ export default {
         {
           title: "Bài thi",
           link: "/"
-        }
-        ,
+        },
         {
           title: "Chỉnh sửa",
           link: "/"
-        }
-        ,
+        },
         {
           title: "Part 7",
           link: "/"
@@ -68,7 +71,58 @@ export default {
   },
   methods: {
     addParagraph() {
-      this.questions.push({ isParent: true, part: 7, paragraph: "", content: "" , questions: []});
+      this.questions.push({
+        isParent: true,
+        part: 7,
+        paragraph: "",
+        content: "",
+        questions: []
+      });
+    },
+    deleteParagraph(item, index) {
+      console.log(item);
+      let question = item;
+      if (question.id == undefined) {
+        this.bigQuestion.questions.splice(index, 1);
+      } else {
+        this.$swal
+          .fire({
+            title: "Xác nhận?",
+            text: "Câu hỏi này sẽ bị xóa?",
+            type: "warning",
+            position: "top",
+            showCancelButton: true,
+            width: 600,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xóa"
+          })
+          .then(res => {
+            if (res.value) {
+              this.deleteQuestion(question, index);
+            }
+          });
+      }
+    },
+    deleteQuestion(question, index) {
+      console.log(index);
+      let data = {
+        id: question.id
+      };
+      request({
+        url: "/backend/questions/delete",
+        method: "post",
+        data
+      })
+        .then(res => {
+          this.questions.splice(index, 1);
+          this.question = this.getPartData();
+          this.successAlert("Xóa câu hỏi thành công!");
+        })
+        .catch(err => {
+          console.log(err.res);
+          this.errorAlert("Lỗi xóa câu hỏi!");
+        });
     },
     updateData() {
       let data = {
@@ -83,50 +137,49 @@ export default {
       })
         .then(res => {
           console.log(res.data.result_data);
-          this.getPartData()
-          this.successAlert("Data has been updated!");
+          this.getPartData();
+          this.successAlert("Cập nhật dữ liệu thành công!");
         })
         .catch(err => {
           console.log(err.res);
-          this.errorAlert("Update data failed!");
+          this.errorAlert("Cập nhật dữ liệu thất bại!");
         });
     },
     getPartData() {
       request({
         url:
-          "/backend/examinations/questions/" +
-          this.$route.params.code +
-          "/7",
+          "/backend/examinations/questions/" + this.$route.params.code + "/7",
         method: "get"
       })
         .then(res => {
           console.log(res.data.result_data);
-          let data = res.data.result_data 
+          let data = res.data.result_data;
           this.part = Object.keys(data).map(i => data[i]);
-          this.formatData()
+          this.formatData();
         })
         .catch(err => {
           console.log(err);
         });
     },
     formatData() {
-      let tmp = this.part
-        let formatData = tmp.filter(e => {
-            if(e.paragraph != null) {
-              e.questions = []
-              return e
-            } 
-        })
-        console.log(formatData)
+      let tmp = this.part;
+      let formatData = tmp.filter(e => {
+        if (e.paragraph != null) {
+          e.questions = []
+          e.isParent= true
+          return e;
+        }
+      });
+      console.log(formatData);
 
-        formatData.forEach(parent => {
-          tmp.filter(e => {
-            if(e.parent_id == parent.id) {
-              parent.questions.push(e)
-            }
-          })
-        })
-        this.questions = formatData
+      formatData.forEach(parent => {
+        tmp.filter(e => {
+          if (e.parent_id == parent.id) {
+            parent.questions.push(e);
+          }
+        });
+      });
+      this.questions = formatData;
     },
     successAlert(message) {
       this.$swal.fire({
@@ -147,8 +200,8 @@ export default {
       });
     }
   },
-  created(){
-    this.getPartData()
+  created() {
+    this.getPartData();
   }
 };
 </script>

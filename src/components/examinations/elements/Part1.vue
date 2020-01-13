@@ -183,7 +183,7 @@ export default {
         .then(res => {
           console.log(res.data.result_data);
           this.modalHidden = true;
-          this.successAlert("Data has been updated!");
+          this.successAlert("Dữ liệu đã được cập nhật!");
         })
         .catch(err => {
           console.log(err.res);

@@ -66,7 +66,7 @@
                 </li>
               </ul>
             </li>
-            <!-- <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
+            <li @click="wordMenu = !wordMenu" v-bind:class="{ active : wordMenu}">
               <a>
                 <i class="fa fa-desktop"></i> Learning Words
                 <span class="fa fa-chevron-down"></span>
@@ -99,7 +99,7 @@
                   <a href="/management/units/list">Units</a>
                 </li>
               </ul>
-            </li> -->
+            </li>
             <li @click="questionMenu = !questionMenu" v-bind:class="{ active : questionMenu}">
               <a>
                 <i class="fa fa-bar-chart-o"></i> Quản lý câu hỏi
@@ -155,10 +155,10 @@ export default {
     return {
       userMenu: true,
       examMenu: true,
-      lessonMenu: true,
-      wordMenu: true,
-      questionMenu: true,
-      contactMenu: true,
+      lessonMenu: !true,
+      wordMenu: !true,
+      questionMenu: !true,
+      contactMenu: !true,
       userInfos: {},
       serverUri: process.env.VUE_APP_BASE_SERVER_URL
     };

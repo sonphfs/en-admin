@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 
-export function successAlert(message = "Data has been updated!") {
+export function successAlert(message = "Dữ liệu đã được cập nhật!") {
   Swal.fire({
     position: "top",
     type: "success",

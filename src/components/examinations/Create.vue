@@ -203,7 +203,7 @@ export default {
       this.$swal.fire({
         position: "top",
         type: "success",
-        title: "Data has been updated!",
+        title: "Dữ liệu đã được cập nhật!",
         width: 600,
         padding: "3em"
       });

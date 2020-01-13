@@ -278,13 +278,12 @@ export default {
       })
         .then(res => {
           this.close();
-
           this.$swal.fire({
             position: "top",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500
+            type: "success",
+            title: "Từ đã được tạo thành công!",
+            width: 600,
+            padding: "3em"
           });
           console.log(res);
         })
